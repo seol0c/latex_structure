@@ -1,4 +1,4 @@
-<pre>
+<pre> 노트북에서 테스트
 book/
 ├── principles of physics/   일반물리 교재를 만드는 경우
 │   ├── appendix/            부록 - 넘버링, 양식이 다르기 때문에 따로 별도 체계 위해 분리

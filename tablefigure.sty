@@ -109,10 +109,12 @@
   \newcommand{#2}{
     \begin{figure}[H] \centering
       \begin{subfigure}[b]{0.3\textwidth} % bottm으로 정렬(t,c 가능), 폭 지정 0.3
-        \includegraphics[scale=0.6]{figures/#1_a} \caption{} % a, b, c 순차적으로 캡션 붙음
+        \includegraphics[scale=0.6]{figures/#1_a}
+         \caption{}\label{fig:#1:a} % a, b, c 순차적으로 캡션 붙음, 하나씩 라벨 호출할 수 있음
       \end{subfigure}
       \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[scale=0.6]{figures/#1_b} \caption{}
+        \includegraphics[scale=0.6]{figures/#1_b}
+         \caption{}\label{fig:#1:b}
       \end{subfigure}
       \caption{#3}
       \label{fig:#1}
@@ -149,20 +151,25 @@
         \caption{}\label{fig:#1:a}
       \end{subfigure}
       \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[scale=0.56]{figures/#1_b} \caption{}
+        \includegraphics[scale=0.56]{figures/#1_b}
+        \caption{}\label{fig:#1:b}
       \end{subfigure}
       \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[scale=0.56]{figures/#1_c} \caption{}
+        \includegraphics[scale=0.56]{figures/#1_c}
+        \caption{}\label{fig:#1:c}
       \end{subfigure}
       \par\medskip % 줄바꿈 + 여백
       \begin{subfigure}[b]{0.3\textwidth} % 두 번째 줄: d, e, f
-        \includegraphics[scale=0.56]{figures/#1_d} \caption{}
+        \includegraphics[scale=0.56]{figures/#1_d}
+        \caption{}\label{fig:#1:d}
       \end{subfigure}
       \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[scale=0.56]{figures/#1_e} \caption{}
+        \includegraphics[scale=0.56]{figures/#1_e}
+        \caption{}\label{fig:#1:e}
       \end{subfigure}
       \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[scale=0.56]{figures/#1_f} \caption{}
+        \includegraphics[scale=0.56]{figures/#1_f}
+        \caption{}\label{fig:#1:f}
       \end{subfigure}
       \caption{#3}
       \label{fig:#1}

@@ -47,3 +47,8 @@ top=25mm, bottom=25mm, left=20mm, right=20mm]{geometry}
 \numberwithin{table}{section}
 \setlength{\abovecaptionskip}{3pt}    % 캡션 위 간격
 \setlength{\belowcaptionskip}{-12pt}  % 캡션 아래 간격
+
+\makeatletter % 여러 그림의 라벨을 a,b,c 따로 호출할 때 Fig.18.5.2(a)으로 괄호 표시되게 함
+\renewcommand*{\p@subfigure}{\thefigure}
+\renewcommand*{\thesubfigure}{(\alph{subfigure})}
+\makeatother

@@ -55,6 +55,9 @@
 %% 여러 줄도 가능한 가운데 정렬 텍스트 매크로
 \newcommand{\centertext}[1]{\par\vspace{-1.9em}{\centering #1 \\}}
 
+% 불완전미분기호 dbar 생성
+\newcommand{\dbar}{d\hspace*{-0.08em}\bar{}\hspace*{0.1em}}
+
 %% 글꼴 강제 기울이기 - 한글은 기울임 지원 안함. fontspec의 옵션
 \setmainhangulfont[UprightFont = {*}, ItalicFont = {*}, SlantedFont = {*}, BoldFont = {*},
 SlantedFeatures = {FakeSlant=0.3},]{UnBatang} % 모든 글꼴 그대로 유지하고, 폰트가 기울임 지원 안하면 강제 slant

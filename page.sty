@@ -125,11 +125,12 @@
     \cleardoublepage
      \ % 빈 내용 삽입
   \fi
-  \thispagestyle{empty} % 커버 페이지 (짝수 페이지)
+  \thispagestyle{empty} % 페이지 번호 없애기
   \drawlinesfalse % 선 긋기 중단
   \restoregeometry % 용지 설정 복원
   \vspace*{\fill}
   \begin{center}{\large #1}\end{center}
   \vspace*{\fill}
   \begin{center}{\small #2}\end{center}
+  \thispagestyle{empty} % 페이지 번호 없애기
   \newpage}

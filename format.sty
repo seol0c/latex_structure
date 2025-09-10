@@ -68,6 +68,10 @@ SlantedFeatures = {FakeSlant=0.3},]{UnBatang} % 모든 글꼴 그대로 유지�
 %% 줄 간격 설정
 \linespread{1.2}             % 전체 줄간격 약간 넓힘
 
+%% 기본 줄바꿈 무효 + 보정값(대괄호) (기본은 0pt)
+% 메모 삽입 등을 위하여 문단 마지막마다 \zz로 끝냄. \zz[2pt]쓰면 추가 2pt 간격 확보
+\newcommand{\zz}[1][0pt]{\\[-\baselineskip+#1]}
+
 %% 기본 단락 여백 제거 - 문단 설정
 \setlength{\parskip}{0.5em} % 문단사이 간격 글자높이의 절반만큼 띄우기(기본값 0)
 \setlength{\parindent}{0pt} % 문단 첫 들여쓰기 없음(글자 너비 절반인 0.5em 해도 됨)

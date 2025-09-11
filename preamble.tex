@@ -6,17 +6,24 @@
 \input{../../structure/tablefigure.sty}
 \input{../../structure/seolf.sty}
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 페이지 설정
-\usepackage[a4paper, % 기본용지 설정
-top=25mm, bottom=25mm, left=20mm, right=20mm]{geometry}
+\newcommand{\geoTop}   {20mm} % 위쪽 여백
+\newcommand{\geoBottom}{20mm} % 아래 여백
+\newcommand{\geoLeft}  {20mm} % 좌측 여백
+\newcommand{\geoRight} {20mm} % 우측 여백
+\geometry{a4paper, % 기본용지 설정
+top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 경고 무시
 \hbadness=10000 % underfull hbox 경고 무시(수평 방향 여백 경고 badness 10000까지 무시)
 \vbadness=10000 % overfull hbox 경고 무시(수직 방향 페이니 나눔 단락 경고 badness 10000까지 무시)
 \hfuzz=7pt  % 7pt 이하의 overfull \hbox 경고 무시
 
+
 % 제목, 서문, 목차 불러오는 함수 만들기
-\newcommand{\includeHead}[1]{\input{../includes/#1.tex}}
+\newcommand{\includeHead}[1]{\input{../includes/#1.tex}} % 경로 확인할 것
 
 % 참고문헌
 \newcommand{\setupBib}{ % 참고문헌 있는 경우 불러오기

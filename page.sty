@@ -50,14 +50,10 @@
 \newcommand{\linkbox}{
   \AddToHook{shipout/background}{%
     \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=south west, inner sep=0pt] at ([yshift=15mm]current page.south west) {%
-        \hyperlink{toc}{\phantom{\rule{\paperwidth}{5mm}}}};
+      \node[anchor=south west, inner sep=0pt] at ([yshift=0mm]current page.south west) { % y축방향 이동
+        \hyperlink{toc}{\phantom{\rule{\paperwidth}{3mm}}}}; % 이동박스 두께
     \end{tikzpicture}}}
 
-% 여백 균등조절 자동으로 하지 않음.
-% book의 경우 어느 정도 양이 차면 아래에 붙고 균등분배되는데 그것을 해제하는 것
-% 다른 요소가 영향 미치고 간섭할 수 있음
-\raggedbottom
 
 % 페이지 애매하게 넘어갈 경우 addlines으로 한 두줄 강제로 확대함. 현재 페이지만 적용됨
 \newcommand{\addlines}[1]{\enlargethispage{#1\baselineskip}}

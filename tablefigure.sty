@@ -188,7 +188,7 @@
 % 교사용 seolfig - 모드 3,4일때만 나오는 그림. 1,2에서는 자리만 차지
 \NewDocumentCommand{\seolfig}{O{0.6} m}{%
   \begin{center}
-    \ifnum\seolfmode>2
+    \ifnum\seolmode>2
       \includegraphics[scale=#1]{figures/#2}%
     \else
       \phantom{\includegraphics[scale=#1]{figures/#2}}%

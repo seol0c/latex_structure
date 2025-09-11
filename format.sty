@@ -14,9 +14,10 @@
 
 %% 기본 줄바꿈 무효 + 보정값(대괄호) (기본은 0pt)
 % 메모 삽입 등을 위하여 문단 마지막마다 \zz로 끝냄. \zz[2pt]쓰면 추가 2pt 간격 확보
-% \zz[\bs]하면 \\와 동일한 역할
-\newcommand{\zz}[1][0pt]{\\[-\bs+#1]}
-\newcommand{\zzz}[1][0pt]{\\[#1]} % \zzz는 \\와 완전히 동일, \zzz[5pt]는 추가 5pt 확장
+% 수평 모드면 \\로, 수직 모드면 \vspace로 처리하게 함
+% \zzz는 \\와 완전히 동일함. 즉, \zz[\bs]임. \zzz[5pt]는 추가 5pt 확장
+\newcommand{\zz}[1][0pt]{\ifhmode \\[-\bs + #1] \else \vspace*{\dimexpr -\bs + #1\relax} \fi}
+\newcommand{\zzz}[1][0pt]{\ifhmode \\[#1] \else \vspace*{\bs + #1} \fi}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 텍스트 스타일 - 볼드, 이탤릭
@@ -26,68 +27,76 @@
 \newcommand{\itl}[1]{{\addhangulfontfeatures{AutoFakeSlant=.3}\textit{#1}}}
 
 
-
-
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 색상, 형광펜
 %% 색상 정의 % xcolor, transparent 필요
-\definecolor{myblue}{RGB}{26,63,186} % 너무 과하지 않은 색상 조합
 \definecolor{myred}{RGB}{255,70,70}
-\definecolor{mygray}{HTML}{666666}
+\definecolor{myorange}{RGB}{255,170,90}
+\definecolor{myyellow}{RGB}{255,230,40}
+\definecolor{mylime}{RGB}{160,240,120}
+\definecolor{mygreen}{RGB}{60,160,70}
+\definecolor{myblue}{RGB}{70,90,230}
+\definecolor{mygray}{RGB}{160,160,160}
+\definecolor{mywhite}{RGB}{255,255,255}
 
-%% 강조 색상 텍스트, b는 볼드체
-\newcommand{\blue}[1]{\textcolor{myblue}{#1}}
+%% 색상 텍스트
 \newcommand{\red}[1]{\textcolor{myred}{#1}}
+\newcommand{\orange}[1]{\textcolor{myorange}{#1}}
+\newcommand{\yellow}[1]{\textcolor{myyellow}{#1}}
+\newcommand{\lime}[1]{\textcolor{mylime}{#1}}
+\newcommand{\green}[1]{\textcolor{mygreen}{#1}}
+\newcommand{\blue}[1]{\textcolor{myblue}{#1}}
 \newcommand{\gray}[1]{\textcolor{mygray}{#1}}
-\newcommand{\blueb}[1]{\textcolor{myblue}{\textbf{#1}}}
-\newcommand{\redb}[1]{\textcolor{myred}{\textbf{#1}}}
-\newcommand{\grayb}[1]{\textcolor{mygray}{\textbf{#1}}}
-
-
-
-
+\newcommand{\white}[1]{\textcolor{mywhite}{#1}}
 
 %% 형광펜, 강조 스타일 정의 - luacolor,lua-ul 쓰면 매우 강력
-\newcommand{\hly}[1]{\highLight[{[RGB]{255,230,40}}]{#1}} % 노랑
-\newcommand{\hlyb}[1]{\highLight[{[RGB]{255,230,40}}]{\textbf{#1}}} % 노랑볼드
-\newcommand{\hlr}[1]{\highLight[{[RGB]{255,70,70}}]{#1}} % 빨강
-\newcommand{\hlrb}[1]{\highLight[{[RGB]{255,70,70}}]{\textbf{#1}}} % 빨강볼드
+\newcommand{\hlr}[1]{\highLight[myred]{#1}}
+\newcommand{\hlo}[1]{\highLight[myorange]{#1}}
+\newcommand{\hly}[1]{\highLight[myyellow]{#1}}
+\newcommand{\hll}[1]{\highLight[mylime]{#1}}
+\newcommand{\hlgr}[1]{\highLight[mygreen]{#1}}
+\newcommand{\hlb}[1]{\highLight[myblue]{#1}}
+\newcommand{\hlgy}[1]{\highLight[mygray]{#1}}
+\newcommand{\hlw}[1]{\highLight[mywhite]{#1}}
 
-% 팬텀 대신 하얀색으로 변경(자리차지용)
-\newcommand{\hlw}[1]{\highLight[{[RGB]{255,255,255}}]{#1}} % 하양
-\newcommand{\hlwb}[1]{\highLight[{[RGB]{255,255,7255}}]{\textbf{#1}}} % 하양볼드
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 자동 넘버링
 %% biglabel 함수 지정. 볼드체 12pt
-\newcommand{\biglabel}[1]{\textbf{\fontsize{12pt}{12pt}\selectfont #1}}
+\newcommand{\biglabel}[1]{\bd{\fontsize{12pt}{12pt}\selectfont #1}}
 
-%% 수동 증가 번호 커맨드 제작. 함수명은 an, bn(괄호), anset, bnset으로 초기화 가능
-% enumitem 패키지 필요
+%% 수동 증가 번호 커맨드 제작. 함수명은 an, bn(괄호), anset, bnset으로 카운트 초기화
+% enumitem 패키지 필요, 항상 문단을 끊고(\par) 시작함. 마지막에는 \par로 닫아줘야 들여쓰기 종료됨.
 \newcounter{anumcounter} % an
-\newcommand{\an}{\stepcounter{anumcounter}\theanumcounter.\ }
 \newcommand{\anset}{\setcounter{anumcounter}{0}}
-\newcommand{\ans}{\hspace*{11pt}} % ans는 들여쓰기 효과
+\newcommand{\an}{\par\stepcounter{anumcounter}\makebox[1em][r]{\theanumcounter.\,}\hangindent=1em \hangafter=1}
+% 1em 박스에 숫자 우측(r)정렬하여 두자리가 되도 붙음. 간격은 \,로 삽입함. 들여쓰기 동일하게 1em 줌
 \newcommand{\ansa}{\ans $\longrightarrow$ ~ } % 들여쓰고 arrow 만들기
 
+
 \newcounter{bnumcounter} % bn
-\newcommand{\bn}{\refstepcounter{bnumcounter}\makebox[1.2em][l]{(\arabic{bnumcounter})}\ }
 \newcommand{\bnset}{\setcounter{bnumcounter}{0}}
-\newcommand{\bns}{\hspace*{15.2pt}} % bns는 들여쓰기 효과
+\newcommand{\bn}{\par\refstepcounter{bnumcounter}\makebox[1.6em][r]{(\arabic{bnumcounter})\,}\hangindent=1.6em \hangafter=1}
 \newcommand{\bnsa}{\bns $\longrightarrow$ ~ } % 들여쓰고 arrow 만들기
+
+
+
 
 %% 글 앞에 찍는 글머리기호 점. bullet은 좀 커서 크기 줄임
 \newcommand{\bul}{\raisebox{0.25ex}{\tiny$\bullet$}\ }
 \newcommand{\bls}{\hspace*{6pt}} % bls는 들여쓰기 효과
 \newcommand{\blsa}{\bls $\longrightarrow$ ~ } % 들여쓰고 arrow 만들기
 
+
+
+% 삭제 임박
+\newcommand{\ans}{\hspace*{11pt}} % ans는 들여쓰기 효과
+\newcommand{\bns}{\hspace*{15.2pt}} % bns는 들여쓰기 효과
+
+
+
+
+
 %% 여러 줄도 가능한 가운데 정렬 텍스트 매크로
 \newcommand{\centertext}[1]{\par\vspace{-1.9em}{\centering #1 \\}}
-
-% 불완전미분기호 dbar 생성
-\newcommand{\dbar}{d\hspace*{-0.08em}\bar{}\hspace*{0.1em}}
-
-%% 글꼴 강제 기울이기 - 한글은 기울임 지원 안함. fontspec의 옵션
-\setmainhangulfont[UprightFont = {*}, ItalicFont = {*}, SlantedFont = {*}, BoldFont = {*},
-SlantedFeatures = {FakeSlant=0.3},]{UnBatang} % 모든 글꼴 그대로 유지하고, 폰트가 기울임 지원 안하면 강제 slant
 
 % 1로 자동조사 사용, 0으로 취소함. luatexko의 옵션
 \josaignoreparens=1 % \은, \이, \으로 는, 가, 로 등으로 자동 수정됨
@@ -95,6 +104,9 @@ SlantedFeatures = {FakeSlant=0.3},]{UnBatang} % 모든 글꼴 그대로 유지�
 
 
 
+
+% 불완전미분기호 dbar 생성
+\newcommand{\dbar}{d\hspace*{-0.08em}\bar{}\hspace*{0.1em}}
 
 
 

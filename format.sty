@@ -59,44 +59,44 @@
 \newcommand{\hlw}[1]{\highLight[mywhite]{#1}}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 자동 넘버링
-%% biglabel 함수 지정. 볼드체 12pt
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 자동 넘버링, an, bn, bul, arw
+% biglabel 함수 지정. 볼드체 12pt
 \newcommand{\biglabel}[1]{\bd{\fontsize{12pt}{12pt}\selectfont #1}}
+
+% 화살표 지정. 본래 수학모드에서 쓰이지만 본문에서도 쓰이도록 함
+\newcommand{\arrow}{\ensuremath{\,\,\,\longrightarrow\,\,\,}}
 
 %% 수동 증가 번호 커맨드 제작. 함수명은 an, bn(괄호), anset, bnset으로 카운트 초기화
 % enumitem 패키지 필요, 항상 문단을 끊고(\par) 시작함. 마지막에는 \par로 닫아줘야 들여쓰기 종료됨.
+% an의 경우 1em 박스에 숫자 우측(r)정렬하여 두자리가 되도 붙음. 간격은 \,로 삽입함. 들여쓰기 동일하게 1em 줌
 \newcounter{anumcounter} % an
 \newcommand{\anset}{\setcounter{anumcounter}{0}}
 \newcommand{\an}{\par\stepcounter{anumcounter}\makebox[1em][r]{\theanumcounter.\,}\hangindent=1em \hangafter=1\relax}
-% 1em 박스에 숫자 우측(r)정렬하여 두자리가 되도 붙음. 간격은 \,로 삽입함. 들여쓰기 동일하게 1em 줌
 \newcommand{\ansa}{\ans $\longrightarrow$ ~ } % 들여쓰고 arrow 만들기
 
-
+% bn (괄호숫자)
 \newcounter{bnumcounter} % bn
 \newcommand{\bnset}{\setcounter{bnumcounter}{0}}
 \newcommand{\bn}{\par\refstepcounter{bnumcounter}\makebox[1.6em][r]{(\arabic{bnumcounter})\,}\hangindent=1.6em \hangafter=1\relax}
 \newcommand{\bnsa}{\bns $\longrightarrow$ ~ } % 들여쓰고 arrow 만들기
 
-
-
-
-%% 글 앞에 찍는 글머리기호 점. bullet은 좀 커서 크기 줄임
-\newcommand{\bul}{\raisebox{0.25ex}{\tiny$\bullet$}\ }
-\newcommand{\bls}{\hspace*{6pt}} % bls는 들여쓰기 효과
+% bul (글머리 점) bullet은 커서 크기 줄임, bn과 들여쓰기 동일하게 함
+\newcommand{\bul}{\par\makebox[1.6em][r]{\raisebox{0.25ex}{\scalebox{0.5}{$\bullet$}}\,\,}\hangindent=1.6em \hangafter=1\relax}
 \newcommand{\blsa}{\bls $\longrightarrow$ ~ } % 들여쓰고 arrow 만들기
 
+% arw (화살표)
+\newcommand{\arw}{\par\makebox[3em][r]{\arrow}\hangindent=3em \hangafter=1\relax}
 
-
-% 삭제 임박
+%%%%%%%%%%% 삭제해야 함
 \newcommand{\ans}{\hspace*{11pt}} % ans는 들여쓰기 효과
 \newcommand{\bns}{\hspace*{15.2pt}} % bns는 들여쓰기 효과
-
+\newcommand{\bls}{\hspace*{6pt}} % bls는 들여쓰기 효과
 
 
 
 
 %% 여러 줄도 가능한 가운데 정렬 텍스트 매크로
-\newcommand{\centertext}[1]{\par\vspace{-1.9em}{\centering #1 \\}}
+\newcommand{\ctt}[1]{\par{\centering #1 \\}}
 
 % 1로 자동조사 사용, 0으로 취소함. luatexko의 옵션
 \josaignoreparens=1 % \은, \이, \으로 는, 가, 로 등으로 자동 수정됨

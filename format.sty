@@ -1,8 +1,38 @@
-%% 색상, 글자 스타일, 굵기, 문단 정렬, 기본 강조 명령어 등을 정의
+%% 문단 정렬, 색상, 글자 스타일, 굵기, 기본 강조 명령어 등을 정의
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 줄간격, 여백 설정
+%% 줄 간격 설정 - 보통 글자크기의 1.2배임 (10pt인 경우 1.2 x 10pt). 직접 설정 가능
+\linespread{1.2} % 추가로 더 넓힘(1.2가 들어가면 1.44배가 됨.)
+
+%% 기본 단락 여백 제거 - 문단 설정
+\setlength{\parskip}{0pt} % 문단사이 간격 (기본값 0, 글자높이의 절반만큼 띄우려면 0.5em)
+\setlength{\parindent}{0pt} % 문단 첫 들여쓰기 없음(글자 너비 절반인 0.5em 해도 됨)
+
+%% 기본 줄간격 명령어 변경. - [\bs], [-0.5\bs]등으로 작성 가능
+\newcommand{\bs}{\baselineskip}
+
+%% 기본 줄바꿈 무효 + 보정값(대괄호) (기본은 0pt)
+% 메모 삽입 등을 위하여 문단 마지막마다 \zz로 끝냄. \zz[2pt]쓰면 추가 2pt 간격 확보
+% \zz[\bs]하면 \\와 동일한 역할
+\newcommand{\zz}[1][0pt]{\\[-\bs+#1]}
+\newcommand{\zzz}[1][0pt]{\\[#1]} % \zzz는 \\와 완전히 동일, \zzz[5pt]는 추가 5pt 확장
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 텍스트 스타일 - 볼드, 이탤릭
+% 한글 폰트에 볼드체가 없는 경우가 있음. 기본적으로 bold체로 바꾸고, 한글은 FakeBold, 강도를 숫자로 조정
+\newcommand{\bd}[1]{{\addhangulfontfeatures{AutoFakeBold=4}\textbf{#1}}}
+% 한글 폰트에 이탤릭체가 대부분 없음. 기본적으로 이탤릭체로 바꾸고, 한글은 FakeSlant, 강도를 숫자로 조정
+\newcommand{\itl}[1]{{\addhangulfontfeatures{AutoFakeSlant=.3}\textit{#1}}}
+
+
+
+
+
 
 %% 색상 정의 % xcolor, transparent 필요
-\definecolor{myblue}{HTML}{1a3fba} % 너무 과하지 않은 색상 조합
-\definecolor{myred}{HTML}{ff0000}
+\definecolor{myblue}{RGB}{26,63,186} % 너무 과하지 않은 색상 조합
+\definecolor{myred}{RGB}{255,70,70}
 \definecolor{mygray}{HTML}{666666}
 
 %% 강조 색상 텍스트, b는 볼드체
@@ -13,12 +43,9 @@
 \newcommand{\redb}[1]{\textcolor{myred}{\textbf{#1}}}
 \newcommand{\grayb}[1]{\textcolor{mygray}{\textbf{#1}}}
 
-%% 텍스트 스타일 매크로
-\newcommand{\bd}[1]{\textbf{#1}} % 볼드
-\newcommand{\itl}[1]{\ifcsdef{itshape}{\textit{#1}}{\textsl{#1}}} % 이탤릭, 지원 안할시 강제 슬랜트
 
-% 한글은 이탤릭체 지원 안하므로 itl 없다면 강제 slant로 설정. 그러나 잘 안되서 아래에서 \tsl 따로 지정
-\newcommand{\tsl}[1]{\textsl{#1}} % sl은 전역적으로 다 slant 되버림. 영어는 itl 써야 함
+
+
 
 %% 형광펜, 강조 스타일 정의 - luacolor,lua-ul 쓰면 매우 강력
 \newcommand{\hly}[1]{\highLight[{[RGB]{255,230,40}}]{#1}} % 노랑
@@ -65,16 +92,12 @@ SlantedFeatures = {FakeSlant=0.3},]{UnBatang} % 모든 글꼴 그대로 유지�
 % 1로 자동조사 사용, 0으로 취소함. luatexko의 옵션
 \josaignoreparens=1 % \은, \이, \으로 는, 가, 로 등으로 자동 수정됨
 
-%% 줄 간격 설정
-\linespread{1.2}             % 전체 줄간격 약간 넓힘
 
-%% 기본 줄바꿈 무효 + 보정값(대괄호) (기본은 0pt)
-% 메모 삽입 등을 위하여 문단 마지막마다 \zz로 끝냄. \zz[2pt]쓰면 추가 2pt 간격 확보
-\newcommand{\zz}[1][0pt]{\\[-\baselineskip+#1]}
 
-%% 기본 단락 여백 제거 - 문단 설정
-\setlength{\parskip}{0.5em} % 문단사이 간격 글자높이의 절반만큼 띄우기(기본값 0)
-\setlength{\parindent}{0pt} % 문단 첫 들여쓰기 없음(글자 너비 절반인 0.5em 해도 됨)
+
+
+
+
 
 %% 긴 URL, 저자명의 경우 줄바꿈
 \PassOptionsToPackage{hyphens}{url}  % url 패키지에 옵션만 전달

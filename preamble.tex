@@ -34,7 +34,7 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
 \newcommand{\printBib}{ % sloppy로 참고문헌 출력시 길이가 길다면 강제 줄바꿈
   \begin{sloppypar} \printbibliography \end{sloppypar}}
 
-% 챕터 불러오기
+% 챕터 불러오기 - 이거 안쓰기로 함. 저장으로 컴파일이 안되는 문제 발생함
 \newcommand{\loadchapter}[1]{\subimport{../chapters/#1/}{chapter.tex}}
 % 히든 챕터 불러오기 - 안쓰는 챕터지만 식 참조 위하여 외부참조(aux 파일 한 번 컴파일 해야 함)
 \newcommand{\hiddenchapter}[1]{%

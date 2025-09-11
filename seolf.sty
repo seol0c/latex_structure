@@ -38,7 +38,7 @@
 
 %% memo 마커 (seolmode가 4일 때만 출력하고 1,2,3일때는 사라짐 - 처음부터 공간 차지 안함)
 \newcommand{\memo}[1]{%
-  \ifnum\seolmode=4
+  \ifnum\seolmode=4 \zz % 항상 zz로 한 줄 없애고 시작하기. 언제나 독립적으로 위아래가 비워진 상태로 memo 삽입해야 함
     \tikz[overlay]{% 현재 줄 기준 그림을 겹쳐서 출력 (본문 레이아웃에 영향 없음)
       \ifodd\value{page} % 페이지 번호가 홀수이면
         \node[anchor=base west, xshift=+382pt, text width=140pt, align=left] at (0,0) {%

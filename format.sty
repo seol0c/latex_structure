@@ -67,14 +67,14 @@
 % enumitem 패키지 필요, 항상 문단을 끊고(\par) 시작함. 마지막에는 \par로 닫아줘야 들여쓰기 종료됨.
 \newcounter{anumcounter} % an
 \newcommand{\anset}{\setcounter{anumcounter}{0}}
-\newcommand{\an}{\par\stepcounter{anumcounter}\makebox[1em][r]{\theanumcounter.\,}\hangindent=1em \hangafter=1}
+\newcommand{\an}{\par\stepcounter{anumcounter}\makebox[1em][r]{\theanumcounter.\,}\hangindent=1em \hangafter=1\relax}
 % 1em 박스에 숫자 우측(r)정렬하여 두자리가 되도 붙음. 간격은 \,로 삽입함. 들여쓰기 동일하게 1em 줌
 \newcommand{\ansa}{\ans $\longrightarrow$ ~ } % 들여쓰고 arrow 만들기
 
 
 \newcounter{bnumcounter} % bn
 \newcommand{\bnset}{\setcounter{bnumcounter}{0}}
-\newcommand{\bn}{\par\refstepcounter{bnumcounter}\makebox[1.6em][r]{(\arabic{bnumcounter})\,}\hangindent=1.6em \hangafter=1}
+\newcommand{\bn}{\par\refstepcounter{bnumcounter}\makebox[1.6em][r]{(\arabic{bnumcounter})\,}\hangindent=1.6em \hangafter=1\relax}
 \newcommand{\bnsa}{\bns $\longrightarrow$ ~ } % 들여쓰고 arrow 만들기
 
 

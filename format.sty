@@ -17,7 +17,21 @@
 % 수평 모드면 \\로, 수직 모드면 \vspace로 처리하게 함
 % \zzz는 \\와 완전히 동일함. 즉, \zz[\bs]임. \zzz[5pt]는 추가 5pt 확장
 \newcommand{\zz}[1][0pt]{\ifhmode \\[-\bs + #1] \else \vspace*{\dimexpr -\bs + #1\relax} \fi}
-\newcommand{\zzz}[1][0pt]{\ifhmode \\[#1] \else \vspace*{\bs + #1} \fi}
+\newcommand{\zzz}[1][0pt]{%
+  \ifmmode
+    \\[#1]%      % 수학 모드일 때는 수식 행 바꿈
+  \else
+    \ifhmode
+      \\[#1]%    % 일반 텍스트 모드일 때는 줄 바꿈
+    \else
+      \vspace*{\bs + #1}% % 수직 모드일 때는 빈 줄 간격
+    \fi
+  \fi
+}
+
+
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 텍스트 스타일 - 볼드, 이탤릭

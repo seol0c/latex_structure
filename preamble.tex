@@ -57,6 +57,7 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
 \numberwithin{figure}{section}
 \numberwithin{table}{section}
 
+\AtBeginDocument{ % 다른 설정으로 바뀌지 않도록 고정해버림
 \setlength{\abovecaptionskip}{3pt}  % 캡션 위 간격 - 캡션이 위에 있으면 캡션과 그림 사이 간격
 \setlength{\belowcaptionskip}{0pt}  % 캡션 아래 간격
 
@@ -66,3 +67,4 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
 \setlength{\belowdisplayshortskip}{0pt} % 특수상황(수식 아랫줄이 짧게 끝나는 경우)
 \setlength{\lineskiplimit}{0pt}         % 인라인 모드 한계치(줄높이가 baselineskip보다 얼마나 부족한가)
 \setlength{\lineskip}{0pt}              % 한계치보다 부족한 경우 추가 여유 간격 - 인라인모드는 잘 안되는 것 같음
+}

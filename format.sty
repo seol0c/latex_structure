@@ -18,9 +18,9 @@
 % \zzz는 \\와 완전히 동일함. 즉, \zz[\bs]임. \zzz[5pt]는 추가 5pt 확장
 \newcommand{\zz}[1][0pt]{\ifhmode \\[-\bs + #1] \else \vspace*{\dimexpr -\bs + #1\relax} \fi}
 \newcommand{\zzz}[1][0pt]{%
-  \ifmmode \\[#1] % 수학 모드일 때는 수식 행 바꿈
-  \else\ifhmode \\[#1] % 일반 텍스트 모드일 때는 줄 바꿈
-    \else\vspace*{\bs + #1}\fi\fi} % 수직 모드일 때는 빈 줄 간격
+  \ifvmode \vspace*{\bs + #1} % 수직 모드일 때는 빈 줄 간격
+  \else \\[#1] \fi} % 그 외 본문(ifhmode), 수식(ifmmode), 표 내부 등 모든 모드에서 \\처럼 동작
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 텍스트 스타일 - 볼드, 이탤릭
 % 한글 폰트에 볼드체가 없는 경우가 있음. 기본적으로 bold체로 바꾸고, 한글은 FakeBold, 강도를 숫자로 조정

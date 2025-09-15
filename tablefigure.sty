@@ -71,16 +71,14 @@
 %     {../figures/kelvin_temperatures} - 파일 경로(파일명)
 %     \caption{Some temperatures on the Kelvin scale} - 캡션(파일명과 동일)
 %     \label{fig:kelvin_temperatures} \end{figure} } - 라벨
-% 여기에, 기본 0.6배로 하지만 추가로 크기 지정할 수 있도록 함
+% 여기에, 기본 0.8배로 하지만 추가로 크기 지정할 수 있도록 함
 
 %% figure 선언 쉽도록 함수 작성 - \DeclareFigure{파일명(라벨)}{명령이름}{캡션} 순으로 입력하면 됨
-\renewcommand{\figurename}{Fig.} % 전역적으로 그림을 Figure가 아닌 Fig.로 말하게 함
-\newcommand{\DeclareFigure}[3]{%
-  \NewDocumentCommand{#2}{g}{%
+\renewcommand{\figurename}{Fig.} % 전역적으로 그림을 Figure가 아닌 Fig.로 표시
+\newcommand{\DeclareFigure}[3]{
+  \NewDocumentCommand{#2}{O{0.8}}{ % 그림 기본 사이즈 0.8배 
     \begin{figure}[H] \centering
-      \IfNoValueTF{##1}
-        {\includegraphics[scale=0.6]{figures/#1}} % 기본사이즈 0.6
-        {\includegraphics[scale=##1]{figures/#1}} % 사이즈 지정 가능
+      \includegraphics[scale=##1]{figures/#1}
       \caption{#3}
       \label{fig:#1} % 파일명과 라벨명 일치시킴
     \end{figure}}}
@@ -178,15 +176,15 @@
 
 %% checkbox 그림처럼 라벨 없이 간단하게 삽입하는 경우
 % \quickfig{파일명}으로 부를 수 있음.
-% 기본 0.6배 크기지만 \qickfig[0.4]{파일명} 이런식으로 사이즈 변경 가능
-\NewDocumentCommand{\quickfig}{O{0.6} m}{%
+% 기본 0.8배 크기지만 \qickfig[0.4]{파일명} 이런식으로 사이즈 변경 가능
+\NewDocumentCommand{\quickfig}{O{0.8} m}{%
   \begin{center}
     \includegraphics[scale=#1]{figures/#2}
   \end{center}
 }
 
 % 교사용 seolfig - 모드 3,4일때만 나오는 그림. 1,2에서는 자리만 차지
-\NewDocumentCommand{\seolfig}{O{0.6} m}{%
+\NewDocumentCommand{\seolfig}{O{0.8} m}{%
   \begin{center}
     \ifnum\seolmode>2
       \includegraphics[scale=#1]{figures/#2}%

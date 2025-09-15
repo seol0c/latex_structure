@@ -64,6 +64,7 @@
   }
 }
 
+
 %%%%% 그림
 %% 본래 그림을 다음과 같이 선언해야 함
 % \newcommand{\kelvintemperatures}{ - 명령 이름 작성
@@ -71,16 +72,32 @@
 %     {../figures/kelvin_temperatures} - 파일 경로(파일명)
 %     \caption{Some temperatures on the Kelvin scale} - 캡션(파일명과 동일)
 %     \label{fig:kelvin_temperatures} \end{figure} } - 라벨
-% 여기에, 기본 0.8배로 하지만 추가로 크기 지정할 수 있도록 함
 
-%% figure 선언 쉽도록 함수 작성 - \DeclareFigure{파일명(라벨)}{명령이름}{캡션} 순으로 입력하면 됨
+% 규칙
+% 1. 그림을 최초 호출할 때는 100% 크기로 호출함.
+% 2. 본문에서 최종 호출할 때 80% 크기로 호출함. 본문 폰트는 10pt이고, 그림은 80%가 되도록 함.
+% 즉, 기본 호출 배열(1단계)은 1배인데 수정 가능하도록
+%     최종 호출 배열(2단계)은 0.8배인데 수정 가능하도록
+
+% 그림 계열
+% 1. 일러스트레이터로 그린 경우 10pt로 작성하므로, 최초 호출 1배율, 본문 호출 0.8배율
+% 2. python으로 그린 경우도 10pt로 작성하므로, 최초 호출 1배율, 본문 호출 0.8배율
+% 3. 일반물리학(12판, fundamental)의 경우 크롬 pdf에서 150%로 캡쳐하면,
+%    최초 호출 0.8배율일 때 1배율이 됨(본문과 폰트 크기 같아짐). 이후 본문호출 0.8배율
+
+%% figure 선언 쉽도록 함수 작성
+% \DeclareFiguree[<1단계 기본배율(기본 1)>]{파일명(라벨)}{명령이름}{캡션} 순으로 입력하면 됨
+% 그림 크기가 최초에 보정이 필요한 경우 \DeclareFigure[0.8]{}{\aaa}{}와 같이 시작함.
+% 최초 배율(1단계)이 100%이 되도록 할 것
+% 값을 쓰지 않는 경우 1배율([1])로 들어감.
+% 이후 본문에서 \aaa[0.8] 으로 최종 배율(2단계) 호출
 \renewcommand{\figurename}{Fig.} % 전역적으로 그림을 Figure가 아닌 Fig.로 표시
-\newcommand{\DeclareFigure}[3]{
-  \NewDocumentCommand{#2}{O{0.8}}{ % 그림 기본 사이즈 0.8배 
-    \begin{figure}[H] \centering
-      \includegraphics[scale=##1]{figures/#1}
-      \caption{#3}
-      \label{fig:#1} % 파일명과 라벨명 일치시킴
+\NewDocumentCommand{\DeclareFigure}{O{1} m m m}{ % 최종 호출 기본 사이즈 미입력시 호출 크기의 1배율(2단계)
+  \NewDocumentCommand{#3}{O{0.8}}{ % 호출 크기 배율 입력하지 않을 시 원본의 1배율(1단계)
+    \begin{figure}[H]\centering
+      \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}%
+      \caption{#4}%
+      \label{fig:#2}%
     \end{figure}}}
 
 %% figure* - 번호, 라벨 없음

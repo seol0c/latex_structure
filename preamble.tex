@@ -41,6 +41,10 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
   \externaldocument[]{../chapters/#1/chapter}%
 }
 
+
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 캡션, 링크
 \renewcommand{\equationautorefname}{Eq.} % 수식 참조 시 equation이 아닌 Eq. 로 나옴. aliascnt 필요
 \renewcommand{\figureautorefname}{Fig.} % figure는 Fig
@@ -57,8 +61,11 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
 \numberwithin{equation}{section} % eq, figure, table이 표시되는 것을 section까지 설정함. 설정하지 않으면 18.1처럼 chapter 별로 정리됨
 \numberwithin{figure}{section}
 \numberwithin{table}{section}
-\setlength{\abovecaptionskip}{3pt}  % 캡션 위 간격
-\setlength{\belowcaptionskip}{-12pt}  % 캡션 아래 간격
+
+
+\setlength{\abovecaptionskip}{3pt}  % 캡션 위 간격 - 캡션이 위에 있으면 캡션과 그림 사이 간격
+\setlength{\belowcaptionskip}{0pt}  % 캡션 아래 간격
+
 
 \makeatletter\g@addto@macro\normalsize{ % 수식 위아래 여백 설정, 전역으로 고정시킴
   \setlength{\abovedisplayskip}{0pt}      % 일반적인 디스플레이 수식 위쪽 간격, 모두 0이면 본문과 똑같이 모두 붙음
@@ -66,5 +73,5 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
   \setlength{\abovedisplayshortskip}{0pt} % 특수상황(수식 앞줄이 짧게 끝나는 경우)
   \setlength{\belowdisplayshortskip}{0pt} % 특수상황(수식 아랫줄이 짧게 끝나는 경우)
   \setlength{\lineskiplimit}{0pt}         % 인라인 모드 한계치(줄높이가 baselineskip보다 얼마나 부족한가)
-  \setlength{\lineskip}{0pt}              % 한계치보다 부족한 경우 추가 여유 간격
+  \setlength{\lineskip}{0pt}              % 한계치보다 부족한 경우 추가 여유 간격 - 인라인모드는 잘 안되는 것 같음
 }\makeatother

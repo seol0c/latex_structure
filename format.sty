@@ -22,11 +22,6 @@
   \else\ifhmode \\[#1] % 일반 텍스트 모드일 때는 줄 바꿈
     \else\vspace*{\bs + #1}\fi\fi} % 수직 모드일 때는 빈 줄 간격
 
-
-
-
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 텍스트 스타일 - 볼드, 이탤릭
 % 한글 폰트에 볼드체가 없는 경우가 있음. 기본적으로 bold체로 바꾸고, 한글은 FakeBold, 강도를 숫자로 조정
 \newcommand{\bd}[1]{{\addhangulfontfeatures{AutoFakeBold=4}\textbf{#1}}}
@@ -79,27 +74,17 @@
 \newcounter{anumcounter} % an
 \newcommand{\anset}{\setcounter{anumcounter}{0}}
 \newcommand{\an}{\par\stepcounter{anumcounter}\makebox[1em][r]{\theanumcounter.\,}\hangindent=1em \hangafter=1\relax}
-\newcommand{\ansa}{\ans $\longrightarrow$ ~ } % 들여쓰고 arrow 만들기
 
 % bn (괄호숫자)
 \newcounter{bnumcounter} % bn
 \newcommand{\bnset}{\setcounter{bnumcounter}{0}}
 \newcommand{\bn}{\par\refstepcounter{bnumcounter}\makebox[1.6em][r]{(\arabic{bnumcounter})\,}\hangindent=1.6em \hangafter=1\relax}
-\newcommand{\bnsa}{\bns $\longrightarrow$ ~ } % 들여쓰고 arrow 만들기
 
 % bul (글머리 점) bullet은 커서 크기 줄임, bn과 들여쓰기 동일하게 함
 \newcommand{\bul}{\par\makebox[1.6em][r]{\raisebox{0.25ex}{\scalebox{0.5}{$\bullet$}}\,\,}\hangindent=1.6em \hangafter=1\relax}
-\newcommand{\blsa}{\bls $\longrightarrow$ ~ } % 들여쓰고 arrow 만들기
 
 % arw (화살표)
 \newcommand{\arw}{\par\makebox[3em][r]{\arrow}\hangindent=3em \hangafter=1\relax}
-
-%%%%%%%%%%% 삭제해야 함
-\newcommand{\ans}{\hspace*{11pt}} % ans는 들여쓰기 효과
-\newcommand{\bns}{\hspace*{15.2pt}} % bns는 들여쓰기 효과
-\newcommand{\bls}{\hspace*{6pt}} % bls는 들여쓰기 효과
-
-
 
 
 %% 여러 줄도 가능한 가운데 정렬 텍스트 매크로

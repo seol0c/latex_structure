@@ -33,20 +33,20 @@
     \ifthenelse{\isempty{#3}}{}{%
       \label{tab:#3} % 라벨이 비어 있지 않으면 tab: 접두사와 함께 삽입
     }
+    {\fontsize{8}{10}\selectfont % 본문폰트 크기 10pt, 표 폰트 크기 8pt
     \begin{tabular}{#4} % 표 열 형식 지정
       \hline
       #5 \\ % 표 내용
       \hline
-    \end{tabular}
-    \vspace{-1em} % 표 아래 여백 강제로 줄이기
-  \end{table}
-}
+    \end{tabular}}
+    \vspace{3pt}% 하단 살짝 여백 넣음
+  \end{table}}
 
 %% table 선언 쉽도록 함수 작성 - \DeclareTable{라벨}{명령이름}{캡션}{열형식}{내용} 순으로 입력하면 됨
 \newcommand{\DeclareTable}[5]{
   \newcommand{#2}{
     \begin{table}[H]
-      \vspace{-2pt}
+      \vspace{-3pt}
       \centering
       \ifstrempty{#3}{}{%
         \caption{#3}
@@ -54,12 +54,13 @@
       \ifstrempty{#1}{}{%
         \label{tab:#1}
       }
+      {\fontsize{8}{10}\selectfont % 본문폰트 크기 10pt, 표 폰트 크기 8pt
       \begin{tabular}{#4}
         \hline
         #5 \\
         \hline
-      \end{tabular}
-      \vspace{-1em}
+      \end{tabular}}
+      \vspace{3pt}% 하단 살짝 여백 넣음
     \end{table}}}
 
 %%%%% 그림

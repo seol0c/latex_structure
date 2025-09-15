@@ -60,10 +60,7 @@
         \hline
       \end{tabular}
       \vspace{-1em}
-    \end{table}
-  }
-}
-
+    \end{table}}}
 
 %%%%% 그림
 %% 본래 그림을 다음과 같이 선언해야 함
@@ -75,29 +72,30 @@
 
 % 규칙
 % 1. 그림을 최초 호출할 때는 100% 크기로 호출함.
-% 2. 본문에서 최종 호출할 때 80% 크기로 호출함. 본문 폰트는 10pt이고, 그림은 80%가 되도록 함.
-% 즉, 기본 호출 배열(1단계)은 1배인데 수정 가능하도록
-%     최종 호출 배열(2단계)은 0.8배인데 수정 가능하도록
+% 2. 본문에서 최종 호출할 때 80% 기본 크기로 호출함. 본문 폰트는 10pt이고, 그림은 80%가 되도록 함.
+% 즉, 기본 호출 배열(1단계)은 1배인데 수정 가능하다.
+%     최종 호출 배열(2단계)은 안쓰면 0.8배(1단계에서 0.8배)인데 수정 가능하도록함
+%     2단계에서 [1]을 넣으면 그림이 커진다. 1단계에서 정한 100% 크기가 되는 것이다.
 
 % 그림 계열
-% 1. 일러스트레이터로 그린 경우 10pt로 작성하므로, 최초 호출 1배율, 본문 호출 0.8배율
-% 2. python으로 그린 경우도 10pt로 작성하므로, 최초 호출 1배율, 본문 호출 0.8배율
+% 1. 일러스트레이터로 그린 경우 10pt로 작성하므로, 최초 호출 1배율([] 필요 없음), 본문 호출 0.8배율([] 필요 없음)
+% 2. python으로 그린 경우도 10pt로 작성하므로, 최초 호출 1배율([] 필요 없음), 본문 호출 0.8배율([] 필요 없음)
 % 3. 일반물리학(12판, fundamental)의 경우 크롬 pdf에서 150%로 캡쳐하면,
-%    최초 호출 0.8배율일 때 1배율이 됨(본문과 폰트 크기 같아짐). 이후 본문호출 0.8배율
+%    최초 호출 0.8배율일 때 본문과 폰트 크기 같아짐. 이후 본문호출 0.8배율
+%    즉, 1단계에서 [0.8]로 크기 조정하고, 본문에서는 ([] 필요 없음)
 
 %% figure 선언 쉽도록 함수 작성
-% \DeclareFiguree[<1단계 기본배율(기본 1)>]{파일명(라벨)}{명령이름}{캡션} 순으로 입력하면 됨
+% \DeclareFigure[<1단계 기본배율(기본 1)>]{파일명(라벨)}{명령이름}{캡션} 순으로 입력하면 됨
 % 그림 크기가 최초에 보정이 필요한 경우 \DeclareFigure[0.8]{}{\aaa}{}와 같이 시작함.
 % 최초 배율(1단계)이 100%이 되도록 할 것
 % 값을 쓰지 않는 경우 1배율([1])로 들어감.
 % 이후 본문에서 \aaa[0.8] 으로 최종 배율(2단계) 호출
 \renewcommand{\figurename}{Fig.} % 전역적으로 그림을 Figure가 아닌 Fig.로 표시
-\NewDocumentCommand{\DeclareFigure}{O{1} m m m}{ % 최종 호출 기본 사이즈 미입력시 호출 크기의 1배율(2단계)
-  \NewDocumentCommand{#3}{O{0.8}}{ % 호출 크기 배율 입력하지 않을 시 원본의 1배율(1단계)
+\NewDocumentCommand{\DeclareFigure}{O{1} m m m}{%
+  \NewDocumentCommand{#3}{O{0.8}}{%
     \begin{figure}[H]\centering
       \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}%
-      \caption{#4}%
-      \label{fig:#2}%
+      \caption{#4}\label{fig:#2}%
     \end{figure}}}
 
 %% figure - 번호, 라벨 없는 Notag 버전 - 누적되지 않도록 하기 위함 - 아래의 quickfig이 더 유용
@@ -110,7 +108,7 @@
 
 %% 라벨 없이 간단하게 삽입하는 경우 - notag보다 유용
 % \quickfig{파일명}으로 부를 수 있음.
-% 기본 0.8배 크기로 삽입되지만 \quickfig[0.6]{파일명} 이런식으로 사이즈 변경 가능
+% 기본 0.8배 크기로 삽입되지만 \quickfig[0.6]{파일명} 이런식으로 사이즈 변경 가능. [1]넣으면 크기 커짐(100%)
 \NewDocumentCommand{\quickfig}{O{0.8} m}{%
   \begin{center}
     \includegraphics[scale=#1]{figures/#2}
@@ -142,10 +140,6 @@
       \label{fig:#2}
     \end{figure}}}
 
-
-
-
-
 %% figure 3개짜리 함수 작성(파일명은 같고_a, _b, _c만 달라야 함) - \DeclareTripleFigure{파일명(라벨)}{명령이름}{캡션} 순으로 입력하면 됨
 \NewDocumentCommand{\DeclareTripleFigure}{O{1} m m m}{%
   \NewDocumentCommand{#3}{O{0.8}}{%
@@ -164,53 +158,40 @@
       \end{subfigure}
       \caption{#4}
       \label{fig:#2}
-    \end{figure}%
-  }%
-}
+    \end{figure}}}
 
 
 %% figure 6개짜리 함수 작성 (파일명은 같고 _a ~ _f까지 순차적으로, 3개씩 2줄 배치)
 %% 사용법: \DeclareQuadFigure{파일명(라벨)}{명령이름}{캡션}
-
-\newcommand{\DeclareQuadFigure}[3]{%
-  \newcommand{#2}{%
+\NewDocumentCommand{\DeclareQuadFigure}{O{1} m m m}{%
+  \NewDocumentCommand{#3}{O{0.8}}{%
     \begin{figure}[H] \centering
-      \begin{subfigure}[b]{0.3\textwidth} % 첫 번째 줄: a, b, c
-        \includegraphics[scale=0.56]{figures/#1_a}
-        \caption{}\label{fig:#1:a}\vspace{12pt}
+      % 1행: a, b, c
+      \begin{subfigure}[b]{0.3\textwidth}  % 첫 번째 줄: a, b, c
+        \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_a}%
+        \caption{}\label{fig:#2:a}\vspace{12pt}
       \end{subfigure}
       \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[scale=0.56]{figures/#1_b}
-        \caption{}\label{fig:#1:b}\vspace{12pt}
+        \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_b}%
+        \caption{}\label{fig:#2:b}\vspace{12pt}
       \end{subfigure}
       \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[scale=0.56]{figures/#1_c}
-        \caption{}\label{fig:#1:c}\vspace{12pt}
+        \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_c}%
+        \caption{}\label{fig:#2:c}\vspace{12pt}
       \end{subfigure}
       \par\medskip % 줄바꿈 + 여백
-      \begin{subfigure}[b]{0.3\textwidth} % 두 번째 줄: d, e, f
-        \includegraphics[scale=0.56]{figures/#1_d}
-        \caption{}\label{fig:#1:d}\vspace{12pt}
+      \begin{subfigure}[b]{0.3\textwidth}  % 두 번째 줄: d, e, f
+        \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_d}%
+        \caption{}\label{fig:#2:d}\vspace{12pt}
       \end{subfigure}
       \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[scale=0.56]{figures/#1_e}
-        \caption{}\label{fig:#1:e}\vspace{12pt}
+        \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_e}%
+        \caption{}\label{fig:#2:e}\vspace{12pt}
       \end{subfigure}
       \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[scale=0.56]{figures/#1_f}
-        \caption{}\label{fig:#1:f}\vspace{12pt}
+        \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_f}%
+        \caption{}\label{fig:#2:f}\vspace{12pt}
       \end{subfigure}
-      \caption{#3}
-      \label{fig:#1}
+      \caption{#4}
+      \label{fig:#2}
     \end{figure}}}
-
-
-
-
-
-
-
-
-
-
-

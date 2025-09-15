@@ -100,51 +100,74 @@
       \label{fig:#2}%
     \end{figure}}}
 
-%% figure* - 번호, 라벨 없음
-\newcommand{\DeclareFigureNoTag}[3]{
-  \NewDocumentCommand{#2}{g}{%
-    \begin{figure}[H] \centering
-      \IfNoValueTF{##1}
-        {\includegraphics[scale=0.6]{figures/#1}} % 기본사이즈 0.6
-        {\includegraphics[scale=##1]{figures/#1}} % 사이즈 지정 가능
-      \caption{#3}
-    \end{figure*}}}
+%% figure - 번호, 라벨 없는 Notag 버전 - 누적되지 않도록 하기 위함 - 아래의 quickfig이 더 유용
+\NewDocumentCommand{\DeclareFigureNoTag}{O{1} m m m}{%
+  \NewDocumentCommand{#3}{O{0.8}}{%
+    \begin{figure}[H]\centering
+      \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}%
+      \caption*{#4}% 번호 없음
+    \end{figure}}}
 
-%% figure 2개짜리 함수 작성(파일명은 같고_a, _b만 달라야 함) - \DeclareDoubleFigure{파일명(라벨)}{명령이름}{캡션} 순으로 입력하면 됨
-\newcommand{\DeclareDoubleFigure}[3]{
-  \newcommand{#2}{
+%% 라벨 없이 간단하게 삽입하는 경우 - notag보다 유용
+% \quickfig{파일명}으로 부를 수 있음.
+% 기본 0.8배 크기로 삽입되지만 \quickfig[0.6]{파일명} 이런식으로 사이즈 변경 가능
+\NewDocumentCommand{\quickfig}{O{0.8} m}{%
+  \begin{center}
+    \includegraphics[scale=#1]{figures/#2}
+  \end{center}}
+
+% 교사용 seolfig - 모드 3,4일때만 나오는 그림. 1,2에서는 자리만 차지
+\NewDocumentCommand{\seolfig}{O{0.8} m}{%
+  \begin{center}
+    \ifnum\seolmode>2
+      \includegraphics[scale=#1]{figures/#2}%
+    \else
+      \phantom{\includegraphics[scale=#1]{figures/#2}}%
+    \fi \end{center}}
+
+%% figure 2개짜리 함수 작성(파일명은 같고_a, _b만 달라야 함)
+% \DeclareDoubleFigure[<1단계 기본배율(기본 1)>]{파일명(라벨)}{명령이름}{캡션} 순으로 입력하면 됨
+\NewDocumentCommand{\DeclareDoubleFigure}{O{1} m m m}{%
+  \NewDocumentCommand{#3}{O{0.8}}{%
     \begin{figure}[H] \centering
       \begin{subfigure}[b]{0.3\textwidth} % bottm으로 정렬(t,c 가능), 폭 지정 0.3
-        \includegraphics[scale=0.6]{figures/#1_a}
-         \caption{}\label{fig:#1:a}\vspace{12pt} % a, b, c 순차적으로 캡션 붙음, 하나씩 라벨 호출할 수 있음
+        \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_a}%
+        \caption{}\label{fig:#2:a}\vspace{12pt} % a, b, c 순차적으로 캡션 붙음, 하나씩 라벨 호출할 수 있음
       \end{subfigure}
       \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[scale=0.6]{figures/#1_b}
-         \caption{}\label{fig:#1:b}\vspace{12pt}
+        \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_b}%
+        \caption{}\label{fig:#2:b}\vspace{12pt}
       \end{subfigure}
-      \caption{#3}
-      \label{fig:#1}
+      \caption{#4}
+      \label{fig:#2}
     \end{figure}}}
+
+
+
+
 
 %% figure 3개짜리 함수 작성(파일명은 같고_a, _b, _c만 달라야 함) - \DeclareTripleFigure{파일명(라벨)}{명령이름}{캡션} 순으로 입력하면 됨
-\newcommand{\DeclareTripleFigure}[3]{
-  \newcommand{#2}{
+\NewDocumentCommand{\DeclareTripleFigure}{O{1} m m m}{%
+  \NewDocumentCommand{#3}{O{0.8}}{%
     \begin{figure}[H] \centering
       \begin{subfigure}[b]{0.3\textwidth} % bottm으로 정렬(t,c 가능), 폭 지정 0.3
-        \includegraphics[scale=0.56]{figures/#1_a}
-        \caption{}\label{fig:#1:a}\vspace{12pt} % a, b, c 순차적으로 캡션 붙음, 하나씩 라벨 호출할 수 있음
+        \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_a}%
+        \caption{}\label{fig:#2:a}\vspace{12pt} % a, b, c 순차적으로 캡션 붙음, 하나씩 라벨 호출할 수 있음
       \end{subfigure}
       \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[scale=0.56]{figures/#1_b}
-        \caption{}\label{fig:#1:b}\vspace{12pt}
+        \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_b}%
+        \caption{}\label{fig:#2:b}\vspace{12pt}
       \end{subfigure}
       \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[scale=0.56]{figures/#1_c}
-        \caption{}\label{fig:#1:c}\vspace{12pt}
+        \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_c}%
+        \caption{}\label{fig:#2:c}\vspace{12pt}
       \end{subfigure}
-      \caption{#3}
-      \label{fig:#1}
-    \end{figure}}}
+      \caption{#4}
+      \label{fig:#2}
+    \end{figure}%
+  }%
+}
+
 
 %% figure 6개짜리 함수 작성 (파일명은 같고 _a ~ _f까지 순차적으로, 3개씩 2줄 배치)
 %% 사용법: \DeclareQuadFigure{파일명(라벨)}{명령이름}{캡션}
@@ -191,22 +214,3 @@
 
 
 
-%% checkbox 그림처럼 라벨 없이 간단하게 삽입하는 경우
-% \quickfig{파일명}으로 부를 수 있음.
-% 기본 0.8배 크기지만 \qickfig[0.4]{파일명} 이런식으로 사이즈 변경 가능
-\NewDocumentCommand{\quickfig}{O{0.8} m}{%
-  \begin{center}
-    \includegraphics[scale=#1]{figures/#2}
-  \end{center}
-}
-
-% 교사용 seolfig - 모드 3,4일때만 나오는 그림. 1,2에서는 자리만 차지
-\NewDocumentCommand{\seolfig}{O{0.8} m}{%
-  \begin{center}
-    \ifnum\seolmode>2
-      \includegraphics[scale=#1]{figures/#2}%
-    \else
-      \phantom{\includegraphics[scale=#1]{figures/#2}}%
-    \fi
-  \end{center}
-}

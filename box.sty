@@ -57,8 +57,8 @@
 
 %% sssbox 정의
 % 박스 스타일 정의
-\newtcolorbox{sssbox}[1][]{%
-  title={Sss...},       % 제목을 고정
+\NewTColorBox{sssbox}{O{} g}{ % 제목을 안쓰면 그냥 Sss... 출력하고, 제목 쓰면 추가함
+  title=\IfNoValueTF{#2}{Sss...}{Sss... ~~ #2},
   colback=white,            % 내용 배경색 (본문)
   colframe=black,           % 테두리 색 (검정)
   coltitle=black,           % 제목 글씨색
@@ -77,8 +77,8 @@
 % 번호 형식: chapter.section.checkbox (예: 18.1.1)
 \renewcommand{\thecheckbox}{\arabic{chapter}.\arabic{section}.\arabic{checkbox}}
 % 박스 스타일 정의
-\newtcolorbox{checkboxbox}[1][]{%
-  title=check \thecheckbox,
+\NewTColorBox{checkboxbox}{O{} g}{ % 제목을 {}안에 넣으면 제목이 함께 출력됨
+  title={check \thecheckbox\IfNoValueF{#2}{ \,\, #2}},
   colback=white,            % 내용 배경색
   colframe=gray!50,         % 테두리, 타이틀 배경 색
   coltitle=black,           % 제목 글씨 검정
@@ -93,8 +93,8 @@
 
 %% checkbox* 정의 - 번호 없음
 % 박스 스타일 정의
-\newtcolorbox{checkboxbox*}[1][]{%
-  title=check,
+\NewTColorBox{checkboxbox*}{O{} g}{ % 제목을 {}안에 넣으면 제목이 함께 출력됨
+  title={check \IfNoValueF{#2}{ \,-\, #2}},
   colback=white,            % 내용 배경색
   colframe=gray!50,         % 테두리, 타이틀 배경 색
   coltitle=black,           % 제목 글씨 검정
@@ -112,12 +112,8 @@
 % 번호 형식
 \renewcommand{\thepracticebox}{\arabic{chapter}.\arabic{section}.\arabic{practicebox}}
 % 박스 스타일 정의
-\newtcolorbox{practiceboxbox}[2][]{%
-  title={%
-    \ifstrempty{#2}%
-      {practice \thepracticebox}% #2가 비었을 때
-      {practice \thepracticebox ~~ #2}% #2가 주어졌을 때
-  },
+\NewTColorBox{practiceboxbox}{O{} g}{ % 제목을 {}안에 넣으면 제목이 함께 출력됨
+  title={practice \thepracticebox\IfNoValueF{#2}{ \,\, #2}},
   colback=white,            % 내용 배경색
   colframe=black,           % 테두리, 타이틀 배경 색
   coltitle=white,           % 제목 글씨 검정
@@ -132,12 +128,8 @@
 
 %% practicebox* 정의 - 번호 없음
 % 박스 스타일 정의
-\newtcolorbox{practiceboxbox*}[2][]{%
-  title={%
-    \ifstrempty{#2}%
-      {practice}% #2가 비었을 때
-      {practice ~~ #2}% #2가 주어졌을 때
-  },
+\NewTColorBox{practiceboxbox*}{O{} g}{ % 제목을 {}안에 넣으면 제목이 함께 출력됨
+  title={practice\IfNoValueF{#2}{ \,-\, #2}},
   colback=white,            % 내용 배경색
   colframe=black,           % 테두리, 타이틀 배경 색
   coltitle=white,           % 제목 글씨 검정

@@ -78,7 +78,7 @@
 \renewcommand{\thecheckbox}{\arabic{chapter}.\arabic{section}.\arabic{checkbox}}
 % 박스 스타일 정의
 \NewTColorBox{checkboxbox}{O{} g}{ % 제목을 {}안에 넣으면 제목이 함께 출력됨
-  title={\raisebox{0pt}[9pt][2pt]{check \thecheckbox\IfNoValueF{#2}{ \,\, #2}}},
+  title={\raisebox{0pt}[9pt][2pt]{check\thecheckbox\IfNoValueF{#2}{ \,\, #2}}},
   colback=white,            % 내용 배경색
   colframe=gray!50,         % 테두리, 타이틀 배경 색
   coltitle=black,           % 제목 글씨 검정
@@ -94,7 +94,7 @@
 %% checkbox* 정의 - 번호 없음
 % 박스 스타일 정의
 \NewTColorBox{checkboxbox*}{O{} g}{ % 제목을 {}안에 넣으면 제목이 함께 출력됨
-  title={\raisebox{0pt}[9pt][2pt]{check \IfNoValueF{#2}{ \,-\, #2}}},
+  title={\raisebox{0pt}[9pt][2pt]{check\IfNoValueF{#2}{ \,-\, #2}}},
   colback=white,            % 내용 배경색
   colframe=gray!50,         % 테두리, 타이틀 배경 색
   coltitle=black,           % 제목 글씨 검정
@@ -113,7 +113,7 @@
 \renewcommand{\thepracticebox}{\arabic{chapter}.\arabic{section}.\arabic{practicebox}}
 % 박스 스타일 정의
 \NewTColorBox{practiceboxbox}{O{} g}{ % 제목을 {}안에 넣으면 제목이 함께 출력됨
-  title={\raisebox{0pt}[9pt][2pt]{practice \thepracticebox\IfNoValueF{#2}{ \,\, #2}}},
+  title={\raisebox{0pt}[9pt][2pt]{practice\thepracticebox\IfNoValueF{#2}{ \,\, #2}}},
   colback=white,            % 내용 배경색
   colframe=black,           % 테두리, 타이틀 배경 색
   coltitle=white,           % 제목 글씨 검정
@@ -141,3 +141,23 @@
 % 환경 정의
 \newenvironment{practicebox*}
 {\begin{practiceboxbox*}}{\end{practiceboxbox*}}
+
+
+%% problem 정의 - 번호 없음, 수기로 작성
+% 번호 형식
+% 박스 스타일 정의
+\NewTColorBox{problemboxbox}{O{} g}{ % 제목을 {}안에 넣으면 제목이 함께 출력됨
+  title={\raisebox{0pt}[9pt][2pt]{problem\IfNoValueF{#2}{ \,\, #2}}},
+  colback=white,            % 내용 배경색
+  colframe=black,           % 테두리, 타이틀 배경 색
+  coltitle=white,           % 제목 글씨 검정
+  boxrule=1pt,              % 테두리 두께
+  arc=1mm,                  % 둥근 모서리
+  top=4pt, bottom=4pt,      % 상하 여백 줄이기
+  left=4pt, right=4pt,      % 좌우 여백
+  #1}                       % 사용자 정의 옵션 허용
+% 환경 정의
+\newenvironment{problembox}
+{\begin{problemboxbox}}{\end{problemboxbox}}
+
+

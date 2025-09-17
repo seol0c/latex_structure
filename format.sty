@@ -68,17 +68,26 @@
 % 화살표 지정. 본래 수학모드에서 쓰이지만 본문에서도 쓰이도록 함
 \newcommand{\arrow}{\ensuremath{\,\,\,\longrightarrow\,\,\,}}
 
-%% 수동 증가 번호 커맨드 제작. 함수명은 an, bn(괄호), anset, bnset으로 카운트 초기화
+%% 수동 증가 번호 커맨드 제작. 함수명은 an(숫자점), bn(괄호숫자), cn(괄호영어), anset, bnset, cnset으로 카운트 초기화
 % enumitem 패키지 필요, 항상 문단을 끊고(\par) 시작함. 마지막에는 \par로 닫아줘야 들여쓰기 종료됨.
 % an의 경우 1em 박스에 숫자 우측(r)정렬하여 두자리가 되도 붙음. 간격은 \,로 삽입함. 들여쓰기 동일하게 1em 줌
+% 들여쓰기를 #1로 받고, 맨 앞에서 1em, 1.6em 등으로 수정
 \newcounter{anumcounter} % an
 \newcommand{\anset}{\setcounter{anumcounter}{0}}
-\newcommand{\an}{\par\stepcounter{anumcounter}\makebox[1em][r]{\theanumcounter.\,}\hangindent=1em \hangafter=1\relax}
+\newcommand{\an}[1][1em]{\par\stepcounter{anumcounter}\makebox[#1][r]{\theanumcounter.\,}\hangindent=#1 \hangafter=1\relax}
 
 % bn (괄호숫자)
 \newcounter{bnumcounter} % bn
 \newcommand{\bnset}{\setcounter{bnumcounter}{0}}
-\newcommand{\bn}{\par\refstepcounter{bnumcounter}\makebox[1.6em][r]{(\arabic{bnumcounter})\,}\hangindent=1.6em \hangafter=1\relax}
+\newcommand{\bn}[1][1.6em]{\par\refstepcounter{bnumcounter}\makebox[#1][r]{(\arabic{bnumcounter})\,}\hangindent=#1 \hangafter=1\relax}
+
+% cn (괄호영어)
+\newcounter{cnumcounter} % cn
+\newcommand{\cnset}{\setcounter{cnumcounter}{0}}
+\newcommand{\cn}[1][1.6em]{\par\refstepcounter{cnumcounter}\makebox[#1][r]{(\alph{cnumcounter})\,}\hangindent=#1 \hangafter=1\relax}
+
+
+
 
 % bul (글머리 점) bullet은 커서 크기 줄임, bn과 들여쓰기 동일하게 함
 \newcommand{\bul}{\par\makebox[1.6em][r]{\raisebox{0.25ex}{\scalebox{0.5}{$\bullet$}}\,\,}\hangindent=1.6em \hangafter=1\relax}

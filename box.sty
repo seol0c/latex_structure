@@ -150,7 +150,7 @@
   top=4pt, bottom=4pt,      % 상하 여백 줄이기
   left=4pt, right=4pt,      % 좌우 여백
   before upper={
-  \setlength{\lineskiplimit}{3pt} % 인라인 위아래 간격이 임계값보다 작으면
+  \setlength{\lineskiplimit}{2pt} % 인라인 위아래 간격이 임계값보다 작으면
   \setlength{\lineskip}{5pt}} % 추가 간격 확보(수식 입력 등에 유용함)
   #1}                       % 사용자 정의 옵션 허용
 % 환경 정의
@@ -174,7 +174,10 @@
   \setlength{\lineskiplimit}{2pt} % 인라인 위아래 간격이 임계값보다 작으면
   \setlength{\lineskip}{5pt} % 추가 간격 확보(수식 입력 등에 유용함)
   \setlength{\abovedisplayskip}{5pt} % 일반적인 디스플레이 수식 여백 설정
-  \setlength{\belowdisplayskip}{5pt}}
+  \setlength{\belowdisplayskip}{5pt}
+\setlength{\abovedisplayshortskip}{5pt} % 특수상황(수식 앞줄이 짧게 끝나는 경우)
+\setlength{\belowdisplayshortskip}{5pt} % 특수상황(수식 아랫줄이 짧게 끝나는 경우)
+}
   #1}                       % 사용자 정의 옵션 허용
 % 환경 정의
 \newenvironment{problembox}

@@ -69,9 +69,13 @@
   arc=2mm,              % 살짝 둥근 모서리
   left=4pt, right=4pt,  % 좌우 여백
   top=4pt, bottom=4pt,   % 상하 여백
-  before upper={
-    \setlength{\lineskiplimit}{3pt} % 인라인 위아래 간격이 임계값보다 작으면
-    \setlength{\lineskip}{5pt}}} % 추가 간격 확보(수식 입력 등에 유용함)
+  before upper={ % 박스 안에서도 위아래 여백이 본문과 동일하게 세팅되어야 함.
+  \setlength{\lineskiplimit}{3pt} % 인라인 위아래 간격이 임계값보다 작으면
+  \setlength{\lineskip}{5pt} % 추가 간격 확보(수식 입력 등에 유용함)
+  \setlength{\abovedisplayskip}{5pt} % 일반적인 디스플레이 수식 여백 설정
+  \setlength{\belowdisplayskip}{5pt}
+  \setlength{\abovedisplayshortskip}{5pt} % 특수상황(수식 앞줄이 짧게 끝나는 경우)
+  \setlength{\belowdisplayshortskip}{5pt}}} % 특수상황(수식 아랫줄이 짧게 끝나는 경우)
 % 모드 변경용 하얀박스
 \NewTColorBox{whitesolsolbox}{O{} g}{ % 위의 solsolbox와 완전 똑같이 만들고 전부 흰색으로 처리함
   title={\raisebox{0pt}[9pt][2pt]{\textcolor{white}{Solution \IfNoValueF{#2}{ \,-\, #2}}}}, colback=white, colframe=white, coltitle=white, colbacktitle=white, boxrule=1pt, arc=2mm, left=4pt, right=4pt, top=4pt, bottom=4pt}

@@ -88,23 +88,21 @@
 
 % cn (괄호영어)
 \newcounter{cnumcounter} % cn
-%\newcommand{\cnset}{\setcounter{cnumcounter}{0}}
-
+% cnset을 위해 먼저 숫자 영어 변환
 \newcommand{\lettertonum}[1]{\number\numexpr`#1-`a+1\relax} % 알파벳(a..z)→숫자(1..26)
 \newcommand{\numtoletter}[1]{\char\numexpr`a-1+#1\relax} % 숫자(1..26)→알파벳(a..z)
 \NewDocumentCommand{\cnset}{g}{\setcounter{cnumcounter}{\IfNoValueTF{#1}{0}{\ifcat a#1 \number\numexpr`#1-`a+1\relax \else #1\fi}}}
-
-
-
-
-
 \newcommand{\cn}[1][1.6em]{\par\refstepcounter{cnumcounter}\makebox[#1][r]{(\alph{cnumcounter})\,}\hangindent=#1 \hangafter=1\relax}
 
 % bul (글머리 점) bullet은 커서 크기 줄임, bn과 들여쓰기 동일하게 함
-\newcommand{\bul}{\par\makebox[1.6em][r]{\raisebox{0.25ex}{\scalebox{0.5}{$\bullet$}}\,\,}\hangindent=1.6em \hangafter=1\relax}
+\newcommand{\bul}[1][1.6em]{\par\makebox[#1][r]{\raisebox{0.25ex}{\scalebox{0.5}{$\bullet$}}\,\,}\hangindent=#1 \hangafter=1\relax}
 
 % arw (화살표)
-\newcommand{\arw}{\par\makebox[3em][r]{\arrow}\hangindent=3em \hangafter=1\relax}
+\newcommand{\arw}[1][3em]{\par\makebox[#1][r]{\arrow}\hangindent=#1 \hangafter=1\relax}
+
+
+
+
 
 
 %% 여러 줄도 가능한 가운데 정렬 텍스트 매크로

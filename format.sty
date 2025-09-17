@@ -76,7 +76,7 @@
 % anset, bnset, cnset으로 카운트 초기화
 % anset{5}를 입력하면 5까지 이미 카운트되도록 함. cnset{d}를 입력하면 d까지 카운트하여 e부터 나오도록 함.
 
-
+% an (숫자점)
 \newcounter{anumcounter} % an
 \NewDocumentCommand{\anset}{g}{\IfNoValueTF{#1}{\setcounter{anumcounter}{0}}{\setcounter{anumcounter}{#1}}}
 \newcommand{\an}[1][1em]{\par\stepcounter{anumcounter}\makebox[#1][r]{\theanumcounter.\,}\hangindent=#1 \hangafter=1\relax}
@@ -88,13 +88,7 @@
 
 % cn (괄호영어)
 \newcounter{cnumcounter} % cn
-\makeatletter % cnset
-\NewDocumentCommand{\cnset}{ O{0} }{\setcounter{cnumcounter}{\numexpr\seol@toint{#1}\relax}}
-\newcommand{\seol@toint}[1]{\ifnum`#1>64\relax
-\ifnum`#1<91\relax\numexpr`#1-64\relax % 'A'->1
-\else\ifnum`#1>96\relax
-ifnum`#1<123\relax\numexpr`#1-96\relax % 'a'->1
-\else#1\relax\fi\else#1\relax\fi\fi\else#1\relax\fi}\makeatother
+\newcommand{\cnset}{\setcounter{cnumcounter}{0}}
 \newcommand{\cn}[1][1.6em]{\par\refstepcounter{cnumcounter}\makebox[#1][r]{(\alph{cnumcounter})\,}\hangindent=#1 \hangafter=1\relax}
 
 % bul (글머리 점) bullet은 커서 크기 줄임, bn과 들여쓰기 동일하게 함

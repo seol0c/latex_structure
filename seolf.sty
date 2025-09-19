@@ -11,11 +11,11 @@
   \ifnum\seolmode=1
     \mbox{\hly{\bd{#1}}}%
   \else\ifnum\seolmode=2
-    \mbox{\bd{(\quad \phantom{#1} \quad)}}%
+    \mbox{(\quad \hlw{\bd{\phantom{#1}}} \quad)}%
   \else\ifnum\seolmode=3
-    \mbox{\textcolor{red}{\bd{(\quad \hly{#1} \quad)}}}%
+    \mbox{\textcolor{red}{(\quad \hly{\bd{#1}} \quad)}}%
   \else\ifnum\seolmode=4
-    \mbox{\textcolor{red}{\bd{(\quad \hly{#1} \quad)}}}%
+    \mbox{\textcolor{red}{(\quad \hly{\bd{#1}} \quad)}}%
   \fi\fi\fi\fi
 }
 

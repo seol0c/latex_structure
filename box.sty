@@ -182,7 +182,7 @@
 % 번호 형식
 % 박스 스타일 정의
 \NewTColorBox{problemboxbox}{O{} g}{ % 제목을 {}안에 넣으면 제목이 함께 출력됨
-  title={\raisebox{0pt}[9pt][2pt]{problem\IfNoValueF{#2}{ \,\, #2}}},
+  title={\raisebox{0pt}[9pt][2pt]{problem\IfNoValueF{#2}{. \,\, #2}}},
   colback=white,            % 내용 배경색
   colframe=black,           % 테두리, 타이틀 배경 색
   coltitle=white,           % 제목 글씨 검정

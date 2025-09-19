@@ -137,7 +137,7 @@
   title={\raisebox{0pt}[9pt][2pt]{practice\thepracticebox\IfNoValueF{#2}{. \,\, #2}}},
   colback=white,            % 내용 배경색
   colframe=black,           % 테두리, 타이틀 배경 색
-  coltitle=white,           % 제목 글씨 검정
+  coltitle=white,           % 제목 글씨 흰색
   boxrule=1pt,              % 테두리 두께
   arc=1mm,                  % 둥근 모서리
   top=4pt, bottom=4pt,      % 상하 여백 줄이기
@@ -160,7 +160,7 @@
   title={\raisebox{0pt}[9pt][2pt]{practice\IfNoValueF{#2}{. \,\, #2}}},
   colback=white,            % 내용 배경색
   colframe=black,           % 테두리, 타이틀 배경 색
-  coltitle=white,           % 제목 글씨 검정
+  coltitle=white,           % 제목 글씨 흰색
   boxrule=1pt,              % 테두리 두께
   arc=1mm,                  % 둥근 모서리
   top=4pt, bottom=4pt,      % 상하 여백 줄이기
@@ -178,6 +178,17 @@
 {\begin{practiceboxbox*}}{\end{practiceboxbox*}}
 
 
+
+
+
+
+
+
+
+
+
+
+
 %% problem 정의 - 번호 없음, 수기로 작성
 % 번호 형식
 % 박스 스타일 정의
@@ -185,7 +196,7 @@
   title={\raisebox{0pt}[9pt][2pt]{problem\IfNoValueF{#2}{. \,\, #2}}},
   colback=white,            % 내용 배경색
   colframe=black,           % 테두리, 타이틀 배경 색
-  coltitle=white,           % 제목 글씨 검정
+  coltitle=white,           % 제목 글씨 흰색
   boxrule=1pt,              % 테두리 두께
   arc=1mm,                  % 둥근 모서리
   top=4pt, bottom=4pt,      % 상하 여백 줄이기
@@ -203,5 +214,5 @@
 {\begin{problemboxbox}}{\end{problemboxbox}}
 
 % 문제번호 저장용 매크로
-\newcommand{\problemnumber}{0} % 초기값 0으로 설정
-\newcommand{\pn}[1]{\renewcommand{\problemnumber}{\unskip#1\unskip}} % 공백 무시, pn값을 저장
+\newcommand{\pnumber}{0} % 초기값 0으로 설정
+\newcommand{\pn}[1]{\renewcommand{\pnumber}{\unskip#1\unskip}} % 공백 무시, pn값을 저장

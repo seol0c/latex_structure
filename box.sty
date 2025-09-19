@@ -203,7 +203,5 @@
 {\begin{problemboxbox}}{\end{problemboxbox}}
 
 % 문제번호 저장용 매크로
-\newcommand{\pn}{0} % 초기값
-\newcommand{\setpn}[1]{\renewcommand{\pn}{#1}} % = n 처럼 쓰는 명령 정의
-
-
+\newcommand{\problemnumber}{0} % 초기값 0으로 설정
+\newcommand{\pn}[1]{\renewcommand{\problemnumber}{#1}} % \pn{숫자} -> \pnum에 저장

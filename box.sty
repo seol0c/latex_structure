@@ -204,4 +204,4 @@
 
 % 문제번호 저장용 매크로
 \newcommand{\problemnumber}{0} % 초기값 0으로 설정
-\newcommand{\pn}[1]{\renewcommand{\problemnumber}{#1}} % \pn{숫자} -> \pnum에 저장
+\newcommand{\pn}[1]{\renewcommand{\problemnumber}{\unskip#1\unskip}} % 공백 무시, pn값을 저장

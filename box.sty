@@ -5,9 +5,9 @@
 % 박스 공통 스타일
 \tcbset{boxbase/.style={
   boxrule=1pt, arc=1mm, % 테두리선 두께, 둥근 모서리 반경
-  top=4pt, bottom=4pt, left=4pt, right=4pt,
-  colback=white,        % 기본적으로 본문 배경은 흰색
-  before upper={
+  top=4pt, bottom=4pt, left=4pt, right=4pt, % 상하좌우 여백
+  colback=white, % 추가 입력 안할 시 본문 배경은 흰색
+  before upper={ % 박스 내부 여백 설정
   \setlength{\lineskiplimit}{2pt} % 인라인 위아래 간격이 임계값보다 작으면
   \setlength{\lineskip}{5pt} % 추가 간격 확보(수식 입력 등에 유용함)
   \setlength{\abovedisplayskip}{5pt} % 일반적인 디스플레이 수식 여백 설정
@@ -102,3 +102,30 @@
 % 문제번호 저장용 매크로
 \newcommand{\ProblemNumberumber}{0} % 초기값 0으로 설정
 \newcommand{\ProblemNumber}[1]{\renewcommand{\ProblemNumberumber}{\unskip#1\unskip}} % 공백 무시, pn값을 저장
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% seolmode와 호환되는 박스
+%% solbox 정의 - 솔루션
+% seolmode가 3,4일때만 출력하고 1,2일때는 사라짐
+% \ifnum\seolmode>2 % seolmode가 3이상이면 출력
+\NewTColorBox{solsolbox}{g}{boxbase,
+  title={\boxtitle{Solution\IfNoValueF{#1}{. \,\, #1}}},
+  colframe=blue!50,     % 중간 파란 테두리
+  coltitle=black,       % 제목 글씨색
+  colbacktitle=white}   % 제목 배경색
+% 모드 변경용 하얀박스 - 위의 solsolbox와 완전 똑같이 만들고 전부 흰색으로 처리함
+\NewTColorBox{whitesolsolbox}{g}{boxbase, 
+  title={\boxtitle{\textcolor{white}{Solution\IfNoValueF{#1}{. \,\, #1}}}},
+  colframe=white, coltitle=white,colbacktitle=white}
+% 환경정의
+\NewDocumentEnvironment{solbox}{g}{
+  \ifnum\seolmode>2
+    \begin{solsolbox}{#1}
+  \else\begin{whitesolsolbox}{#1}\color{white}\fi}{
+  \ifnum\seolmode>2
+    \end{solsolbox}
+  \else\end{whitesolsolbox}\fi}
+
+% 솔루션 하이라이트, solight - 모드가 3 이상일때만 orange 출력
+\newcommand{\soli}[1]{%
+  \ifnum\seolmode>2 \hlo{#1}
+  \else #1 \fi}

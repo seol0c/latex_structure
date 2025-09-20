@@ -1,10 +1,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 모든 패키지, 사용자 정의 매크로 호출 
-\input{../../structure/package.sty} % 컴파일이 일어나는 main 기준으로 두 단계 올라가서 다시 내려옴
-\input{../../structure/page.sty}
+% 호출 경로는 컴파일이 일어나는 main 기준으로 두 단계 올라가서 다시 내려옴
+% 기본 골격
+\input{../../structure/package.sty}
 \input{../../structure/format.sty}
+\input{../../structure/page.sty}
+% 응용함수
+\input{../../structure/seolf.sty}
 \input{../../structure/box.sty}
 \input{../../structure/tablefigure.sty}
-\input{../../structure/seolf.sty}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 페이지 설정
@@ -12,8 +15,9 @@
 \newcommand{\geoBottom}{20mm} % 아래 여백
 \newcommand{\geoLeft}  {20mm} % 좌측 여백
 \newcommand{\geoRight} {20mm} % 우측 여백
-\geometry{a4paper, % 기본용지 설정
+\geometry{a4paper, % 기본용지 설정. 위의 숫자만 바꾸면 됨.
 top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 경고 무시
 \hbadness=10000 % underfull hbox 경고 무시(수평 방향 여백 경고 badness 10000까지 무시)
@@ -21,10 +25,11 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
 \hfuzz=7pt  % 7pt 이하의 overfull \hbox 경고 무시
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% main.tex 명령어 단순화
 % 제목, 서문, 목차 불러오는 함수 만들기
 \newcommand{\includeHead}[1]{\input{../includes/#1.tex}} % 경로 확인할 것
 
-% 참고문헌
+% 참고문헌 불러오기
 \newcommand{\setupBib}{ % 참고문헌 있는 경우 불러오기
   \usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
   \usepackage{csquotes}
@@ -36,7 +41,7 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
 
 % 챕터 불러오기 - 이거 안쓰기로 함. 저장으로 컴파일이 안되는 문제 발생함
 \newcommand{\loadchapter}[1]{\subimport{../chapters/#1/}{chapter.tex}}
-% 히든 챕터 불러오기 - 안쓰는 챕터지만 식 참조 위하여 외부참조(aux 파일 한 번 컴파일 해야 함)
+% 히든 챕터 불러오기 - 본문에 안쓰는 챕터지만 식 참조 위하여 외부참조하기 위함 (aux 파일 한 번 컴파일 해야 함)
 \newcommand{\hiddenchapter}[1]{%
   \externaldocument[]{../chapters/#1/chapter}%
 }

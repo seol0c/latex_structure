@@ -1,11 +1,12 @@
 %% 박스, 틀, 테두리 등 시각적 요소 정의
-%% 박스 스타일 정의
+%% 박스 스타일 정의 - 패키지 불러와야 newtcolorbox 쓸 수 있음
 
-
-% 박스 공통 스타일 먼저 정의
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 공통 스타일 정의
+% 박스 공통 스타일
 \tcbset{boxbase/.style={
   boxrule=1pt, arc=1mm, % 테두리선 두께, 둥근 모서리 반경
   top=4pt, bottom=4pt, left=4pt, right=4pt,
+  colback=white,        % 기본적으로 본문 배경은 흰색
   before upper={
   \setlength{\lineskiplimit}{2pt} % 인라인 위아래 간격이 임계값보다 작으면
   \setlength{\lineskip}{5pt} % 추가 간격 확보(수식 입력 등에 유용함)
@@ -14,40 +15,34 @@
   \setlength{\abovedisplayshortskip}{5pt} % 특수상황(수식 앞줄이 짧게 끝나는 경우)
   \setlength{\belowdisplayshortskip}{5pt}}}} % 특수상황(수식 아랫줄이 짧게 끝나는 경우)
 
+% 박스 제목 있는 경우 위아래 여백 미리 확보 - 수직이동량, 위쪽여백, 아래쪽여백, 내용으로 선언
+\newcommand{\boxtitle}[1]{\raisebox{0pt}[9pt][2pt]{#1}}
 
 
-
-
-% 회색 박스 (설명, 정리 등) - 패키지 불러와야 newtcolorbox 쓸 수 있음
-\newtcolorbox{graybox}{boxbase,
-  colback=white,        % 흰색 배경
-  colframe=gray!50}     % 중간 회색 테두리
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 기본 단순박스 제작
+% 회색 박스 (설명, 정리 등)
+\newtcolorbox{graybox}{boxbase, % 공통 서식 먼저 호출
+  colframe=gray!50}   % 테두리 - 회색(50%)
 % 강조용 빨간 테두리 박스
 \newtcolorbox{redbox}{boxbase,
-  colback=white,        % 흰색 배경
-  colframe=red}         % 빨간색 테두리
-
+  colframe=red}       % 테두리 - 빨간색
 % 강조용 파란 배경 박스
 \newtcolorbox{bluebox}{boxbase,
-  colback=blue!5,       % 아주 연한 파란 배경
-  colframe=blue!50}     % 중간 파란 테두리
-
+  colback=blue!5,     % 본문 배경 - 파란색(5%)
+  colframe=blue!50}   % 테두리 - 중간 파랑
 % 회색 수식 박스 - graybox에 수식 정렬만 추가
-\newtcolorbox{eqbox}[1][]{boxbase,
-  ams align,            % 수식 정렬
-  colback=gray!10,      % 연한 회색 배경
-  colframe=gray!50,      % 중간 회색 테두리
-  #1}     
-
+\newtcolorbox{eqbox}{boxbase,
+  ams align,          % 수식 정렬
+  colback=gray!10,    % 본문 배경 - 회색(10%)
+  colframe=gray!50}   % 테두리 - 회색(50%)
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 보충설명용 박스 제작
 %% sssbox 정의
-% 박스 스타일 정의
 \NewTColorBox{sssbox}{O{} g}{boxbase, % 제목을 {}안에 넣으면 제목이 함께 출력됨
-  title={\raisebox{0pt}[9pt][2pt]{\IfNoValueTF{#2}{Sss...}{Sss... \,\, #2}}},
-  colback=white,            % 내용 배경색 (본문)
-  colframe=black,           % 테두리 색 (검정)
-  colbacktitle=white,       % 제목 배경색 - 안 넣으면 테두리색으로 채워짐
-  coltitle=black,           % 제목 글씨색
+  title={\boxtitle{\IfNoValueTF{#2}{Sss...}{Sss... \,\, #2}}},
+  colframe=black,     % 테두리 - 검정
+  colbacktitle=white, % 제목 배경 - 흰색 - 안 넣으면 테두리색으로 채워짐
+  coltitle=black,     % 제목 글씨색 - 검정
   #1}
 
 

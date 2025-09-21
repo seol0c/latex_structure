@@ -22,6 +22,7 @@
   \else \\[#1] \fi} % 그 외 본문(ifhmode), 수식(ifmmode), 표 내부 등 모든 모드에서 \\처럼 동작
 
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 텍스트 스타일 - 볼드, 이탤릭
 % 한글 폰트에 볼드체가 없는 경우가 있음. 기본적으로 bold체로 바꾸고, 한글은 FakeBold, 강도를 숫자로 조정
 \newcommand{\bd}[1]{ % 수식모드, 일반텍스트 모든 상황에서 bold 가능하도록 설정
@@ -31,6 +32,7 @@
 
 % 한글 폰트에 이탤릭체가 대부분 없음. 기본적으로 이탤릭체로 바꾸고, 한글은 FakeSlant, 강도를 숫자로 조정
 \newcommand{\itl}[1]{{\addhangulfontfeatures{AutoFakeSlant=.3}\textit{#1}}}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 색상, 형광펜
@@ -63,6 +65,10 @@
 \newcommand{\hlb}[1]{\highLight[myblue]{#1}}
 \newcommand{\hlgy}[1]{\highLight[mygray]{#1}}
 \newcommand{\hlw}[1]{\highLight[mywhite]{#1}}
+\newcommand{\hlp}[1]{ % 투명 형광펜 - 자리 차지 동일하게 하기 위해 높이, 깊이를 동일하게 갖는 박스를 앞뒤에 삽입
+  \leavevmode
+  \vrule height 7.5425pt depth 3.2325pt width 0pt #1 % 앞
+  \vrule height 7.5425pt depth 3.2325pt width 0pt} % 뒤
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 자동 넘버링, an, bn, bul, arw
@@ -101,7 +107,6 @@
 % dn (수동) - \dn{(가)} 이런식으로 쓰면 (가) 하고 들여쓰기 됨. 뒤에 \ignorespaces으로 공백 무시함(띄어쓰기 가능)
 % \dn 으로만 쓰면 기본 여백으로 들여쓰기됨. \dn[2em] 등으로 간격만 줄 수도 있음
 \NewDocumentCommand{\dn}{ O{1.6em} g }{\par\makebox[#1][r]{\IfNoValueTF{#2}{}{#2\,}}\hangindent=#1 \hangafter=1\relax\ignorespaces}
-
 
 % bul (글머리 점) bullet은 커서 크기 줄임, bn과 들여쓰기 동일하게 함
 \newcommand{\bul}[1][1.6em]{\par\makebox[#1][r]{\raisebox{0.25ex}{\scalebox{0.5}{$\bullet$}}\,\,}\hangindent=#1 \hangafter=1\relax}

@@ -5,17 +5,25 @@
 % 3=( 붉게 강조 ), 답안배포용
 % 4=( 붉게 강조 ) 및 메모 노출, 교사용
 
+% 텍스트/수식 모두 안전하게 한 덩어리로 묶는 박스 만들기
+% mbox는 텍스트만 됨. 줄바꿈을 막기 위해 한 덩어리 취급하는 박스 제작
+\newcommand{\nobreakbox}[1]{\ifmmode\mathchoice
+      {\hbox{$\displaystyle #1$}}
+      {\hbox{$\textstyle #1$}}
+      {\hbox{$\scriptstyle #1$}}
+      {\hbox{$\scriptscriptstyle #1$}}\else\mbox{#1}\fi}
+
 \newcount\seolmode
 
-\newcommand{\seolfa}[1]{% a는 괄호가 있음. mbox로 하나의 덩어리로 묶어서 줄바꿈 되지 않게 함.
+\newcommand{\seolfa}[1]{% a는 괄호가 있음. 하나의 덩어리로 묶어서 줄바꿈 되지 않게 함.
   \ifnum\seolmode=1
-    \mbox{\hly{\bd{#1}}}%
+    \nobreakbox{\hly{\bd{#1}}}%
   \else\ifnum\seolmode=2
-    \mbox{(\quad \hlw{\bd{\phantom{#1}}} \quad)}%
+    \nobreakbox{(\quad \hlw{\bd{\phantom{#1}}} \quad)}%
   \else\ifnum\seolmode=3
-    \mbox{\red{(\quad \hly{\bd{#1}} \quad)}}%
+    \nobreakbox{\red{(\quad \hly{\bd{#1}} \quad)}}%
   \else\ifnum\seolmode=4
-    \mbox{\red{(\quad \hly{\bd{#1}} \quad)}}%
+    \nobreakbox{\red{(\quad \hly{\bd{#1}} \quad)}}%
   \fi\fi\fi\fi}
 
 \newcommand{\seolfb}[1]{% b는 괄호가 없음. 표 안의 내용 등에 활용. 줄바꿈 가능

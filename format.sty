@@ -23,6 +23,7 @@
 
 
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 텍스트 스타일 - 볼드, 이탤릭
 % 한글 폰트에 볼드체가 없는 경우가 있음. 기본적으로 bold체로 바꾸고, 한글은 FakeBold, 강도를 숫자로 조정
 \newcommand{\bd}[1]{ % 수식모드, 일반텍스트 모든 상황에서 bold 가능하도록 설정
@@ -65,10 +66,13 @@
 \newcommand{\hlb}[1]{\highLight[myblue]{#1}}
 \newcommand{\hlgy}[1]{\highLight[mygray]{#1}}
 \newcommand{\hlw}[1]{\highLight[mywhite]{#1}}
-\newcommand{\hlp}[1]{ % 투명 형광펜 - 자리 차지 동일하게 하기 위해 높이, 깊이를 동일하게 갖는 박스를 앞뒤에 삽입
-  \leavevmode
-  \vrule height 7.5425pt depth 3.2325pt width 0pt #1 % 앞
-  \vrule height 7.5425pt depth 3.2325pt width 0pt} % 뒤
+\newcommand{\hlp}[1]{\hlw{#1}} % 그냥 화이트로 대체함. 투명 하이라이트 찾아야 함.
+
+% 정말 투명한 \hlp를 만들고 싶으나 실패함
+%\newcommand{\hlp}[1]{ % 투명 형광펜 - 자리 차지 동일하게 하기 위해 높이, 깊이를 동일하게 갖는 박스를 앞뒤에 삽입
+%  \leavevmode % luacolor,lua-ul 패키지의 하이라이트에 이용되는 높이, 깊이 비율 그대로 쓰고 폭 0pt로 지정
+%  \vrule height 1.75ex depth .75ex width 0pt #1 % 앞
+%  \vrule height 1.75ex depth .75ex width 0pt} % 뒤
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 자동 넘버링, an, bn, bul, arw

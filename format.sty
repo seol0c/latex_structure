@@ -24,7 +24,8 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 텍스트 스타일 - 볼드, 이탤릭
 % 한글 폰트에 볼드체가 없는 경우가 있음. 기본적으로 bold체로 바꾸고, 한글은 FakeBold, 강도를 숫자로 조정
-\newcommand{\bd}[1]{{\addhangulfontfeatures{AutoFakeBold=4}\textbf{#1}}}
+\newcommand{\bd}[1]{\ifmmode\bm{#1} % 수식 모드에서는 \bm으로 처리
+  \else{\addhangulfontfeatures{AutoFakeBold=4}\textbf{#1}}\fi}
 % 한글 폰트에 이탤릭체가 대부분 없음. 기본적으로 이탤릭체로 바꾸고, 한글은 FakeSlant, 강도를 숫자로 조정
 \newcommand{\itl}[1]{{\addhangulfontfeatures{AutoFakeSlant=.3}\textit{#1}}}
 

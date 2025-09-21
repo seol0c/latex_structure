@@ -13,23 +13,21 @@
   \else\ifnum\seolmode=2
     \mbox{(\quad \hlw{\bd{\phantom{#1}}} \quad)}%
   \else\ifnum\seolmode=3
-    \mbox{\textcolor{red}{(\quad \hly{\bd{#1}} \quad)}}%
+    \mbox{\red{(\quad \hly{\bd{#1}} \quad)}}%
   \else\ifnum\seolmode=4
-    \mbox{\textcolor{red}{(\quad \hly{\bd{#1}} \quad)}}%
-  \fi\fi\fi\fi
-}
+    \mbox{\red{(\quad \hly{\bd{#1}} \quad)}}%
+  \fi\fi\fi\fi}
 
 \newcommand{\seolfb}[1]{% b는 괄호가 없음. 표 안의 내용 등에 활용. 줄바꿈 가능
   \ifnum\seolmode=1
     \hly{\bd{#1}}%
   \else\ifnum\seolmode=2
-    \hlw{\textcolor{white}{\bd{#1}}}%
+    \hlw{\white{\bd{#1}}}%
   \else\ifnum\seolmode=3
-    \hly{\textcolor{red}{\bd{#1}}}%
+    \hly{\red{\bd{#1}}}%
   \else\ifnum\seolmode=4
-    \hly{\textcolor{red}{\bd{#1}}}%
-  \fi\fi\fi\fi
-}
+    \hly{\red{\bd{#1}}}%
+  \fi\fi\fi\fi}
 
 %% 교사용 녹색 하이라이트 (seolmode가 4일 때는 \hll(라임형광펜), 나머지는 \hlw(화이트) - 똑같이 여백 차지하게 하려고 hlw 씀
 \newcommand{\seoli}[1]{%

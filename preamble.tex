@@ -43,9 +43,9 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
 \newcommand{\loadchapter}[1]{\subimport{../chapters/#1/}{chapter.tex}}
 % 히든 챕터 불러오기 - 본문에 안쓰는 챕터지만 식 참조 위하여 외부참조하기 위함 (aux 파일 한 번 컴파일 해야 함)
 \newcommand{\hiddenchapter}[1]{%
-  \externaldocument[]{../chapters/#1/chapter}%
-}
+  \externaldocument[]{../chapters/#1/chapter}}
 
+  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 캡션, 링크
 \renewcommand{\equationautorefname}{Eq.} % 수식 참조 시 equation이 아닌 Eq. 로 나옴. aliascnt 필요
 \renewcommand{\figureautorefname}{Fig.} % figure는 Fig
@@ -77,3 +77,6 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
 \setlength{\lineskiplimit}{3pt}         % 인라인 모드 한계치(줄높이가 baselineskip보다 얼마나 부족한가)
 \setlength{\lineskip}{3pt}              % 한계치보다 부족한 경우 추가 여유 간격
 } % 0pt로 하면 모두 붙어버림, 아래 두줄의 인라인은 본문에도 해당됨
+
+% 문제 풀이시 1값을 주면 문제가 출력되고, 0값을 주면 문제가 출력되지 않음
+\newcommand{\qblock}[2]{\ifnum #1 = 1\relax #2 \fi}

@@ -42,18 +42,19 @@
 
 %% memo 마커 (seolmode가 4일 때만 출력하고 1,2,3일때는 사라짐 - 처음부터 공간 차지 안함)
 % 페이지가 밀리는 경우 메모 위치가 함께 밀릴 수 있으나 컴파일 두 번하면 제대로 배치됨.
-\newcommand{\memo}[1]{%
+\newcounter{memomark}
+\newcommand{\memo}[1]{
   \ifnum\seolmode=4 % 항상 zz로 한 줄 없애고 시작하기. 언제나 독립적으로 위아래가 비워진 상태로 memo 삽입해야 함
-    \zz\tikz[overlay]{ % 현재 줄 기준 그림을 겹쳐서 출력 (본문 레이아웃에 영향 없음)
-      \checkoddpage\ifoddpage % 페이지 번호가 홀수이면
-        \node[anchor=base west, xshift=+382pt, text width=140pt, align=left] at (0,0){%
-          \scriptsize\fboxsep=0pt
-          \colorbox{yellow!20}{\parbox{140pt}{#1}}};
-      \else % 페이지 번호가 짝수이면
-        \node[anchor=base west, xshift=-159pt, text width=140pt, align=left] at (0,0){%
-          \scriptsize\fboxsep=0pt
-          \colorbox{yellow!20}{\parbox{140pt}{#1}}%
-        };\fi}\fi\ignorespaces}
+  \stepcounter{memomark} % memomark를 이용해서 현재 좌표 기억(0,0)하게 함.
+  \tikz[remember picture,baseline]{\coordinate (memomark-\thememomark) at (0,0);}%
+  \zz \tikz[remember picture,overlay]{ % 현재 줄 기준 그림을 겹쳐서 출력 (본문 레이아웃에 영향 없음)
+    \checkoddpage\ifoddpage % 홀수 페이지
+    \node at ($(current page.east |- memomark-\thememomark)+(-85pt,0)$)
+      {\scriptsize\fboxsep=0pt\colorbox{yellow!20}{\parbox{140pt}{#1}}};
+    \else % 짝수 페이지
+    \node at ($(current page.west |- memomark-\thememomark)+(85pt,0)$)
+      {\scriptsize\fboxsep=0pt\colorbox{yellow!20}{\parbox{140pt}{#1}}};
+      \fi}\fi\ignorespaces} % 좌표를 기억하고 빼면 본문이든 표 안이든 같은 (절대)좌표를 참조하게 됨
 
 % 교사용 페이지 삽입 명령 - 3 이상일 때 노출됨
 \newcommand{\insertTeacherPages}[2]{%

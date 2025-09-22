@@ -47,7 +47,7 @@
   \ifnum\seolmode=4 % 항상 zz로 한 줄 없애고 시작하기. 언제나 독립적으로 위아래가 비워진 상태로 memo 삽입해야 함
   \stepcounter{memomark} % memomark를 이용해서 현재 좌표 기억(0,0)하게 함.
   \tikz[remember picture,baseline]{\coordinate (memomark-\thememomark) at (0,0);}%
-  \zz \tikz[remember picture,overlay]{ % 현재 줄 기준 그림을 겹쳐서 출력 (본문 레이아웃에 영향 없음)
+  \zz[-\bs] \tikz[remember picture,overlay]{ % 현재 줄 기준 그림을 겹쳐서 출력 (본문 레이아웃에 영향 없음)
     \checkoddpage\ifoddpage % 홀수 페이지
     \node at ($(current page.east |- memomark-\thememomark)+(-85pt,0)$)
       {\scriptsize\fboxsep=0pt\colorbox{yellow!20}{\parbox{140pt}{#1}}};

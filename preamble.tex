@@ -80,3 +80,52 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
 
 % 문제 풀이시 1값을 주면 문제가 출력되고, 0값을 주면 문제가 출력되지 않음
 \newcommand{\qblock}[2]{\ifnum #1 = 1\relax #2 \fi}
+
+
+
+\usepackage{tikz}
+\usepackage{tikzpagenodes} % current page.* 앵커
+\usepackage{caption}
+\usepackage{ifoddpage}
+% \usepackage{xfp} % \fpeval 쓰면 필요
+
+% 종이(페이지) 경계 기준 데드라인. 0pt=종이 끝이 데드라인.
+\newlength\EFTopOffset     \setlength{\EFTopOffset}{0pt}    % 위: (current page.north) - EFTopOffset
+\newlength\EFBottomOffset  \setlength{\EFBottomOffset}{0pt} % 아래: (current page.south) + EFBottomOffset
+
+% 내부 상태
+\newsavebox{\EFbox}                 % 측정용 박스
+\newlength\EFhalf                   % 실제 박스 절반 높이
+\newlength\EFy \newlength\EFN \newlength\EFS \newlength\EFyshift
+\newlength\EFbottom \newlength\EFtop
+\newlength\EFsouthline \newlength\EFnorthline
+
+% (1) 실제 박스 높이 측정 → 절반을 \EFhalf에 저장
+%     #1: "그림+캡션" 전체 내용
+\newcommand{\EFMeasure}[1]{%
+  \sbox{\EFbox}{#1}%
+  \setlength{\EFhalf}{.5\dimexpr \ht\EFbox+\dp\EFbox\relax}%
+}
+
+% (2) y-클램프: 박스 아래/위 엣지가 종이 데드라인을 넘치면 '넘친 만큼만' 보정
+%     #1: 기준 좌표 이름(예: edgefiguremark-<번호>)
+\newcommand{\EFClampY}[1]{%
+  \setlength{\EFyshift}{0pt}% 기본: 이동 없음
+  % 현재 중심 y와 종이 위/아래 경계
+  \tikz[remember picture,overlay]{%
+    \pgfextracty{\EFy}{\pgfpointanchor{#1}{center}}%
+    \pgfextracty{\EFN}{\pgfpointanchor{current page}{north}}%
+    \pgfextracty{\EFS}{\pgfpointanchor{current page}{south}}%
+  }%
+  % 박스 엣지와 데드라인
+  \setlength{\EFbottom}{\dimexpr \EFy - \EFhalf\relax}%
+  \setlength{\EFtop}{\dimexpr \EFy + \EFhalf\relax}%
+  \setlength{\EFsouthline}{\dimexpr \EFS + \EFBottomOffset\relax}%
+  \setlength{\EFnorthline}{\dimexpr \EFN - \EFTopOffset\relax}%
+  % 아래 넘침 → 위로(+), 위 넘침 → 아래로(−) — 필요한 만큼만
+  \ifdim \EFbottom<\EFsouthline
+    \setlength{\EFyshift}{\dimexpr \EFsouthline - \EFbottom\relax}%
+  \else\ifdim \EFtop>\EFnorthline
+    \setlength{\EFyshift}{\dimexpr \EFnorthline - \EFtop\relax}%
+  \fi\fi
+}

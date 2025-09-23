@@ -84,8 +84,7 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 페이지 벗어나는 상자(그림, 메모) 안쪽으로 밀어넣기
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 페이지 벗어나는 상자(그림, 메모) 안쪽으로 밀어넣기(shift)
 % 좌표/크기 저장
 \newsavebox{\edgebox}
 \newlength\halfbox % 가운데 점을 기준으로 위아래로 커지기 때문에 박스의 절반 길이를 구해야 함
@@ -94,22 +93,43 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
 \newlength\yshiftEdge % 각종 길이 선언함
 
 % 오프셋(종이 경계 기준 데드라인) - 데드라인을 만들기 위해 오프셋을 줄 수 있음
-\newlength\TopOffset     \setlength{\TopOffset}{110pt} % 위에서 내려올 거리
-\newlength\BottomOffset  \setlength{\BottomOffset}{110pt} % 아래에서 올라올 거리
+\newlength\TopOffset     \setlength{\TopOffset}{0pt} % 위에서 내려올 거리
+\newlength\BottomOffset  \setlength{\BottomOffset}{120pt} % 아래에서 올라올 거리
 
 % 정해진 컨텐츠(메모, 그림상자)의 절반 높이를 측정하여 halfbox에 설정
 \newcommand{\MeasureHalfFrom}[1]{%
   \sbox{\edgebox}{#1}%
   \setlength{\halfbox}{.5\dimexpr \ht\edgebox+\dp\edgebox\relax}}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%% 박스 내부에서 메모 shift 위해서 로컬 이동량 잡아서 보정하려는데 하는데 잘 안잡힘
+
+% 로컬 진행량(박스 내부에서만 누적; 기본 0)
+\newlength\Ylocal
+\setlength{\Ylocal}{0pt}
+
+% 박스(예: minipage, tabular) 시작 시 호출
+\newcommand{\YlocalReset}{\setlength{\Ylocal}{0pt}}
+
+% 길이 직접 더하기(줄 하나 내렸으면 \baselineskip 등)
+\newcommand{\YlocalAdd}[1]{\addtolength{\Ylocal}{#1}}
+
+% 실제 콘텐츠 높이를 '측정해서' 누적 (폭을 지정할 수 있음; 기본 \linewidth)
+\newcommand{\YlocalFrom}[2][\linewidth]{%
+  \sbox{\edgebox}{\begin{minipage}{#1}#2\end{minipage}}%
+  \addtolength{\Ylocal}{\dimexpr \ht\edgebox+\dp\edgebox\relax}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 % 현재 위치 좌표 계산(페이지 좌표계: 위=\paperheight, 아래=0)
 \newcommand{\CoordsHere}{%
   \setlength{\Ytop}{\dimexpr \paperheight-\TopOffset\relax}%
   \setlength{\Ybottom}{\BottomOffset}%
-  \setlength{\Ycenter}{\dimexpr \paperheight-\pagetotal\relax} % 메모, 그림 박스가 삽입되는 중심점
+  \setlength{\Ycenter}{\dimexpr \paperheight-\pagetotal-\Ylocal\relax} % 메모, 그림 박스가 삽입되는 중심점, \pagetotal에서 '로컬 누적 보정'을 빼서 현재 y를 잡음
   \setlength{\Yboxtop}{\dimexpr \Ycenter+\halfbox\relax} % 박스 상단
-  \setlength{\Yboxbottom}{\dimexpr \Ycenter-\halfbox\relax} % 박스 하단
-}
+  \setlength{\Yboxbottom}{\dimexpr \Ycenter-\halfbox\relax}} % 박스 하단
 
 % 데드라인으로부터 넘어가는 값을 이동(shift)하여 보정
 \newcommand{\ClampFromCoords}{%
@@ -117,10 +137,9 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
   \ifdim \Yboxbottom<\Ybottom % 아래에 지정된 데드라인보다 박스가 내려가면
     \setlength{\yshiftEdge}{\dimexpr \Ybottom-\Yboxbottom\relax} %  넘어가는 값(+)을 shift 값으로 가짐 - 위로 올림
   \else\ifdim \Yboxtop>\Ytop % 위에 지정된 데드라인보다 박스가 올라가면
-    \setlength{\yshiftEdge}{\dimexpr \Ytop-\Yboxtop\relax} % 넘어가는 값(-)을 shift 값으로 가짐 - 아래로 내림
-  \fi\fi}
+    \setlength{\yshiftEdge}{\dimexpr \Ytop-\Yboxtop\relax}\fi\fi} % 넘어가는 값(-)을 shift 값으로 가짐 - 아래로 내림
 
-% (옵션) 좌표 디버그시 \PrintCoords로 사용
+% 좌표 디버깅용 - \PrintCoords로 위, 아래, 중심, 박스위아래 출력할 수 있음
 \newcommand{\PrintCoords}{%
   Top=\the\Ytop,\quad Bottom=\the\Ybottom,\quad
   Center=\the\Ycenter,\quad BoxTop=\the\Yboxtop,\quad BoxBottom=\the\Yboxbottom\par}

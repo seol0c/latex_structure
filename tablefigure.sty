@@ -126,7 +126,7 @@
   \begin{minipage}{130pt}\centering
     \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}\\[2pt]
     {\captionsetup{type=figure,width=\linewidth,hypcap=false}%
-     \phantomsection\captionof*{figure}{#4}} % 번호 누적 없이 캡션 효과 고려
+     \caption*{#4}} % 번호 누적 없이 캡션 효과 고려. 라벨 없음
   \end{minipage}}%
     \CoordsHere % 좌표 계산
     \ClampFromCoords % 보정량 산출(오프셋 반영)

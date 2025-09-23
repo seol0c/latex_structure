@@ -97,33 +97,30 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
 \newlength\TopOffset     \setlength{\TopOffset}{110pt} % 위에서 내려올 거리
 \newlength\BottomOffset  \setlength{\BottomOffset}{110pt} % 아래에서 올라올 거리
 
-% (1) 임의 콘텐츠의 '절반 높이'를 halfbox에 설정 (측정 전용)
+% 정해진 컨텐츠(메모, 그림상자)의 절반 높이를 측정하여 halfbox에 설정
 \newcommand{\MeasureHalfFrom}[1]{%
   \sbox{\edgebox}{#1}%
-  \setlength{\halfbox}{.5\dimexpr \ht\edgebox+\dp\edgebox\relax}%
-}
+  \setlength{\halfbox}{.5\dimexpr \ht\edgebox+\dp\edgebox\relax}}
 
-% (2) 현재 위치 좌표 계산(페이지 좌표계: 위=\paperheight, 아래=0)
+% 현재 위치 좌표 계산(페이지 좌표계: 위=\paperheight, 아래=0)
 \newcommand{\CoordsHere}{%
   \setlength{\Ytop}{\dimexpr \paperheight-\TopOffset\relax}%
   \setlength{\Ybottom}{\BottomOffset}%
-  \setlength{\Ycenter}{\dimexpr \paperheight-\pagetotal\relax}%
-  \setlength{\Yboxtop}{\dimexpr \Ycenter+\halfbox\relax}%
-  \setlength{\Yboxbottom}{\dimexpr \Ycenter-\halfbox\relax}%
+  \setlength{\Ycenter}{\dimexpr \paperheight-\pagetotal\relax} % 메모, 그림 박스가 삽입되는 중심점
+  \setlength{\Yboxtop}{\dimexpr \Ycenter+\halfbox\relax} % 박스 상단
+  \setlength{\Yboxbottom}{\dimexpr \Ycenter-\halfbox\relax} % 박스 하단
 }
 
-% (3) 넘침만 보정(아래 넘치면 ↑, 위 넘치면 ↓) → yshiftEdge
+% 데드라인으로부터 넘어가는 값을 이동(shift)하여 보정
 \newcommand{\ClampFromCoords}{%
   \setlength{\yshiftEdge}{0pt}%
-  \ifdim \Yboxbottom<\Ybottom
-    \setlength{\yshiftEdge}{\dimexpr \Ybottom-\Yboxbottom\relax}%
-  \else\ifdim \Yboxtop>\Ytop
-    \setlength{\yshiftEdge}{\dimexpr \Ytop-\Yboxtop\relax}%
-  \fi\fi
-}
+  \ifdim \Yboxbottom<\Ybottom % 아래에 지정된 데드라인보다 박스가 내려가면
+    \setlength{\yshiftEdge}{\dimexpr \Ybottom-\Yboxbottom\relax} %  넘어가는 값(+)을 shift 값으로 가짐 - 위로 올림
+  \else\ifdim \Yboxtop>\Ytop % 위에 지정된 데드라인보다 박스가 올라가면
+    \setlength{\yshiftEdge}{\dimexpr \Ytop-\Yboxtop\relax} % 넘어가는 값(-)을 shift 값으로 가짐 - 아래로 내림
+  \fi\fi}
 
-% (옵션) 좌표 디버그
+% (옵션) 좌표 디버그시 \PrintCoords로 사용
 \newcommand{\PrintCoords}{%
   Top=\the\Ytop,\quad Bottom=\the\Ybottom,\quad
-  Center=\the\Ycenter,\quad BoxTop=\the\Yboxtop,\quad BoxBottom=\the\Yboxbottom\par
-}
+  Center=\the\Ycenter,\quad BoxTop=\the\Yboxtop,\quad BoxBottom=\the\Yboxbottom\par}

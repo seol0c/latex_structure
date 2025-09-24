@@ -29,7 +29,12 @@
 \newcommand{\bd}[1]{ % 수식모드, 일반텍스트 모든 상황에서 bold 가능하도록 설정
   \ifmmode{\let\txt\text \def\text##1{\txt{\addhangulfontfeatures{AutoFakeBold=4}\textbf{##1}}}\bm{#1}}%
   \else{\addhangulfontfeatures{AutoFakeBold=4}\textbf{\boldmath #1}}\fi}
-% \newcommand{\bd}[1]{{\addhangulfontfeatures{AutoFakeBold=4}\textbf{#1}}}
+
+% memo 내부에서는 bold가 되지 않는 문제가 있어서 따로 지정함
+\DeclareRobustCommand{\MemoBoldStart}{\begingroup\addhangulfontfeatures{AutoFakeBold=3}\bfseries\boldmath}
+\DeclareRobustCommand{\MemoBoldEnd}{\endgroup}
+
+% \newcommand{\bd}[1]{{\addhangulfontfeatures{AutoFakeBold=4}\textbf{#1}}} % 이게 기본형태임
 
 % 한글 폰트에 이탤릭체가 대부분 없음. 기본적으로 이탤릭체로 바꾸고, 한글은 FakeSlant, 강도를 숫자로 조정
 \newcommand{\itl}[1]{{\addhangulfontfeatures{AutoFakeSlant=.3}\textit{#1}}}

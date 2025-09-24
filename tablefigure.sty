@@ -15,8 +15,16 @@
 \newcommand{\bluecell}[1]{\cellcolor{myblue!20}#1}   % 파란 강조 셀
 
 
-%%%%% 표
+%% 그림이나 표를 감싸서 좌측 또는 우측에 배열하는 함수
+\newcommand{\wrapfigR}[1]{ % fig나 tab을 우측에 붙이기
+  \sbox0{#1}\begin{wrapfigure}{r}{\wd0}%
+    \zz \usebox0 \zz \end{wrapfigure}} % 위아래 한 줄 들어가서 \zz로 없애기
+\newcommand{\wrapfigL}[1]{ % fig나 tab을 좌측에 붙이기
+  \sbox0{#1}\begin{wrapfigure}{l}{\wd0}%
+    \zz \usebox0 \zz \end{wrapfigure}}
 
+
+%%%%% 표
 %% 표 내에서 정렬이 편하도록 함수 명명
 \newcommand{\leftcell}[1]{\raggedright #1\arraybackslash}
 \newcommand{\centercell}[1]{\centering #1\arraybackslash}

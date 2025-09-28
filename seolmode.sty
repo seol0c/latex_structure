@@ -59,7 +59,7 @@
     \checkoddpage\ifoddpage % 홀수 페이지
     \node[yshift=0] at ($(current page.east |- memomark-\thememomark)+(-85pt,0)$)
       {\scriptsize\fboxsep=0pt\setlength{\fboxrule}{0.8pt} % 해당 두께의 빨간 테두리 생성
-       \fcolorbox{red}{yellow!30}{\parbox{140pt}{\leavevmode \MemoBoldStart #1\MemoBoldEnd1}}};
+       \fcolorbox{red}{yellow!30}{\parbox{140pt}{\leavevmode \MemoBoldStart #1\MemoBoldEnd}}};
     \else % 짝수 페이지
     \node[yshift=0] at ($(current page.west |- memomark-\thememomark)+(85pt,0)$)
       {\scriptsize\fboxsep=0pt\setlength{\fboxrule}{0.8pt}%

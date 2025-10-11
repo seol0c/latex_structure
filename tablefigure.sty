@@ -110,19 +110,30 @@
 
 %% figure - 번호, 라벨 없는 Notag 버전 - section 번호 누적되지 않도록 하기 위함
 %% box 내부에 wrap 형태로 들어갈 수 있게 동시에 선언함
+\makeatletter
 \NewDocumentCommand{\DeclareFigureNoTag}{O{1} m m m}{%
+  % 기본 figure 버전 (float)
   \NewDocumentCommand{#3}{O{0.8}}{%
     \begin{figure}[H]\centering
       \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}%
-      \caption*{#4}% 번호 없음
-    \end{figure}}}
-
-
-
-
-
-
-
+      \caption*{#4}%
+    \end{figure}}
+  % 이름에서 백슬래시 제거 (\foo → foo)
+  \edef\tempname{\expandafter\@gobble\string#3}%
+  % 오른쪽 wrap은 그림 호출 시 wrapR을 추가하면 됨
+  \expandafter\NewDocumentCommand\csname wrapR\tempname\endcsname{O{0.8}}{%
+    \begin{wrapfigure}{r}{0.45\textwidth}%
+      \centering
+      \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}%
+      \caption*{#4}%
+    \end{wrapfigure}}%
+  % 왼쪽 wrap은 그림 호출 시 wrapL을 추가하면 됨
+  \expandafter\NewDocumentCommand\csname wrapL\tempname\endcsname{O{0.8}}{%
+    \begin{wrapfigure}{l}{0.45\textwidth}%
+      \centering
+      \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}%
+      \caption*{#4}%
+    \end{wrapfigure}}}\makeatother
 
 %% 라벨 없이 간단하게 삽입하는 경우 - notag를 그냥 쓰는 것이 그림 관리가 쉬워서 notag 씀
 % \quickfig{파일명}으로 부를 수 있음.

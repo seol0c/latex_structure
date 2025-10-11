@@ -109,6 +109,7 @@
     \end{figure}}}
 
 %% figure - 번호, 라벨 없는 Notag 버전 - section 번호 누적되지 않도록 하기 위함
+%% box 내부에 wrap 형태로 들어갈 수 있게 동시에 선언함
 \NewDocumentCommand{\DeclareFigureNoTag}{O{1} m m m}{%
   \NewDocumentCommand{#3}{O{0.8}}{%
     \begin{figure}[H]\centering
@@ -116,7 +117,14 @@
       \caption*{#4}% 번호 없음
     \end{figure}}}
 
-%% 라벨 없이 간단하게 삽입하는 경우 - notag보다 유용
+
+
+
+
+
+
+
+%% 라벨 없이 간단하게 삽입하는 경우 - notag를 그냥 쓰는 것이 그림 관리가 쉬워서 notag 씀
 % \quickfig{파일명}으로 부를 수 있음.
 % 기본 0.8배 크기로 삽입되지만 \quickfig[0.6]{파일명} 이런식으로 사이즈 변경 가능. [1]넣으면 크기 커짐(100%)
 \NewDocumentCommand{\quickfig}{O{0.8} m}{%

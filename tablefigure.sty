@@ -124,14 +124,14 @@
   \expandafter\NewDocumentCommand\csname wrapR\tempname\endcsname{O{0.8}}{%
     \begin{wrapfigure}{r}{0.45\textwidth}%
       \centering
-      \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}%
+      \zz \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2} \zz% 위아래 공백 세팅
       \caption*{#4}%
     \end{wrapfigure}}%
   % 왼쪽 wrap은 그림 호출 시 wrapL을 추가하면 됨
   \expandafter\NewDocumentCommand\csname wrapL\tempname\endcsname{O{0.8}}{%
     \begin{wrapfigure}{l}{0.45\textwidth}%
       \centering
-      \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}%
+      \zz \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2} \zz%
       \caption*{#4}%
     \end{wrapfigure}}}\makeatother
 

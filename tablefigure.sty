@@ -33,7 +33,7 @@
 % \tab[h]{캡션}{라벨}{정렬}{내용} - 내용 빼고 모두 생략 가능
 \newcommand{\tab}[5][H]{ % 기본 위치 here. 무조건 강하게 H
   \begin{table}[#1] % 표 float 환경 시작, 위에서 H로 지정함. 안써도 됨
-    \vspace{-3pt} % 표 위로 살짝 올리기
+    \zz[0.2\bs]
     \centering % 표 가운데 정렬
     \ifthenelse{\isempty{#2}}{}{ % 캡션 내용 비어있으면 생략
       \caption{#2} % 캡션이 비어 있지 않으면 삽입. tabular 아래에 넣으면 캡션은 아래로 감
@@ -47,14 +47,14 @@
       #5 \\ % 표 내용
       \hline
     \end{tabular}}
-    \vspace{3pt}% 하단 살짝 여백 넣음
+    \zz[0.2\bs]
   \end{table}}
 
 %% table 선언 쉽도록 함수 작성 - \DeclareTable{라벨}{명령이름}{캡션}{열형식}{내용} 순으로 입력하면 됨
 \newcommand{\DeclareTable}[5]{
   \newcommand{#2}{
     \begin{table}[H]
-      \vspace{-3pt}
+      \zz[0.2\bs]
       \centering
       \ifstrempty{#3}{}{%
         \caption{#3}
@@ -68,7 +68,7 @@
         #5 \\
         \hline
       \end{tabular}}
-      \vspace{3pt}% 하단 살짝 여백 넣음
+      \zz[0.2\bs]
     \end{table}}}
 
 %%%%% 그림

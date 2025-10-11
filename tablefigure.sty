@@ -103,9 +103,9 @@
 % 이후 본문에서 \aaa[0.8] 으로 최종 배율(2단계) 호출
 \NewDocumentCommand{\DeclareFigure}{O{1} m m m}{%
   \NewDocumentCommand{#3}{O{0.8}}{%
-    \begin{figure}[H]\centering
-      \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}%
-      \caption{#4}\label{fig:#2}%
+    \begin{figure}[H]\centering % 위 공백 살짝 줄임 \zz[0.2\bs]
+      \zz[0.2\bs] \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}%
+      \caption{#4}\label{fig:#2} \zz % 아래공백 세팅
     \end{figure}}}
 
 %% figure - 번호, 라벨 없는 Notag 버전 - section 번호 누적되지 않도록 하기 위함
@@ -115,8 +115,8 @@
   % 기본 figure 버전 (float)
   \NewDocumentCommand{#3}{O{0.8}}{%
     \begin{figure}[H]\centering
-      \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}%
-      \caption*{#4}%
+      \zz[0.2\bs] \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}%
+      \caption*{#4} \zz%
     \end{figure}}
   % 이름에서 백슬래시 제거 (\foo → foo)
   \edef\tempname{\expandafter\@gobble\string#3}%
@@ -124,15 +124,15 @@
   \expandafter\NewDocumentCommand\csname wrapR\tempname\endcsname{O{0.8}}{%
     \begin{wrapfigure}{r}{0.45\textwidth}%
       \centering
-      \zz \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2} \zz% 위아래 공백 세팅
-      \caption*{#4}%
+      \zz[0.2\bs] \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}%
+      \caption*{#4} \zz%
     \end{wrapfigure}}%
   % 왼쪽 wrap은 그림 호출 시 wrapL을 추가하면 됨
   \expandafter\NewDocumentCommand\csname wrapL\tempname\endcsname{O{0.8}}{%
     \begin{wrapfigure}{l}{0.45\textwidth}%
       \centering
-      \zz \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2} \zz%
-      \caption*{#4}%
+      \zz[0.2\bs] \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}%
+      \caption*{#4} \zz%
     \end{wrapfigure}}}\makeatother
 
 %% 라벨 없이 간단하게 삽입하는 경우 - notag를 그냥 쓰는 것이 그림 관리가 쉬워서 notag 씀
@@ -140,7 +140,7 @@
 % 기본 0.8배 크기로 삽입되지만 \quickfig[0.6]{파일명} 이런식으로 사이즈 변경 가능. [1]넣으면 크기 커짐(100%)
 \NewDocumentCommand{\quickfig}{O{0.8} m}{%
   \begin{center}
-    \includegraphics[scale=#1]{figures/#2}
+    \zz[0.2\bs] \includegraphics[scale=#1]{figures/#2} \zz
   \end{center}}
 
 % memo와 비슷하게 홀수짝수일 때 페이지 측면으로 붙는 그림 - 넘어가는 경우 shift되게 하여 항상 페이지 안쪽 유지
@@ -183,12 +183,12 @@
 
 % 교사용 seolfig - 모드 3,4일때만 나오는 그림. 1,2에서는 자리만 차지
 \NewDocumentCommand{\seolfig}{O{0.8} m}{%
-  \begin{center}
+  \begin{center} \zz
     \ifnum\seolmode>2
       \includegraphics[scale=#1]{figures/#2}%
     \else
       \phantom{\includegraphics[scale=#1]{figures/#2}}%
-    \fi \end{center}}
+    \fi \zz \end{center}}
 
 %% figure 2개짜리 함수 작성(파일명은 같고_a, _b만 달라야 함)
 % \DeclareDoubleFigure[<1단계 기본배율(기본 1)>]{파일명(라벨)}{명령이름}{캡션} 순으로 입력하면 됨

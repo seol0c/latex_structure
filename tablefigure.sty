@@ -33,7 +33,7 @@
 % \tab[h]{캡션}{라벨}{정렬}{내용} - 내용 빼고 모두 생략 가능
 \newcommand{\tab}[5][H]{ % 기본 위치 here. 무조건 강하게 H
   \begin{table}[#1] % 표 float 환경 시작, 위에서 H로 지정함. 안써도 됨
-    \zz[0.2\bs]
+    \zz[0.4\bs]
     \centering % 표 가운데 정렬
     \ifthenelse{\isempty{#2}}{}{ % 캡션 내용 비어있으면 생략
       \caption{#2} % 캡션이 비어 있지 않으면 삽입. tabular 아래에 넣으면 캡션은 아래로 감
@@ -54,7 +54,7 @@
 \newcommand{\DeclareTable}[5]{
   \newcommand{#2}{
     \begin{table}[H]
-      \zz[0.2\bs]
+      \zz[0.4\bs]
       \centering
       \ifstrempty{#3}{}{%
         \caption{#3}
@@ -147,7 +147,7 @@
 % memo와 위치가 겹치므로, 항상 background로 보내야 함. 메모가 위로 오는 게 더 중요함.
 \newcounter{edgefiguremark}
 \NewDocumentCommand{\DeclareEdgeFigure}{O{1} m m m}{%
-  \NewDocumentCommand{#3}{O{0.8}}{%
+  \NewDocumentCommand{#3}{O{0.8}}{ \zz
     \stepcounter{edgefiguremark}%
     \tikz[remember picture,baseline]{\coordinate (edgefiguremark-\theedgefiguremark) at (0,0);}%
 \MeasureHalfFrom{ % 실제 박스와 똑같이 측정
@@ -179,7 +179,7 @@
     \fi
   \end{tikzpicture}%
 %} % 가장 아래층 내림 안됨
-\ignorespaces}}
+\ignorespaces} \zz }
 
 % 교사용 seolfig - 모드 3,4일때만 나오는 그림. 1,2에서는 자리만 차지
 \NewDocumentCommand{\seolfig}{O{0.8} m}{%

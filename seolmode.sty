@@ -14,12 +14,12 @@
       {\hbox{$\scriptscriptstyle #1$}}\else\mbox{#1}\fi}
 
 \newcount\seolmode
-
+% 진짜 투명 형광펜과 진짜 투명 글씨는 똑같이 자리차지를 안해서 흰글씨와 흰형광펜을 사용중임
 \newcommand{\seolfa}[1]{% a는 괄호가 있음. 하나의 덩어리로 묶어서 줄바꿈 되지 않게 함.
   \ifnum\seolmode=1
     \nobreakbox{\hly{\bd{#1}}} % 노랑 형광펜과 bold 글씨
   \else\ifnum\seolmode=2
-    \nobreakbox{(\quad \hlp{\phantom{\bd{#1}}} \quad)} % 투명 형광펜과 투명 bold 글씨 - 형광펜을 또 해줘야 위아래 폭 동일함
+    \nobreakbox{(\quad \hlp{\white{\bd{#1}}} \quad)} % 투명 형광펜과 흰색 bold 글씨 - 형광펜을 또 해줘야 위아래 폭 동일함
   \else\ifnum\seolmode=3
     \nobreakbox{\red{(\quad \hly{\bd{#1}} \quad)}} % 빨간 형광펜과 bold 글씨
   \else\ifnum\seolmode=4
@@ -29,7 +29,7 @@
   \ifnum\seolmode=1
     \hly{\bd{#1}} % 노랑 형광펜과 bold 글씨
   \else\ifnum\seolmode=2
-    \hlp{\phantom{\bd{#1}}} % 투명 형광펜과 투명 bold 글씨
+    \hlp{\white{\bd{#1}}} % 투명 형광펜과 투명 bold 글씨
   \else\ifnum\seolmode=3
     \hly{\red{\bd{#1}}} % 빨간 형광펜과 bold 글씨
   \else\ifnum\seolmode=4

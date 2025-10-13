@@ -50,6 +50,16 @@
     \zz[0.2\bs]
   \end{table}}
 
+% \tabul{열형식}{내용} - tabular 완전 대체용
+\newcommand{\tabul}[2]{%
+  \begin{tabular}{#1}%
+    #2%
+  \end{tabular}%
+}
+
+
+
+
 %% table 선언 쉽도록 함수 작성 - \DeclareTable{라벨}{명령이름}{캡션}{열형식}{내용} 순으로 입력하면 됨
 \newcommand{\DeclareTable}[5]{
   \newcommand{#2}{
@@ -101,12 +111,34 @@
 % 최초 배율(1단계)이 100%이 되도록 할 것
 % 값을 쓰지 않는 경우 1배율([1])로 들어감.
 % 이후 본문에서 \aaa[0.8] 으로 최종 배율(2단계) 호출
+%% box 내부에 wrap 형태로 들어갈 수 있게 동시에 선언함
+\makeatletter
 \NewDocumentCommand{\DeclareFigure}{O{1} m m m}{%
   \NewDocumentCommand{#3}{O{0.8}}{%
     \begin{figure}[H]\centering % 위 공백 살짝 줄임 \zz[0.2\bs]
       \zz[0.2\bs] \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}%
       \caption{#4}\label{fig:#2} \zz % 아래공백 세팅
-    \end{figure}}}
+    \end{figure}}
+  % 이름에서 백슬래시 제거 (\foo → foo)
+  \edef\tempname{\expandafter\@gobble\string#3}%
+  % 오른쪽 wrap은 그림 호출 시 wrapR을 추가하면 됨
+  \expandafter\NewDocumentCommand\csname wrapR\tempname\endcsname{O{0.8}}{%
+    \begin{wrapfigure}{r}{0.45\textwidth}%
+      \centering
+      \zz[0.2\bs] \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}%
+      \caption{#4}\label{fig:#2} \zz%
+    \end{wrapfigure}}%
+  % 왼쪽 wrap은 그림 호출 시 wrapL을 추가하면 됨
+  \expandafter\NewDocumentCommand\csname wrapL\tempname\endcsname{O{0.8}}{%
+    \begin{wrapfigure}{l}{0.45\textwidth}%
+      \centering
+      \zz[0.2\bs] \hspace*{0.45\textwidth}% wrapL은 anchor가 반대로 되는 버그가 있어서 다시 이동
+      \begin{minipage}{0.45\textwidth}% 캡션이 따라오지 못해서 minipage로 묶어줌
+        \centering
+      \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}%
+      \caption{#4}\label{fig:#2}
+      \end{minipage}\zz%
+    \end{wrapfigure}}}\makeatother
 
 %% figure - 번호, 라벨 없는 Notag 버전 - section 번호 누적되지 않도록 하기 위함
 %% box 내부에 wrap 형태로 들어갈 수 있게 동시에 선언함

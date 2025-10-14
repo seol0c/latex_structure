@@ -90,7 +90,7 @@
 %% 수동 증가 번호 커맨드 제작. 함수명은 an(숫자점), bn(괄호숫자), cn(괄호영어)
 % enumitem 패키지 필요, 항상 문단을 끊고(\par) 시작함. 마지막에는 \par로 닫아줘야 들여쓰기 종료됨.
 % an의 경우 1em 박스에 숫자 우측(r)정렬하여 두자리가 되도 붙음. 간격은 \,로 삽입함. 들여쓰기 동일하게 1em 줌
-% 들여쓰기를 #1로 받고, 맨 앞에서 1em, 1.6em 등으로 수정 - 사용할 시 변경 가능 (예) \an[2em] 내용입력
+% 들여쓰기를 #1로 받고, 맨 앞에서 1em, 1.4em 등으로 수정 - 사용할 시 변경 가능 (예) \an[2em] 내용입력
 
 % anset, bnset, cnset으로 카운트 초기화
 % anset{5}를 입력하면 5까지 이미 카운트되도록 함. cnset{d}를 입력하면 d까지 카운트하여 e부터 나오도록 함.
@@ -103,7 +103,7 @@
 % bn (괄호숫자)
 \newcounter{bnumcounter} % bn
 \NewDocumentCommand{\bnset}{g}{\IfNoValueTF{#1}{\setcounter{bnumcounter}{0}}{\setcounter{bnumcounter}{#1}}}
-\newcommand{\bn}[1][1.6em]{\par\refstepcounter{bnumcounter}\makebox[#1][r]{(\arabic{bnumcounter})\,}\hangindent=#1 \hangafter=1\relax}
+\newcommand{\bn}[1][1.4em]{\par\refstepcounter{bnumcounter}\makebox[#1][r]{(\arabic{bnumcounter})\,}\hangindent=#1 \hangafter=1\relax}
 
 % cn (괄호영어)
 \newcounter{cnumcounter} % cn
@@ -111,14 +111,14 @@
 \newcommand{\lettertonum}[1]{\number\numexpr`#1-`a+1\relax} % 알파벳(a..z)→숫자(1..26)
 \newcommand{\numtoletter}[1]{\char\numexpr`a-1+#1\relax} % 숫자(1..26)→알파벳(a..z)
 \NewDocumentCommand{\cnset}{g}{\setcounter{cnumcounter}{\IfNoValueTF{#1}{0}{\ifcat a#1 \number\numexpr`#1-`a+1\relax \else #1\fi}}}
-\newcommand{\cn}[1][1.6em]{\par\refstepcounter{cnumcounter}\makebox[#1][r]{(\alph{cnumcounter})\,}\hangindent=#1 \hangafter=1\relax}
+\newcommand{\cn}[1][1.4em]{\par\refstepcounter{cnumcounter}\makebox[#1][r]{(\alph{cnumcounter})\,}\hangindent=#1 \hangafter=1\relax}
 
 % dn (수동) - \dn{(가)} 이런식으로 쓰면 (가) 하고 들여쓰기 됨. 뒤에 \ignorespaces으로 공백 무시함(띄어쓰기 가능)
 % \dn 으로만 쓰면 기본 여백으로 들여쓰기됨. \dn[2em] 등으로 간격만 줄 수도 있음
-\NewDocumentCommand{\dn}{ O{1.6em} g }{\par\makebox[#1][r]{\IfNoValueTF{#2}{}{#2\,}}\hangindent=#1 \hangafter=1\relax\ignorespaces}
+\NewDocumentCommand{\dn}{ O{1.4em} g }{\par\makebox[#1][r]{\IfNoValueTF{#2}{}{#2\,}}\hangindent=#1 \hangafter=1\relax\ignorespaces}
 
-% bul (글머리 점) bullet은 커서 크기 줄임, bn과 들여쓰기 동일하게 함
-\newcommand{\bul}[1][1.6em]{\par\makebox[#1][r]{\raisebox{0.25ex}{\scalebox{0.5}{$\bullet$}}\,\,}\hangindent=#1 \hangafter=1\relax}
+% bul (글머리 점) bullet은 커서 크기 줄임
+\newcommand{\bul}[1][1.2em]{\par\makebox[#1][r]{\raisebox{0.25ex}{\scalebox{0.5}{$\bullet$}}\,\,}\hangindent=#1 \hangafter=1\relax}
 
 % arw (화살표)
 \newcommand{\arw}[1][3em]{\par\makebox[#1][r]{\arrow}\hangindent=#1 \hangafter=1\relax}

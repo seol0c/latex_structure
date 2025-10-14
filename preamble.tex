@@ -23,6 +23,10 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
 \hbadness=10000 % underfull hbox 경고 무시(수평 방향 여백 경고 badness 10000까지 무시)
 \vbadness=10000 % overfull hbox 경고 무시(수직 방향 페이니 나눔 단락 경고 badness 10000까지 무시)
 \hfuzz=7pt  % 7pt 이하의 overfull \hbox 경고 무시
+% usepackage{silence} 필요
+\WarningFilter{caption}{The option `hypcap=true'} % 그림 하이퍼링크 경고 끔
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% main.tex 명령어 단순화
@@ -80,8 +84,6 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
 
 % 문제 풀이시 1값을 주면 문제가 출력되고, 0값을 주면 문제가 출력되지 않음
 \newcommand{\qblock}[2]{\ifnum #1 = 1\relax #2 \fi}
-
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 페이지 벗어나는 상자(그림, 메모) 안쪽으로 밀어넣기(shift)

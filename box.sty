@@ -45,12 +45,28 @@
   \begingroup % 캡션 설정 여기서만 적용되도록 로컬화함
     \captionsetup[figure]{width=\linewidth}% 박스 안에서만 글너비에 꽉차도록 함
     \captionsetup[table]{width=\linewidth}% 표 캡션도 마찬가지
-    \begin{minipage}{#1\linewidth}% 왼쪽 폭
+    \begin{minipage}[t]{#1\linewidth}% 왼쪽 폭, t로 위부터 쌓이게 함
       #3% 왼쪽 내용
     \end{minipage} \hfill% 끝까지 밀어내기
-    \begin{minipage}{#2\linewidth}% 오른쪽 폭
+    \begin{minipage}[t]{#2\linewidth}% 오른쪽 폭
       #4% 오른쪽 내용
     \end{minipage}\endgroup},after upper={},}% 박스 종료 시 추가 명령 없음
+
+% 박스 내부에서 쓰도록 doublepage를 쉽게 만듦
+\NewDocumentEnvironment{doublepage}{mmmm}{
+  \begingroup
+    \captionsetup[figure]{width=\linewidth}
+    \captionsetup[table]{width=\linewidth}
+    \noindent
+    \begin{minipage}[t]{#1\linewidth}
+      #3
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{#2\linewidth}
+      #4
+    \end{minipage}
+  \endgroup
+}{}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 보충설명용 박스 제작

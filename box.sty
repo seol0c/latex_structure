@@ -52,20 +52,19 @@
       #4% 오른쪽 내용
     \end{minipage}\endgroup},after upper={},}% 박스 종료 시 추가 명령 없음
 
-% 박스 내부에서 쓰도록 doublepage를 쉽게 만듦
-\NewDocumentEnvironment{doublepage}{mmmm}{
-  \begingroup
-    \captionsetup[figure]{width=\linewidth}
-    \captionsetup[table]{width=\linewidth}
-    \noindent
-    \begin{minipage}[t]{#1\linewidth}
-      #3
-    \end{minipage}
-    \hfill
-    \begin{minipage}[t]{#2\linewidth}
-      #4
-    \end{minipage}
-  \endgroup
+% 박스 내부에서 쓰도록 doublepage를 쉽게 만듦, 여백이나 간격을 제거하여 본문과 똑같이 쓰이게 함
+\NewDocumentEnvironment{doublepage}{mm +m +m}{% 빈 줄 허용
+  \parindent=0pt\parskip=0pt%
+  \leavevmode\noindent%
+  \captionsetup[figure]{width=\linewidth}%
+  \captionsetup[table]{width=\linewidth}%
+  \begin{minipage}[t]{#1\linewidth}%
+    #3%
+  \end{minipage}%
+  \hfill%
+  \begin{minipage}[t]{#2\linewidth}%
+    #4%
+  \end{minipage}%
 }{}
 
 

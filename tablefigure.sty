@@ -173,22 +173,45 @@
       \zz[0.2\bs] \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}%
       \caption*{#4} \zz%
     \end{figure}}
+  %
   % 이름에서 백슬래시 제거 (\foo → foo)
   \edef\tempname{\expandafter\@gobble\string#3}%
+  %
   % 오른쪽 wrap은 그림 호출 시 wrapR을 추가하면 됨
   \expandafter\NewDocumentCommand\csname wrapR\tempname\endcsname{O{0.8}}{%
-    \begin{wrapfigure}{r}{0.45\textwidth}%
+    \sbox0{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}}% 그림 가로폭 위한 박스 sbox0
+    \edef\wrapwidth{\the\wd0}% 측정한 가로 폭 wd0을 wrapwidth에 저장
+    \captionsetup[figure]{width=\linewidth}% 캡션 너비 본문크기로 지정
+    \sbox1{% 새로운 박스 sbox1 생성
+      \begin{minipage}{\wrapwidth}
+        \centering
+        \usebox0
+      \end{minipage}}
+    \edef\wrapheight{\dimexpr\ht1+\dp1\relax}% 세로 높이 계산 - 잘안됨 나중에 다시
+    \begin{wrapfigure}{r}{\wrapwidth}%
+      \zz[0.2\bs]
       \centering
-      \zz[0.2\bs] \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}%
-      \caption*{#4} \zz%
+      \usebox1
     \end{wrapfigure}}%
+  %
   % 왼쪽 wrap은 그림 호출 시 wrapL을 추가하면 됨
   \expandafter\NewDocumentCommand\csname wrapL\tempname\endcsname{O{0.8}}{%
-    \begin{wrapfigure}{l}{0.45\textwidth}%
+    \sbox0{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}}% 그림 가로폭 위한 박스 sbox0
+    \edef\wrapwidth{\the\wd0}% 측정한 가로 폭 wd0을 wrapwidth에 저장
+    \captionsetup[figure]{width=\linewidth}% 캡션 너비 본문크기로 지정
+    \sbox1{% 새로운 박스 sbox1 생성
+      \begin{minipage}{\wrapwidth}
+        \centering
+        \usebox0
+      \end{minipage}}
+    \edef\wrapheight{\dimexpr\ht1+\dp1\relax}% 세로 높이 계산 - 잘안됨 나중에 다시
+    \begin{wrapfigure}{l}{\wrapwidth}% 여기만 r에서 l로 바꿈
+      \zz[0.2\bs]
       \centering
-      \zz[0.2\bs] \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}%
-      \caption*{#4} \zz%
-    \end{wrapfigure}}}\makeatother
+      \usebox1
+    \end{wrapfigure}}%
+}
+\makeatother
 
 %% 라벨 없이 간단하게 삽입하는 경우 - notag를 그냥 쓰는 것이 그림 관리가 쉬워서 notag 씀
 % \quickfig{파일명}으로 부를 수 있음.

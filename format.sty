@@ -3,11 +3,11 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 줄간격, 여백 설정
 %% 줄 간격 설정 - 기본적으로 1.2배가 곱해짐 (10pt인 경우 1.2 x 10pt).
-\linespread{1.1} % 추가로 더 넓힐 간격(1.2가 들어가면 1.44배가 됨.)
+\linespread{1.1}% 추가로 더 넓힐 간격(1.2가 들어가면 1.44배가 됨.)
 
 %% 기본 단락 여백 제거 - 문단 설정
-\setlength{\parskip}{0pt} % 문단사이 간격 (기본값 0, 글자높이의 절반만큼 띄우려면 0.5em)
-\setlength{\parindent}{0pt} % 문단 첫 들여쓰기 없음(글자 너비 절반인 0.5em 해도 됨)
+\setlength{\parskip}{0pt}% 문단사이 간격 (기본값 0, 글자높이의 절반만큼 띄우려면 0.5em)
+\setlength{\parindent}{0pt}% 문단 첫 들여쓰기 없음(글자 너비 절반인 0.5em 해도 됨)
 
 %% 기본 줄간격 명령어 변경. - [\bs], [-0.5\bs]등으로 작성 가능
 \newcommand{\bs}{\baselineskip}
@@ -18,8 +18,8 @@
 % \zzz는 \\와 완전히 동일함. 즉, \zz[\bs]임. \zzz[5pt]는 추가 5pt 확장
 \newcommand{\zz}[1][0pt]{\ifhmode \\[-\bs + #1] \else \vspace*{\dimexpr -\bs + #1\relax} \fi}
 \newcommand{\zzz}[1][0pt]{%
-  \ifvmode \vspace*{\bs + #1} % 수직 모드일 때는 빈 줄 간격
-  \else \\[#1] \fi} % 그 외 본문(ifhmode), 수식(ifmmode), 표 내부 등 모든 모드에서 \\처럼 동작
+  \ifvmode \vspace*{\bs + #1}% 수직 모드일 때는 빈 줄 간격
+  \else \\[#1] \fi}% 그 외 본문(ifhmode), 수식(ifmmode), 표 내부 등 모든 모드에서 \\처럼 동작
 
 
 
@@ -34,7 +34,7 @@
 \DeclareRobustCommand{\MemoBoldStart}{\begingroup\addhangulfontfeatures{AutoFakeBold=3}\bfseries\boldmath}
 \DeclareRobustCommand{\MemoBoldEnd}{\endgroup}
 
-% \newcommand{\bd}[1]{{\addhangulfontfeatures{AutoFakeBold=4}\textbf{#1}}} % 이게 기본형태임
+% \newcommand{\bd}[1]{{\addhangulfontfeatures{AutoFakeBold=4}\textbf{#1}}}% 이게 기본형태임
 
 % 한글 폰트에 이탤릭체가 대부분 없음. 기본적으로 이탤릭체로 바꾸고, 한글은 FakeSlant, 강도를 숫자로 조정
 \newcommand{\itl}[1]{{\addhangulfontfeatures{AutoFakeSlant=.3}\textit{#1}}}
@@ -42,7 +42,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 색상, 형광펜
-%% 색상 정의 % xcolor, transparent 필요
+%% 색상 정의 -  xcolor, transparent 필요
 \definecolor{myred}{RGB}{255,70,70}
 \definecolor{myorange}{RGB}{255,170,90}
 \definecolor{myyellow}{RGB}{255,230,40}
@@ -71,13 +71,13 @@
 \newcommand{\hlb}[1]{\highLight[myblue]{#1}}
 \newcommand{\hlgy}[1]{\highLight[mygray]{#1}}
 \newcommand{\hlw}[1]{\highLight[mywhite]{#1}}
-\newcommand{\hlp}[1]{\hlw{#1}} % 그냥 화이트로 대체함. 투명 하이라이트 찾아야 함.
+\newcommand{\hlp}[1]{\hlw{#1}}% 그냥 화이트로 대체함. 투명 하이라이트 찾아야 함.
 
 % 정말 투명한 \hlp를 만들고 싶으나 실패함
 %\newcommand{\hlp}[1]{% 투명 형광펜 - 자리 차지 동일하게 하기 위해 높이, 깊이를 동일하게 갖는 박스를 앞뒤에 삽입
-%  \leavevmode % luacolor,lua-ul 패키지의 하이라이트에 이용되는 높이, 깊이 비율 그대로 쓰고 폭 0pt로 지정
-%  \vrule height 1.75ex depth .75ex width 0pt #1 % 앞
-%  \vrule height 1.75ex depth .75ex width 0pt} % 뒤
+%  \leavevmode% luacolor,lua-ul 패키지의 하이라이트에 이용되는 높이, 깊이 비율 그대로 쓰고 폭 0pt로 지정
+%  \vrule height 1.75ex depth .75ex width 0pt #1% 앞
+%  \vrule height 1.75ex depth .75ex width 0pt}% 뒤
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 자동 넘버링, an, bn, bul, arw
@@ -96,20 +96,20 @@
 % anset{5}를 입력하면 5까지 이미 카운트되도록 함. cnset{d}를 입력하면 d까지 카운트하여 e부터 나오도록 함.
 
 % an (숫자점)
-\newcounter{anumcounter} % an
+\newcounter{anumcounter}% an
 \NewDocumentCommand{\anset}{g}{\IfNoValueTF{#1}{\setcounter{anumcounter}{0}}{\setcounter{anumcounter}{#1}}}
 \newcommand{\an}[1][1em]{\par\stepcounter{anumcounter}\makebox[#1][r]{\theanumcounter.\,}\hangindent=#1 \hangafter=1\relax}
 
 % bn (괄호숫자)
-\newcounter{bnumcounter} % bn
+\newcounter{bnumcounter}% bn
 \NewDocumentCommand{\bnset}{g}{\IfNoValueTF{#1}{\setcounter{bnumcounter}{0}}{\setcounter{bnumcounter}{#1}}}
 \newcommand{\bn}[1][1.4em]{\par\refstepcounter{bnumcounter}\makebox[#1][r]{(\arabic{bnumcounter})\,}\hangindent=#1 \hangafter=1\relax}
 
 % cn (괄호영어)
-\newcounter{cnumcounter} % cn
+\newcounter{cnumcounter}% cn
 % cnset을 위해 먼저 숫자 영어 변환
-\newcommand{\lettertonum}[1]{\number\numexpr`#1-`a+1\relax} % 알파벳(a..z)→숫자(1..26)
-\newcommand{\numtoletter}[1]{\char\numexpr`a-1+#1\relax} % 숫자(1..26)→알파벳(a..z)
+\newcommand{\lettertonum}[1]{\number\numexpr`#1-`a+1\relax}% 알파벳(a..z)→숫자(1..26)
+\newcommand{\numtoletter}[1]{\char\numexpr`a-1+#1\relax}% 숫자(1..26)→알파벳(a..z)
 \NewDocumentCommand{\cnset}{g}{\setcounter{cnumcounter}{\IfNoValueTF{#1}{0}{\ifcat a#1 \number\numexpr`#1-`a+1\relax \else #1\fi}}}
 \newcommand{\cn}[1][1.4em]{\par\refstepcounter{cnumcounter}\makebox[#1][r]{(\alph{cnumcounter})\,}\hangindent=#1 \hangafter=1\relax}
 
@@ -132,7 +132,7 @@
 \newcommand{\ctt}[1]{\par{\centering #1 \\}}
 
 % 1로 자동조사 사용, 0으로 취소함. luatexko의 옵션
-\josaignoreparens=1 % \은, \이, \으로 는, 가, 로 등으로 자동 수정됨
+\josaignoreparens=1% \은, \이, \으로 는, 가, 로 등으로 자동 수정됨
 
 % 인라인 수식모드 $수식입력$ 안에서 디스플레이스타일 빠르게 지정
 \newcommand{\dps}{\displaystyle}
@@ -146,12 +146,12 @@
 
 
 %% 긴 URL, 저자명의 경우 줄바꿈
-\PassOptionsToPackage{hyphens}{url}  % url 패키지에 옵션만 전달
+\PassOptionsToPackage{hyphens}{url}% url 패키지에 옵션만 전달
 \Urlmuskip=0mu plus 1mu
 
 %% 영어 하이픈 자동 삽입 - \usepackage[english]{babel} 필요
-\pretolerance=100           % 1차 시도: 띄어쓰기만으로 줄맞춤 (낮을수록 더 많이 줄바꿈)
-\tolerance=500              % 2차 시도: 하이픈·늘림 포함 줄맞춤 (높을수록 더 많이 사용)
-\emergencystretch=1em       % 최후: 여백 추가로 억지 줄맞춤
-\hyphenpenalty=1000         % 자동 하이픈을 거의 안 씀 (값이 높을수록 하이픈을 덜 씀)
-\exhyphenpenalty=50         % 수동 하이픈(\-)은 비교적 잘 씀
+\pretolerance=100% 1차 시도: 띄어쓰기만으로 줄맞춤 (낮을수록 더 많이 줄바꿈)
+\tolerance=500% 2차 시도: 하이픈·늘림 포함 줄맞춤 (높을수록 더 많이 사용)
+\emergencystretch=1em% 최후: 여백 추가로 억지 줄맞춤
+\hyphenpenalty=1000% 자동 하이픈을 거의 안 씀 (값이 높을수록 하이픈을 덜 씀)
+\exhyphenpenalty=50% 수동 하이픈(\-)은 비교적 잘 씀

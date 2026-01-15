@@ -1,24 +1,24 @@
 %% 표 스타일 정의용 매크로
 
 %% 자주 쓰는 열 정의
-\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}   % 가운데 정렬 고정폭 열
-\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}} % 왼쪽 정렬 고정폭 열
-\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}  % 오른쪽 정렬 고정폭 열
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}% 가운데 정렬 고정폭 열
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}% 왼쪽 정렬 고정폭 열
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}% 오른쪽 정렬 고정폭 열
 
 %% 기본 테이블 여백 조정
-\setlength{\tabcolsep}{8pt}  % 셀 좌우 간격
-\renewcommand{\arraystretch}{1.2}  % 행 간격
+\setlength{\tabcolsep}{8pt}% 셀 좌우 간격
+\renewcommand{\arraystretch}{1.2}% 행 간격
 
 %% 강조 셀 스타일 - 기존에 정의한 색 재사용 (이미 \definecolor 되어 있어야 함)
-\newcommand{\graycell}[1]{\cellcolor{mygray!20}#1}   % 회색 강조 셀
-\newcommand{\redcell}[1]{\cellcolor{myred!20}#1}     % 빨간 강조 셀
-\newcommand{\bluecell}[1]{\cellcolor{myblue!20}#1}   % 파란 강조 셀
+\newcommand{\graycell}[1]{\cellcolor{mygray!20}#1}% 회색 강조 셀
+\newcommand{\redcell}[1]{\cellcolor{myred!20}#1}% 빨간 강조 셀
+\newcommand{\bluecell}[1]{\cellcolor{myblue!20}#1}% 파란 강조 셀
 
 
 %% 그림이나 표를 감싸서 좌측 또는 우측에 배열하는 함수
 \newcommand{\wrapfigR}[1]{% fig나 tab을 우측에 붙이기
   \sbox0{#1}\begin{wrapfigure}{r}{\wd0}%
-    \zz \usebox0 \zz \end{wrapfigure}} % 위아래 한 줄 들어가서 \zz로 없애기
+    \zz \usebox0 \zz \end{wrapfigure}}% 위아래 한 줄 들어가서 \zz로 없애기
 \newcommand{\wrapfigL}[1]{% fig나 tab을 좌측에 붙이기
   \sbox0{#1}\begin{wrapfigure}{l}{\wd0}%
     \zz \usebox0 \zz \end{wrapfigure}}
@@ -32,19 +32,19 @@
 
 % \tab[h]{캡션}{라벨}{정렬}{내용} - 내용 빼고 모두 생략 가능
 \newcommand{\tab}[5][H]{% 기본 위치 here. 무조건 강하게 H
-  \begin{table}[#1] % 표 float 환경 시작, 위에서 H로 지정함. 안써도 됨
+  \begin{table}[#1]% 표 float 환경 시작, 위에서 H로 지정함. 안써도 됨
     \zz[0.4\bs]
-    \centering % 표 가운데 정렬
+    \centering% 표 가운데 정렬
     \ifthenelse{\isempty{#2}}{}{% 캡션 내용 비어있으면 생략
-      \caption{#2} % 캡션이 비어 있지 않으면 삽입. tabular 아래에 넣으면 캡션은 아래로 감
+      \caption{#2}% 캡션이 비어 있지 않으면 삽입. tabular 아래에 넣으면 캡션은 아래로 감
     }
     \ifthenelse{\isempty{#3}}{}{%
-      \label{tab:#3} % 라벨이 비어 있지 않으면 tab: 접두사와 함께 삽입
+      \label{tab:#3}% 라벨이 비어 있지 않으면 tab: 접두사와 함께 삽입
     }
-    {\fontsize{8}{10}\selectfont % 본문폰트 크기 10pt, 표 폰트 크기 8pt
-    \begin{tabular}{#4} % 표 열 형식 지정
+    {\fontsize{8}{10}\selectfont% 본문폰트 크기 10pt, 표 폰트 크기 8pt
+    \begin{tabular}{#4}% 표 열 형식 지정
       \hline
-      #5 \\ % 표 내용
+      #5 \\% 표 내용
       \hline
     \end{tabular}}
     \zz[0.2\bs]
@@ -72,7 +72,7 @@
       \ifstrempty{#1}{}{%
         \label{tab:#1}
       }
-      {\fontsize{8}{10}\selectfont % 본문폰트 크기 10pt, 표 폰트 크기 8pt
+      {\fontsize{8}{10}\selectfont% 본문폰트 크기 10pt, 표 폰트 크기 8pt
       \begin{tabular}{#4}
         \hline
         #5 \\
@@ -103,7 +103,7 @@
 %    최초 호출 0.8배율일 때 본문과 폰트 크기 같아짐. 이후 본문호출 0.8배율
 %    즉, 1단계에서 [0.8]로 크기 조정하고, 본문에서는 ([] 필요 없음)
 
-\renewcommand{\figurename}{Fig.} % 전역적으로 그림을 Figure가 아닌 Fig.로 표시
+\renewcommand{\figurename}{Fig.}% 전역적으로 그림을 Figure가 아닌 Fig.로 표시
 
 %% figure 선언 쉽도록 함수 작성
 % \DeclareFigure[<1단계 기본배율(기본 1)>]{파일명(라벨)}{명령이름}{캡션} 순으로 입력하면 됨
@@ -114,18 +114,18 @@
 %% box 내부에 wrap 형태로 들어갈 수 있게 동시에 선언함
 \makeatletter
 \NewDocumentCommand{\DeclareFigure}{O{1} m m m}{%
-  % 일반 figure 선언
+% 일반 figure 선언
   \NewDocumentCommand{#3}{O{0.8}}{%
-    \begin{figure}[H]\centering % 위 공백 살짝 줄임 \zz[0.2\bs]
+    \begin{figure}[H]\centering% 위 공백 살짝 줄임 \zz[0.2\bs]
       \zz[0.2\bs]
       \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}% 실제 그림
-      \caption{#4}\label{fig:#2} \zz % 아래공백 세팅
+      \caption{#4}\label{fig:#2} \zz% 아래공백 세팅
     \end{figure}}%
-  %
-  % 이름에서 백슬래시 제거 (\foo → foo)
+%
+% 이름에서 백슬래시 제거 (\foo → foo)
   \edef\tempname{\expandafter\@gobble\string#3}%
-  %
-  % 오른쪽 wrap은 그림 호출 시 wrapR을 추가하면 됨
+%
+% 오른쪽 wrap은 그림 호출 시 wrapR을 추가하면 됨
   \expandafter\NewDocumentCommand\csname wrapR\tempname\endcsname{O{0.8}}{%
     \sbox0{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}}% 그림 가로폭 위한 박스 sbox0
     \edef\wrapwidth{\the\wd0}% 측정한 가로 폭 wd0을 wrapwidth에 저장
@@ -142,8 +142,8 @@
       \centering
       \usebox1
     \end{wrapfigure}}%
-  %
-  % 왼쪽 wrap은 그림 호출 시 wrapL을 추가하면 됨
+%
+% 왼쪽 wrap은 그림 호출 시 wrapL을 추가하면 됨
   \expandafter\NewDocumentCommand\csname wrapL\tempname\endcsname{O{0.8}}{%
     \sbox0{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}}% 그림 가로폭 위한 박스 sbox0
     \edef\wrapwidth{\the\wd0}% 측정한 가로 폭 wd0을 wrapwidth에 저장
@@ -167,17 +167,17 @@
 %% box 내부에 wrap 형태로 들어갈 수 있게 동시에 선언함
 \makeatletter
 \NewDocumentCommand{\DeclareFigureNoTag}{O{1} m m m}{%
-  % 기본 figure 버전 (float)
+% 기본 figure 버전 (float)
   \NewDocumentCommand{#3}{O{0.8}}{%
     \begin{figure}[H]\centering
       \zz[0.2\bs] \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}%
       \caption*{#4} \zz%
     \end{figure}}
-  %
-  % 이름에서 백슬래시 제거 (\foo → foo)
+%
+% 이름에서 백슬래시 제거 (\foo → foo)
   \edef\tempname{\expandafter\@gobble\string#3}%
-  %
-  % 오른쪽 wrap은 그림 호출 시 wrapR을 추가하면 됨
+%
+% 오른쪽 wrap은 그림 호출 시 wrapR을 추가하면 됨
   \expandafter\NewDocumentCommand\csname wrapR\tempname\endcsname{O{0.8}}{%
     \sbox0{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}}% 그림 가로폭 위한 박스 sbox0
     \edef\wrapwidth{\the\wd0}% 측정한 가로 폭 wd0을 wrapwidth에 저장
@@ -193,8 +193,8 @@
       \centering
       \usebox1
     \end{wrapfigure}}%
-  %
-  % 왼쪽 wrap은 그림 호출 시 wrapL을 추가하면 됨
+%
+% 왼쪽 wrap은 그림 호출 시 wrapL을 추가하면 됨
   \expandafter\NewDocumentCommand\csname wrapL\tempname\endcsname{O{0.8}}{%
     \sbox0{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}}% 그림 가로폭 위한 박스 sbox0
     \edef\wrapwidth{\the\wd0}% 측정한 가로 폭 wd0을 wrapwidth에 저장
@@ -232,13 +232,13 @@
   \begin{minipage}{130pt}\centering
     \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}\\[2pt]
     {\captionsetup{type=figure,width=\linewidth,hypcap=false}%
-     \caption*{#4}} % 번호 누적 없이 캡션 효과 고려. 라벨 없음
+     \caption*{#4}}% 번호 누적 없이 캡션 효과 고려. 라벨 없음
   \end{minipage}}%
-    \CoordsHere % 좌표 계산
-    \ClampFromCoords % 보정량 산출(오프셋 반영)
+    \CoordsHere% 좌표 계산
+    \ClampFromCoords% 보정량 산출(오프셋 반영)
 %    \AddToShipoutPictureBG*{% 가장 아래층으로 내림 - 그림 전체가 이동하는 문제 발생
   \begin{tikzpicture}[remember picture,overlay]%
-    \checkoddpage\ifoddpage % 홀수 페이지 - 오른쪽 엣지로 이동
+    \checkoddpage\ifoddpage% 홀수 페이지 - 오른쪽 엣지로 이동
       \node[yshift=\yshiftEdge] at ($(current page.east |- edgefiguremark-\theedgefiguremark)+(-82pt,0)$) {%
         \begin{minipage}{130pt}\centering
           \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}\\[2pt]
@@ -246,7 +246,7 @@
           {\captionsetup{type=figure,width=\linewidth,hypcap=false}%
            \phantomsection\captionof{figure}{#4}\label{fig:#2}}%
         \end{minipage}};
-    \else % 짝수 페이지 - 왼쪽 엣지로 이동
+    \else% 짝수 페이지 - 왼쪽 엣지로 이동
       \node[yshift=\yshiftEdge] at ($(current page.west |- edgefiguremark-\theedgefiguremark)+(82pt,0)$) {%
         \begin{minipage}{130pt}\centering
           \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}\\[2pt]
@@ -256,7 +256,7 @@
         \end{minipage}};
     \fi
   \end{tikzpicture}%
-%} % 가장 아래층 내림 안됨
+%}% 가장 아래층 내림 안됨
 \ignorespaces} \zz}
 
 % 교사용 seolfig - 모드 3,4일때만 나오는 그림. 1,2에서는 자리만 차지
@@ -275,11 +275,11 @@
     \begin{figure}[H] \centering \zz[0.2\bs]
       \setbox0=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_a}}%
       \setbox2=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_b}}%
-      \begin{subfigure}[b]{\wd0} % bottm으로 정렬(t,c 가능), 폭 지정 0.3
+      \begin{subfigure}[b]{\wd0}% bottm으로 정렬(t,c 가능), 폭 지정 0.3
         \box0
-        \caption{}\label{fig:#2:a} % a, b, c 순차적으로 캡션 붙음, 하나씩 라벨 호출할 수 있음
+        \caption{}\label{fig:#2:a}% a, b, c 순차적으로 캡션 붙음, 하나씩 라벨 호출할 수 있음
       \end{subfigure}
-      \hspace*{##2\textwidth} % 두 그림 간격 조절(기본 0)
+      \hspace*{##2\textwidth}% 두 그림 간격 조절(기본 0)
       \begin{subfigure}[b]{\wd2}
         \box2
         \caption{}\label{fig:#2:b}
@@ -296,16 +296,16 @@
       \setbox0=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_a}}%
       \setbox2=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_b}}%
       \setbox4=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_c}}%
-      \begin{subfigure}[b]{\wd0} % bottm으로 정렬(t,c 가능)
+      \begin{subfigure}[b]{\wd0}% bottm으로 정렬(t,c 가능)
         \box0
-        \caption{}\label{fig:#2:a} % a, b, c 순차적으로 캡션 붙음, 하나씩 라벨 호출할 수 있음
+        \caption{}\label{fig:#2:a}% a, b, c 순차적으로 캡션 붙음, 하나씩 라벨 호출할 수 있음
       \end{subfigure}
-      \hspace*{##2\textwidth} % 그림 간격 조절(기본 0)
+      \hspace*{##2\textwidth}% 그림 간격 조절(기본 0)
       \begin{subfigure}[b]{\wd2}
         \box2
         \caption{}\label{fig:#2:b}
       \end{subfigure}
-      \hspace*{##2\textwidth} % 그림 간격 조절(기본 0)
+      \hspace*{##2\textwidth}% 그림 간격 조절(기본 0)
       \begin{subfigure}[b]{\wd4}
         \box4
         \caption{}\label{fig:#2:c}
@@ -321,7 +321,7 @@
 \NewDocumentCommand{\DeclareHexaFigure}{O{1} m m m}{%
   \NewDocumentCommand{#3}{O{0.8} O{0} O{0}}{% 첫 번째 인자는 사이즈(기본값 0.8), 두 번째는 가로 간격(기본값 0), 세 번째는 세로 간격(기본값 0)
     \begin{figure}[H] \centering \zz[0.2\bs]
-      % 1행: a, b, c
+% 1행: a, b, c
       \setbox0=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_a}}%
       \setbox1=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_b}}%
       \setbox2=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_c}}%
@@ -342,7 +342,7 @@
 
       \par\vspace*{##3\textwidth}
 
-      % 2행: d, e, f
+% 2행: d, e, f
       \setbox3=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_d}}%
       \setbox4=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_e}}%
       \setbox5=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_f}}%

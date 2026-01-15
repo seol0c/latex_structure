@@ -4,16 +4,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 공통 스타일 정의
 % 박스 공통 스타일
 \tcbset{boxbase/.style={
-  boxrule=1pt, arc=1mm, % 테두리선 두께, 둥근 모서리 반경
-  top=4pt, bottom=4pt, left=4pt, right=4pt, % 상하좌우 여백
-  colback=white, % 추가 입력 안할 시 본문 배경은 흰색
+  boxrule=1pt, arc=1mm,% 테두리선 두께, 둥근 모서리 반경
+  top=4pt, bottom=4pt, left=4pt, right=4pt,% 상하좌우 여백
+  colback=white,% 추가 입력 안할 시 본문 배경은 흰색
   before upper={% 박스 내부 여백 설정
-  \setlength{\lineskiplimit}{2pt} % 인라인 위아래 간격이 임계값보다 작으면
-  \setlength{\lineskip}{5pt} % 추가 간격 확보(수식 입력 등에 유용함)
-  \setlength{\abovedisplayskip}{5pt} % 일반적인 디스플레이 수식 여백 설정
+  \setlength{\lineskiplimit}{2pt}% 인라인 위아래 간격이 임계값보다 작으면
+  \setlength{\lineskip}{5pt}% 추가 간격 확보(수식 입력 등에 유용함)
+  \setlength{\abovedisplayskip}{5pt}% 일반적인 디스플레이 수식 여백 설정
   \setlength{\belowdisplayskip}{5pt}
-  \setlength{\abovedisplayshortskip}{5pt} % 특수상황(수식 앞줄이 짧게 끝나는 경우)
-  \setlength{\belowdisplayshortskip}{5pt}}}} % 특수상황(수식 아랫줄이 짧게 끝나는 경우)
+  \setlength{\abovedisplayshortskip}{5pt}% 특수상황(수식 앞줄이 짧게 끝나는 경우)
+  \setlength{\belowdisplayshortskip}{5pt}}}}% 특수상황(수식 아랫줄이 짧게 끝나는 경우)
 
 % 박스 제목 있는 경우 위아래 여백 미리 확보 - 수직이동량, 위쪽여백, 아래쪽여백, 내용으로 선언
 \newcommand{\boxtitle}[1]{\raisebox{0pt}[9pt][2pt]{#1}}
@@ -21,28 +21,28 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 기본 단순박스 제작
 % 회색 박스 (설명, 정리 등)
-\newtcolorbox{graybox}{boxbase, % 공통 서식 먼저 호출
-  colframe=gray!50}   % 테두리(기본 제목 배경) - 회색(50%)
+\newtcolorbox{graybox}{boxbase,% 공통 서식 먼저 호출
+  colframe=gray!50}% 테두리(기본 제목 배경) - 회색(50%)
 % 강조용 빨간 테두리 박스
 \newtcolorbox{redbox}{boxbase,
-  colframe=red}       % 테두리(기본 제목 배경) - 빨간색
+  colframe=red}% 테두리(기본 제목 배경) - 빨간색
 % 강조용 파란 배경 박스
 \newtcolorbox{bluebox}{boxbase,
-  colback=blue!5,     % 본문 배경 - 파란색(5%)
-  colframe=blue!50}   % 테두리(기본 제목 배경) - 중간 파랑
+  colback=blue!5,% 본문 배경 - 파란색(5%)
+  colframe=blue!50}% 테두리(기본 제목 배경) - 중간 파랑
 % 회색 수식 박스 - graybox에 수식 정렬만 추가
 \newtcolorbox{eqbox}{boxbase,
-  ams align,          % 수식 정렬
-  colback=gray!10,    % 본문 배경 - 회색(10%)
-  colframe=gray!50}   % 테두리(기본 제목 배경) - 회색(50%)
+  ams align,% 수식 정렬
+  colback=gray!10,% 본문 배경 - 회색(10%)
+  colframe=gray!50}% 테두리(기본 제목 배경) - 회색(50%)
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 좌우 양면 박스
 \newtcolorbox{doublebox}[4]{boxbase,
-  colframe=gray!50,   % 테두리(기본 제목 배경) - 회색(50%)
-  enhanced,           % 내부 LaTeX 코드 허용
+  colframe=gray!50,% 테두리(기본 제목 배경) - 회색(50%)
+  enhanced,% 내부 LaTeX 코드 허용
   before upper={%
-  \begingroup % 캡션 설정 여기서만 적용되도록 로컬화함
+  \begingroup% 캡션 설정 여기서만 적용되도록 로컬화함
     \captionsetup[figure]{width=\linewidth}% 박스 안에서만 글너비에 꽉차도록 함
     \captionsetup[table]{width=\linewidth}% 표 캡션도 마찬가지
     \begin{minipage}[t]{#1\linewidth}% 왼쪽 폭, t로 위부터 쌓이게 함
@@ -70,11 +70,11 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 보충설명용 박스 제작
 %% sssbox 정의
-\NewTColorBox{sssbox}{g}{boxbase, % 제목을 {}안에 넣으면 제목이 함께 출력됨
+\NewTColorBox{sssbox}{g}{boxbase,% 제목을 {}안에 넣으면 제목이 함께 출력됨
   title={\boxtitle{\IfNoValueTF{#1}{Sss...}{Sss... \,\,#1}}},
-  colframe=black,     % 테두리(기본 제목 배경) - 검정
-  colbacktitle=white, % 제목 배경 변경 - 흰색
-  coltitle=black}     % 제목 글씨색 - 검정
+  colframe=black,% 테두리(기본 제목 배경) - 검정
+  colbacktitle=white,% 제목 배경 변경 - 흰색
+  coltitle=black}% 제목 글씨색 - 검정
 
 % {g}는 입력하지 않을 경우 아예 없는 것으로 판단함. 즉 괄호 자체가 없음
 % {O{} g}는 입력하지 않으면 공백을 입력한 것으로 판단함. 즉 빈괄호{}를 생성함
@@ -86,17 +86,17 @@
 % 번호 형식은 '챕터.섹션.누적번호'임 (예: 18.1.1)
 \newcounter{checkbox}[section]
 \renewcommand{\thecheckbox}{\arabic{chapter}.\arabic{section}.\arabic{checkbox}}
-\NewTColorBox{checkboxbox}{g}{boxbase, % 제목을 {}안에 넣으면 제목이 함께 출력됨, 공통 서식 호출
+\NewTColorBox{checkboxbox}{g}{boxbase,% 제목을 {}안에 넣으면 제목이 함께 출력됨, 공통 서식 호출
   title={\boxtitle{check\,\,\thecheckbox\IfNoValueF{#1}{. \,\,#1}}},
-  colframe=gray!50,   % 테두리(기본 제목 배경) - 회색(50%)
-  coltitle=black}     % 제목 글씨색 - 검정
+  colframe=gray!50,% 테두리(기본 제목 배경) - 회색(50%)
+  coltitle=black}% 제목 글씨색 - 검정
 \newenvironment{checkbox}{\refstepcounter{checkbox}\begin{checkboxbox}}{\end{checkboxbox}}
 
 %% checkbox* 정의 - 번호 없음
 \NewTColorBox{checkboxbox*}{g}{boxbase,
   title={\boxtitle{check\IfNoValueF{#1}{. \,\,#1}}},
-  colframe=gray!50,   % 테두리(기본 제목 배경) - 회색(50%)
-  coltitle=black}     % 제목 글씨색 - 검정
+  colframe=gray!50,% 테두리(기본 제목 배경) - 회색(50%)
+  coltitle=black}% 제목 글씨색 - 검정
 \newenvironment{checkbox*}{\begin{checkboxbox*}}{\end{checkboxbox*}}
 
 %% practicebox 정의
@@ -104,46 +104,46 @@
 \renewcommand{\thepracticebox}{\arabic{chapter}.\arabic{section}.\arabic{practicebox}}
 \NewTColorBox{practiceboxbox}{g}{boxbase,
   title={\boxtitle{practice\,\,\thepracticebox\IfNoValueF{#1}{. \,\,#1}}},
-  colframe=black,     % 테두리(기본 제목 배경) - 검정
-  coltitle=white}     % 제목 글씨색 - 흰색
+  colframe=black,% 테두리(기본 제목 배경) - 검정
+  coltitle=white}% 제목 글씨색 - 흰색
 \newenvironment{practicebox}{\refstepcounter{practicebox}\begin{practiceboxbox}}{\end{practiceboxbox}}
 
 %% practicebox* 정의 - 번호 없음
 \NewTColorBox{practiceboxbox*}{g}{boxbase,
   title={\boxtitle{practice\IfNoValueF{#1}{. \,\,#1}}},
-  colframe=black,     % 테두리(기본 제목 배경) - 검정
-  coltitle=white}     % 제목 글씨색 - 흰색
+  colframe=black,% 테두리(기본 제목 배경) - 검정
+  coltitle=white}% 제목 글씨색 - 흰색
 \newenvironment{practicebox*}{\begin{practiceboxbox*}}{\end{practiceboxbox*}}
 
 %% questionbox 정의
 \NewTColorBox{questionboxbox}{g}{boxbase,
   title={\boxtitle{question\IfNoValueF{#1}{. \,\,#1}}},
-  colframe=gray!50,   % 테두리(기본 제목 배경) - 회색(50%)
-  coltitle=black}     % 제목 글씨색 - 검정
+  colframe=gray!50,% 테두리(기본 제목 배경) - 회색(50%)
+  coltitle=black}% 제목 글씨색 - 검정
 \newenvironment{questionbox}{\begin{questionboxbox}}{\end{questionboxbox}}
 % 문제번호 저장용 매크로
-\newcommand{\QuestionNumberumber}{0} % 초기값 0으로 설정
-\newcommand{\QuestionNumber}[1]{\renewcommand{\QuestionNumberumber}{\unskip#1\unskip}} % 공백 무시, pn값을 저장
+\newcommand{\QuestionNumberumber}{0}% 초기값 0으로 설정
+\newcommand{\QuestionNumber}[1]{\renewcommand{\QuestionNumberumber}{\unskip#1\unskip}}% 공백 무시, pn값을 저장
 
 %% problembox 정의
 \NewTColorBox{problemboxbox}{g}{boxbase,
   title={\boxtitle{problem\IfNoValueF{#1}{. \,\,#1}}},
-  colframe=black,     % 테두리(기본 제목 배경) - 검정
-  coltitle=white}     % 제목 글씨색 - 흰색
+  colframe=black,% 테두리(기본 제목 배경) - 검정
+  coltitle=white}% 제목 글씨색 - 흰색
 \newenvironment{problembox}{\begin{problemboxbox}}{\end{problemboxbox}}
 % 문제번호 저장용 매크로
-\newcommand{\ProblemNumberumber}{0} % 초기값 0으로 설정
-\newcommand{\ProblemNumber}[1]{\renewcommand{\ProblemNumberumber}{\unskip#1\unskip}} % 공백 무시, pn값을 저장
+\newcommand{\ProblemNumberumber}{0}% 초기값 0으로 설정
+\newcommand{\ProblemNumber}[1]{\renewcommand{\ProblemNumberumber}{\unskip#1\unskip}}% 공백 무시, pn값을 저장
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% seolmode와 호환되는 박스
 %% solbox 정의 - 솔루션
 % seolmode가 3,4일때만 출력하고 1,2일때는 사라짐
-% \ifnum\seolmode>2 % seolmode가 3이상이면 출력
+% \ifnum\seolmode>2% seolmode가 3이상이면 출력
 \NewTColorBox{solsolbox}{g}{boxbase,
   title={\boxtitle{Solution\IfNoValueF{#1}{. \,\,#1}}},
-  colframe=blue!50,     % 중간 파란 테두리
-  coltitle=black,       % 제목 글씨색
-  colbacktitle=white}   % 제목 배경색
+  colframe=blue!50,% 중간 파란 테두리
+  coltitle=black,% 제목 글씨색
+  colbacktitle=white}% 제목 배경색
 % 모드 변경용 하얀박스 - 위의 solsolbox와 완전 똑같이 만들고 전부 흰색으로 처리함
 \NewTColorBox{whitesolsolbox}{g}{boxbase, 
   title={\boxtitle{\textcolor{white}{Solution\IfNoValueF{#1}{. \,\,#1}}}},

@@ -32,10 +32,10 @@
 % 페이지 번호 표시. pagenumber.
 \newcommand{\pagenumber}{
   \fancypagestyle{plain}{% plain이든 fancy든 모두 작동하도록 함
-    \fancyhf{} % 초기화 먼저
-    \fancyfoot[LE]{\hspace*{-5mm}\thepage} % 짝수는 왼쪽에서 더 밀기
-    \fancyfoot[RO]{\thepage\hspace*{-5mm}} % 홀수는 오른쪽에서 더 밀기
-    \renewcommand{\headrulewidth}{0pt}} % 상단 선 지우기
+    \fancyhf{}% 초기화 먼저
+    \fancyfoot[LE]{\hspace*{-5mm}\thepage}% 짝수는 왼쪽에서 더 밀기
+    \fancyfoot[RO]{\thepage\hspace*{-5mm}}% 홀수는 오른쪽에서 더 밀기
+    \renewcommand{\headrulewidth}{0pt}}% 상단 선 지우기
   \fancypagestyle{fancy}{
     \fancyhf{}
     \fancyfoot[LE]{\hspace*{-5mm}\thepage}
@@ -51,7 +51,7 @@
   \AddToHook{shipout/background}{%
     \begin{tikzpicture}[remember picture, overlay]
       \node[anchor=south west, inner sep=0pt] at ([yshift=0mm]current page.south west) {% y축방향 이동
-        \hyperlink{toc}{\phantom{\rule{\paperwidth}{3mm}}}}; % 이동박스 두께
+        \hyperlink{toc}{\phantom{\rule{\paperwidth}{3mm}}}};% 이동박스 두께
     \end{tikzpicture}}}
 
 
@@ -64,21 +64,21 @@
 \makeatletter
 % 번호 있는 챕터(\chapter{})의 제목 위치를 위로 올림
 \renewcommand{\@makechapterhead}[1]{%
-  \vspace*{-5pt} % 페이지 상단에서 챕터 제목까지 간격 줄이기
-  {\parindent \z@            % 문단 들여쓰기 제거
-   \raggedright \normalfont  % 왼쪽 정렬, 일반 글꼴
-   \huge\bfseries \@chapapp\space \thechapter % 'Chapter 1' 등의 챕터 번호 출력
-   \par\nobreak              % 문단 끝 + 줄 바꿈 금지
-   \vskip 20pt               % 챕터 번호와 제목 사이 간격
-   \Huge \bfseries #1\par\nobreak % 제목 본문
-   \vskip 40pt}}               % 제목 아래 본문과의 간격
+  \vspace*{-5pt}% 페이지 상단에서 챕터 제목까지 간격 줄이기
+  {\parindent \z@% 문단 들여쓰기 제거
+   \raggedright \normalfont% 왼쪽 정렬, 일반 글꼴
+   \huge\bfseries \@chapapp\space \thechapter% 'Chapter 1' 등의 챕터 번호 출력
+   \par\nobreak% 문단 끝 + 줄 바꿈 금지
+   \vskip 20pt% 챕터 번호와 제목 사이 간격
+   \Huge \bfseries #1\par\nobreak% 제목 본문
+   \vskip 40pt}}% 제목 아래 본문과의 간격
 % 번호 없는 챕터(\chapter*{})의 제목 위치를 위로 올림 (예: contents, appendix 등)
 \renewcommand{\@makeschapterhead}[1]{%
-  \vspace*{-5pt} % 페이지 상단에서 챕터 제목까지 간격 줄이기
-  {\parindent \z@            % 문단 들여쓰기 제거
-   \raggedright \normalfont  % 왼쪽 정렬, 일반 글꼴
-   \Huge\bfseries #1\par\nobreak % 제목 본문
-   \vskip 40pt}}               % 제목 아래 본문과의 간격
+  \vspace*{-5pt}% 페이지 상단에서 챕터 제목까지 간격 줄이기
+  {\parindent \z@% 문단 들여쓰기 제거
+   \raggedright \normalfont% 왼쪽 정렬, 일반 글꼴
+   \Huge\bfseries #1\par\nobreak% 제목 본문
+   \vskip 40pt}}% 제목 아래 본문과의 간격
 \makeatother
 
 %% 챕터 번호매김 - 0이면 chapter, 1이면 section, 2면 subsecion ,,,, 까지 번호매김
@@ -87,9 +87,9 @@
 %% section 변경
 \makeatletter
 \renewcommand\section{\@startsection{section}{1}{\z@}
-  {-3.25ex\@plus -1ex \@minus -.2ex} % 제목 위 여백
-  {1.5ex \@plus .2ex} % 제목 아래 여백
-  {\normalfont\fontsize{17pt}{17pt}\bfseries\selectfont}} % 글자 크기, 줄간격, 굵게
+  {-3.25ex\@plus -1ex \@minus -.2ex}% 제목 위 여백
+  {1.5ex \@plus .2ex}% 제목 아래 여백
+  {\normalfont\fontsize{17pt}{17pt}\bfseries\selectfont}}% 글자 크기, 줄간격, 굵게
 \makeatother
 
 %% subsection 변경(* 붙이고*(선택) 글자 크기 변경)
@@ -98,7 +98,7 @@
   {-3.25ex\@plus -1ex \@minus -.2ex}
   {1.5ex \@plus .2ex}
   {\normalfont\fontsize{15pt}{15pt}\bfseries\selectfont}}
-%\let\oldsubsection\subsection % 기호 *을 앞에 붙이도록 함
+%\let\oldsubsection\subsection% 기호 *을 앞에 붙이도록 함
 %\renewcommand{\subsection}[1]{\oldsubsection{*\hspace{2pt}#1}}
 \makeatother
 
@@ -108,25 +108,25 @@
   {-3.25ex\@plus -1ex \@minus -.2ex}
   {1.5ex \@plus .2ex}
   {\normalfont\fontsize{12pt}{12pt}\bfseries\selectfont}}
-\let\oldsubsubsection\subsubsection % 기호 *을 앞에 붙이도록 함
+\let\oldsubsubsection\subsubsection% 기호 *을 앞에 붙이도록 함
 \renewcommand{\subsubsection}[1]{\oldsubsubsection{*\hspace{2pt}#1}}
 \makeatother
 
 % 글 마감할 때 뒷표지 만들기
 % #1 = 홀수페이지 내용, #2 = 짝수페이지 가운데 큰 글, #3 = 짝수페이지 하단 작은 글
 \newcommand{\makecover}[2]{%
-  \ifodd\value{page} % 홀수 끝인 경우 바로 커버 삽입
+  \ifodd\value{page}% 홀수 끝인 경우 바로 커버 삽입
     \newpage
-  \else % 짝수 끝인 경우 빈페이지 삽입
+  \else% 짝수 끝인 경우 빈페이지 삽입
     \cleardoublepage
-     \ % 빈 내용 삽입
+     \,% 빈 내용 삽입
   \fi
-  \thispagestyle{empty} % 페이지 번호 없애기
-  \drawlinesfalse % 선 긋기 중단
-  \restoregeometry % 용지 설정 복원
+  \thispagestyle{empty}% 페이지 번호 없애기
+  \drawlinesfalse% 선 긋기 중단
+  \restoregeometry% 용지 설정 복원
   \vspace*{\fill}
   \begin{center}{\large #1}\end{center}
   \vspace*{\fill}
   \begin{center}{\small #2}\end{center}
-  \thispagestyle{empty} % 페이지 번호 없애기
+  \thispagestyle{empty}% 페이지 번호 없애기
   \newpage}

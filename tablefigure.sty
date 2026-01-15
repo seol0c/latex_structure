@@ -16,10 +16,10 @@
 
 
 %% 그림이나 표를 감싸서 좌측 또는 우측에 배열하는 함수
-\newcommand{\wrapfigR}[1]{ % fig나 tab을 우측에 붙이기
+\newcommand{\wrapfigR}[1]{% fig나 tab을 우측에 붙이기
   \sbox0{#1}\begin{wrapfigure}{r}{\wd0}%
     \zz \usebox0 \zz \end{wrapfigure}} % 위아래 한 줄 들어가서 \zz로 없애기
-\newcommand{\wrapfigL}[1]{ % fig나 tab을 좌측에 붙이기
+\newcommand{\wrapfigL}[1]{% fig나 tab을 좌측에 붙이기
   \sbox0{#1}\begin{wrapfigure}{l}{\wd0}%
     \zz \usebox0 \zz \end{wrapfigure}}
 
@@ -31,11 +31,11 @@
 \newcommand{\rightcell}[1]{\raggedleft #1\arraybackslash}
 
 % \tab[h]{캡션}{라벨}{정렬}{내용} - 내용 빼고 모두 생략 가능
-\newcommand{\tab}[5][H]{ % 기본 위치 here. 무조건 강하게 H
+\newcommand{\tab}[5][H]{% 기본 위치 here. 무조건 강하게 H
   \begin{table}[#1] % 표 float 환경 시작, 위에서 H로 지정함. 안써도 됨
     \zz[0.4\bs]
     \centering % 표 가운데 정렬
-    \ifthenelse{\isempty{#2}}{}{ % 캡션 내용 비어있으면 생략
+    \ifthenelse{\isempty{#2}}{}{% 캡션 내용 비어있으면 생략
       \caption{#2} % 캡션이 비어 있지 않으면 삽입. tabular 아래에 넣으면 캡션은 아래로 감
     }
     \ifthenelse{\isempty{#3}}{}{%
@@ -83,11 +83,11 @@
 
 %%%%% 그림
 %% 본래 그림을 다음과 같이 선언해야 함
-% \newcommand{\kelvintemperatures}{ - 명령 이름 작성
+% \newcommand{\kelvintemperatures}{% - 명령 이름 작성
 %     \begin{figure}[h] \centering \includegraphics[scale=0.6]
 %     {../figures/kelvin_temperatures} - 파일 경로(파일명)
 %     \caption{Some temperatures on the Kelvin scale} - 캡션(파일명과 동일)
-%     \label{fig:kelvin_temperatures} \end{figure} } - 라벨
+%     \label{fig:kelvin_temperatures} \end{figure}} - 라벨
 
 % 규칙
 % 1. 그림을 최초 호출할 때는 100% 크기로 호출함.
@@ -225,10 +225,10 @@
 % memo와 위치가 겹치므로, 항상 background로 보내야 함. 메모가 위로 오는 게 더 중요함.
 \newcounter{edgefiguremark}
 \NewDocumentCommand{\DeclareEdgeFigure}{O{1} m m m}{%
-  \NewDocumentCommand{#3}{O{0.8}}{ \zz
-    \stepcounter{edgefiguremark}%
+  \NewDocumentCommand{#3}{O{0.8}}{%
+  \zz\stepcounter{edgefiguremark}%
     \tikz[remember picture,baseline]{\coordinate (edgefiguremark-\theedgefiguremark) at (0,0);}%
-\MeasureHalfFrom{ % 실제 박스와 똑같이 측정
+\MeasureHalfFrom{% 실제 박스와 똑같이 측정
   \begin{minipage}{130pt}\centering
     \includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}\\[2pt]
     {\captionsetup{type=figure,width=\linewidth,hypcap=false}%
@@ -236,7 +236,7 @@
   \end{minipage}}%
     \CoordsHere % 좌표 계산
     \ClampFromCoords % 보정량 산출(오프셋 반영)
-%    \AddToShipoutPictureBG*{ % 가장 아래층으로 내림 - 그림 전체가 이동하는 문제 발생
+%    \AddToShipoutPictureBG*{% 가장 아래층으로 내림 - 그림 전체가 이동하는 문제 발생
   \begin{tikzpicture}[remember picture,overlay]%
     \checkoddpage\ifoddpage % 홀수 페이지 - 오른쪽 엣지로 이동
       \node[yshift=\yshiftEdge] at ($(current page.east |- edgefiguremark-\theedgefiguremark)+(-82pt,0)$) {%
@@ -257,7 +257,7 @@
     \fi
   \end{tikzpicture}%
 %} % 가장 아래층 내림 안됨
-\ignorespaces} \zz }
+\ignorespaces} \zz}
 
 % 교사용 seolfig - 모드 3,4일때만 나오는 그림. 1,2에서는 자리만 차지
 \NewDocumentCommand{\seolfig}{O{0.8} m}{%

@@ -31,12 +31,12 @@
 
 % 페이지 번호 표시. pagenumber.
 \newcommand{\pagenumber}{
-  \fancypagestyle{plain}{ % plain이든 fancy든 모두 작동하도록 함
+  \fancypagestyle{plain}{% plain이든 fancy든 모두 작동하도록 함
     \fancyhf{} % 초기화 먼저
     \fancyfoot[LE]{\hspace*{-5mm}\thepage} % 짝수는 왼쪽에서 더 밀기
     \fancyfoot[RO]{\thepage\hspace*{-5mm}} % 홀수는 오른쪽에서 더 밀기
     \renewcommand{\headrulewidth}{0pt}} % 상단 선 지우기
-  \fancypagestyle{fancy}{ 
+  \fancypagestyle{fancy}{
     \fancyhf{}
     \fancyfoot[LE]{\hspace*{-5mm}\thepage}
     \fancyfoot[RO]{\thepage\hspace*{-5mm}}
@@ -50,7 +50,7 @@
 \newcommand{\linkbox}{
   \AddToHook{shipout/background}{%
     \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=south west, inner sep=0pt] at ([yshift=0mm]current page.south west) { % y축방향 이동
+      \node[anchor=south west, inner sep=0pt] at ([yshift=0mm]current page.south west) {% y축방향 이동
         \hyperlink{toc}{\phantom{\rule{\paperwidth}{3mm}}}}; % 이동박스 두께
     \end{tikzpicture}}}
 

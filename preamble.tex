@@ -34,13 +34,13 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
 \newcommand{\includeHead}[1]{\input{../includes/#1.tex}} % 경로 확인할 것
 
 % 참고문헌 불러오기
-\newcommand{\setupBib}{ % 참고문헌 있는 경우 불러오기
+\newcommand{\setupBib}{% 참고문헌 있는 경우 불러오기
   \usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
   \usepackage{csquotes}
   \addbibresource{../bib/papers.bib}
   \addbibresource{../bib/references.bib}
   \addbibresource{../bib/websites.bib}}
-\newcommand{\printBib}{ % sloppy로 참고문헌 출력시 길이가 길다면 강제 줄바꿈
+\newcommand{\printBib}{% sloppy로 참고문헌 출력시 길이가 길다면 강제 줄바꿈
   \begin{sloppypar} \printbibliography \end{sloppypar}}
 
 % 챕터 불러오기 - 이거 안쓰기로 함. 저장으로 컴파일이 안되는 문제 발생함
@@ -66,7 +66,7 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
 \numberwithin{figure}{section}
 \numberwithin{table}{section}
 
-\AtBeginDocument{ % 다른 설정으로 바뀌지 않도록 고정해버림
+\AtBeginDocument{% 다른 설정으로 바뀌지 않도록 고정해버림
 % 캡션
 \setlength{\abovecaptionskip}{3pt}  % 캡션 위 간격 - 캡션이 위에 있으면 캡션과 그림 사이 간격
 \setlength{\belowcaptionskip}{0pt}  % 캡션 아래 간격

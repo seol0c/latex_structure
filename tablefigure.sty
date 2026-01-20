@@ -315,6 +315,37 @@
     \zz \end{figure}}}
 
 
+%% figure 4개짜리 함수 작성(파일명은 같고_a ~ _d만 달라야 함, 1열 세로 배치)
+\NewDocumentCommand{\DeclareQuadFigure}{O{1} m m m}{%
+  \NewDocumentCommand{#3}{O{0.8} O{0}}{% 첫 번째 인자는 사이즈(기본값 0.8), 두 번째 인자는 그림 간격(기본값 0)
+    \begin{figure}[H] \centering \zz[0.2\bs]
+      \setbox0=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_a}}%
+      \setbox2=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_b}}%
+      \setbox4=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_c}}%
+      \setbox6=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_d}}%
+      \begin{subfigure}[b]{\wd0}% bottm으로 정렬(t,c 가능)
+        \box0
+        \caption{}\label{fig:#2:a}% a, b, c 순차적으로 캡션 붙음, 하나씩 라벨 호출할 수 있음
+      \end{subfigure}
+      \par\vspace*{##2\textwidth}% 그림 간격 조절(기본 0)
+      \begin{subfigure}[b]{\wd2}
+        \box2
+        \caption{}\label{fig:#2:b}
+      \end{subfigure}
+      \par\vspace*{##2\textwidth}% 그림 간격 조절(기본 0)
+      \begin{subfigure}[b]{\wd4}
+        \box4
+        \caption{}\label{fig:#2:c}
+      \end{subfigure}
+      \par\vspace*{##2\textwidth}
+      \begin{subfigure}[b]{\wd6}
+        \box6
+        \caption{}\label{fig:#2:d}
+      \end{subfigure}
+      \caption{#4}
+      \label{fig:#2}
+    \zz \end{figure}}}
+
 
 %% figure 6개짜리 함수 작성 (파일명은 같고 _a ~ _f까지 순차적으로, 3개씩 2줄 배치)
 %% 사용법: \DeclareHexaFigure[<1단계 기본배율(기본 1)>]{파일명(라벨)}{명령이름}{캡션}

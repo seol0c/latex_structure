@@ -315,7 +315,7 @@
     \zz \end{figure}}}
 
 
-%% figure 4개짜리 함수 작성(파일명은 같고_a ~ _d만 달라야 함, 1열 세로 배치)
+%% figure 4개짜리 함수 작성(파일명은 같고_a ~ _d만 달라야 함, 1열 가로 배치)
 \NewDocumentCommand{\DeclareQuadFigure}{O{1} m m m}{%
   \NewDocumentCommand{#3}{O{0.8} O{0}}{% 첫 번째 인자는 사이즈(기본값 0.8), 두 번째 인자는 그림 간격(기본값 0)
     \begin{figure}[H] \centering \zz[0.2\bs]
@@ -327,17 +327,17 @@
         \box0
         \caption{}\label{fig:#2:a}% a, b, c 순차적으로 캡션 붙음, 하나씩 라벨 호출할 수 있음
       \end{subfigure}
-      \par\vspace*{##2\textwidth}% 그림 간격 조절(기본 0)
+      \hspace*{##2\textwidth}% 그림 간격 조절(기본 0)
       \begin{subfigure}[b]{\wd2}
         \box2
         \caption{}\label{fig:#2:b}
       \end{subfigure}
-      \par\vspace*{##2\textwidth}% 그림 간격 조절(기본 0)
+      \hspace*{##2\textwidth}% 그림 간격 조절(기본 0)
       \begin{subfigure}[b]{\wd4}
         \box4
         \caption{}\label{fig:#2:c}
       \end{subfigure}
-      \par\vspace*{##2\textwidth}
+      \hspace*{##2\textwidth}
       \begin{subfigure}[b]{\wd6}
         \box6
         \caption{}\label{fig:#2:d}

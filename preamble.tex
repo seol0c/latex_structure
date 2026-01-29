@@ -44,8 +44,11 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
 % 챕터 불러오기 - 이거 안쓰기로 함. 저장으로 컴파일이 안되는 문제 발생함
 \newcommand{\loadchapter}[1]{\subimport{../chapters/#1/}{chapter.tex}}
 % 히든 챕터 불러오기 - 본문에 안쓰는 챕터지만 식 참조 위하여 외부참조하기 위함 (aux 파일 한 번 컴파일 해야 함)
-\newcommand{\hiddenchapter}[1]{%
-  \externaldocument[]{../chapters/#1/chapter}}
+\newcommand{\hiddenchapter}[2]{%
+\externaldocument[]{../chapters/#1/#2/chapter}}
+
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 캡션, 링크

@@ -161,3 +161,142 @@
 \newcommand{\soli}[1]{%
   \ifnum\seolmode>2 \hlo{#1}
   \else \hlp{#1} \fi}
+
+
+%----------------------------
+% 1) numbering
+%----------------------------
+\newcounter{testcheckbox}[section]
+\renewcommand{\thetestcheckbox}{\arabic{chapter}.\arabic{section}.\arabic{testcheckbox}}
+
+% 번호를 전역 문자열로 저장/읽기 (래퍼는 ":" 없음)
+\newcommand{\TestCheckSetNo}{}
+\newcommand{\TestCheckGetNo}{}
+
+\ExplSyntaxOn
+\tl_new:N \g__tc_lastno_tl
+\cs_new_protected:Npn \__tc_set_lastno: { \tl_gset:Nx \g__tc_lastno_tl { \thetestcheckbox } }
+\cs_new:Npn \__tc_get_lastno: { \tl_use:N \g__tc_lastno_tl }
+
+% 래퍼 정의(콜론 없는 사용자 명령)
+\cs_gset_protected:Npn \TestCheckSetNo { \__tc_set_lastno: }
+\cs_gset:Npn \TestCheckGetNo { \__tc_get_lastno: }
+\ExplSyntaxOff
+
+%----------------------------
+% 2) problem box (printed)
+%----------------------------
+\NewTColorBox{testcheckboxbox}{g}{boxbase,
+  title={\boxtitle{test\,\,\thetestcheckbox\IfNoValueF{#1}{. \,\,#1}}},
+  colframe=gray!50,
+  coltitle=black,
+  breakable}
+
+\NewDocumentEnvironment{testcheckbox}{g}{%
+  \refstepcounter{testcheckbox}%
+  \TestCheckSetNo % <-- 콜론 없는 래퍼 호출
+  \begin{testcheckboxbox}{#1}%
+}{%
+  \end{testcheckboxbox}%
+}
+
+%----------------------------
+% 3) solution print box (printed only when .sol is input)
+%----------------------------
+\NewTColorBox{testchecksolprintbox}{m g}{boxbase,
+  title={\boxtitle{solution\,\,#1\IfNoValueF{#2}{. \,\,#2}}},
+  colframe=blue!50,
+  coltitle=black,
+  colbacktitle=white,
+  coltext=black,
+  before upper=\color{black},
+  breakable}
+
+%----------------------------
+% 4) build flattened BASENAME from currfiledir+currfilebase
+%    -> 6_Electromagnetism_11_section01
+%----------------------------
+\newwrite\testsolfile
+\newif\iftestsolopen
+\testsolopenfalse
+
+\newcommand{\testsolwritename}{} % *.sol.tmp
+\newcommand{\testsolreadname}{}  % *.sol
+
+\ExplSyntaxOn
+\tl_new:N \l__tc_solbase_tl
+
+\cs_new_protected:Npn \__tc_build_solbase:
+  {
+    \tl_set:Nx \l_tmpa_tl { \currfiledir }
+    \tl_set:Nx \l_tmpb_tl { \currfilebase }
+
+    \regex_replace_all:nnN { \A (?:\.\./)+ } { } \l_tmpa_tl
+    \regex_replace_once:nnN { \A chapters/ } { } \l_tmpa_tl
+    \regex_replace_all:nnN { /\./ } { / } \l_tmpa_tl
+    \regex_replace_all:nnN { / \z } { } \l_tmpa_tl
+    \regex_replace_all:nnN { / } { _ } \l_tmpa_tl
+
+    \tl_set:Nx \l__tc_solbase_tl { \l_tmpa_tl _ \l_tmpb_tl }
+  }
+
+\cs_new_protected:Npn \__tc_open_sol_for_currfile:
+  {
+    \__tc_build_solbase:
+    \tl_set:Nx \l_tmpc_tl { \l__tc_solbase_tl }
+    \edef\__base{\tl_use:N \l_tmpc_tl}%
+    \edef\__write{\__base.sol.tmp}%
+    \edef\__read{\__base.sol}%
+
+    \ifx\testsolwritename\__write
+    \else
+      \iftestsolopen
+        \immediate\closeout\testsolfile
+        \testsolopenfalse
+      \fi
+      \edef\testsolwritename{\__write}%
+      \edef\testsolreadname{\__read}%
+      \immediate\openout\testsolfile=\testsolwritename\relax
+      \testsolopentrue
+    \fi
+  }
+
+% 래퍼(콜론 없음)
+\cs_gset_protected:Npn \TestCheckOpenSol { \__tc_open_sol_for_currfile: }
+\ExplSyntaxOff
+
+% 문서 끝: tmp -> sol 자동 갱신 (Windows, requires -shell-escape)
+\AtEndDocument{%
+  \iftestsolopen
+    \immediate\closeout\testsolfile
+    \testsolopenfalse
+  \fi
+  \IfFileExists{\testsolwritename}{%
+    \immediate\write18{copy /Y "\testsolwritename" "\testsolreadname"}%
+  }{}%
+}
+
+%----------------------------
+% 6) solution input box (NOT printed, only written to .sol.tmp)
+%----------------------------
+\NewDocumentEnvironment{testchecksolbox}{g +b}{%
+  \TestCheckOpenSol
+  \begingroup
+    \edef\solno{\TestCheckGetNo}%
+    \immediate\write\testsolfile{%
+      \string\begin{testchecksolprintbox}{\solno}%
+      \IfNoValueTF{#1}{{}}{{#1}}%
+    }%
+    \immediate\write\testsolfile{\unexpanded{#2}}%
+    \immediate\write\testsolfile{\string\end{testchecksolprintbox}}%
+  \endgroup
+}{}
+
+%----------------------------
+% 7) print chosen .sol (manual selection)
+%----------------------------
+\newcommand{\UseTestCheckSolutions}[1]{%
+  \par\color{black}%
+  \input{#1}%
+  \par
+}

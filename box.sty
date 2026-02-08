@@ -87,12 +87,15 @@
 % solution의 문제 해결 박스는
 % 1번 모드면 본문에 나와서 보면서 편집이 가능하고,
 % 2번 모드이면 .sol 파일에 저장되어 나중에 한 번에 불러올 수 있도록 함
+% 3번 모드이면(맨 뒤 문제풀이용) seolmode 1,2에서는 자리차지하고 안보임
 
 % 1. 넘버링
+% section 기준으로 리셋
+% 번호 형식은 '챕터.섹션.누적번호'임 (예: 18.1.1)
 \newcounter{ckbox}[section]
 \renewcommand{\theckbox}{\arabic{chapter}.\arabic{section}.\arabic{ckbox}}
 
-\newcounter{ckboxstar}[section]
+\newcounter{ckboxstar}[section]% star(*)는 seolmode 2까지는 번호가 안보임. 3부터 관리용으로 보임
 \renewcommand{\theckboxstar}{\arabic{chapter}.\arabic{section}.\arabic{ckboxstar}}
 
 \newcounter{prbox}[section]
@@ -153,19 +156,24 @@
   \begin{prboxbox*}{#1}}{\end{prboxbox*}}
 
 % 3-1. 솔루션 박스(제목은 날리고 번호만 가져옴)
-% 1은 본문 출력과 파일 저장 / 2는 파일 저장만
-\NewTColorBox{soltestprintbox}{m m g}{boxbase,
+% 1은 본문 출력과 파일 저장 / 2는 파일 저장만 / 3일 때는 seolmode에 따라 동작
+\NewTColorBox{solprintbox}{m m g}{boxbase,
   title={\boxtitle{sol:\,\,#1\,\,#2}},
   colframe=blue!50,% 중간 파란 테두리
   coltitle=black,% 제목 글씨색
   colbacktitle=white}% 제목 배경색
 
+% 하얀 출력 박스(자리 차지용)
+\NewTColorBox{solprintboxwhite}{m m g}{boxbase,
+  title={\boxtitle{\textcolor{white}{sol:\,\,#1\,\,#2}}},
+  colframe=white,coltitle=white,colbacktitle=white}
+
 % 3-2. .sol.tmp 파일 생성 (main 폴더에 생성)
-\newwrite\soltestfile
-\newif\ifsoltestopen
-\soltestopenfalse
-\newcommand{\soltesttmpname}{} % 최종 tmp 파일명
-\newcommand{\SolTestBuildTmpName}{%
+\newwrite\solfile
+\newif\ifsolopen
+\solopenfalse
+\newcommand{\soltmpname}{} % 최종 tmp 파일명
+\newcommand{\SolBuildTmpName}{%
   \edef\__raw{\currfiledir\currfilebase}%
   \StrSubstitute{\__raw}{../}{}[\__a]% ../ 제거(반복)
   \StrSubstitute{\__a}{../}{}[\__a]%
@@ -174,114 +182,97 @@
   \StrSubstitute{\__a}{chapters/}{}[\__b]% chapters/ 제거
   \StrSubstitute{\__b}{/./}{/}[\__c]% /./ 정리
   \StrSubstitute{\__c}{/}{_}[\__d]% / -> _
-  \edef\soltesttmpname{\__d.sol.tmp}}% 최종
-\newcommand{\SolTestOpenFile}{%
-  \ifsoltestopen\else
-    \SolTestBuildTmpName
-    \immediate\openout\soltestfile=\soltesttmpname\relax
-    \global\soltestopentrue\fi}
+  \edef\soltmpname{\__d.sol.tmp}}% 최종
+\newcommand{\SolOpenFile}{%
+  \ifsolopen\else
+    \SolBuildTmpName
+    \immediate\openout\solfile=\soltmpname\relax
+    \global\solopentrue\fi}
 \AtEndDocument{%
-  \ifsoltestopen
-    \immediate\closeout\soltestfile\fi}
+  \ifsolopen
+    \immediate\closeout\solfile\fi}
 
 % 3-3. 모드별 동작
 % 자동추적 변수로 \lastboxtype, \lastboxno 사용
-\NewDocumentEnvironment{soltestbox}{m g +b}{% 1,2 공통: 파일 저장은 무조건 수행
-  \SolTestOpenFile
-  \begingroup
-    \immediate\write\soltestfile{%
-      \string\begin{soltestprintbox}{\lastboxtype}{\lastboxno}%
-      \IfNoValueTF{#2}{{}}{{#2}}}%
-    \immediate\write\soltestfile{\unexpanded{#3}}%
-    \immediate\write\soltestfile{\string\end{soltestprintbox}}%
-  \endgroup%
-  \ifnum#1=1% 1이면 본문 출력도 수행
-    \begin{soltestprintbox}{\lastboxtype}{\lastboxno}{#2}
-    #3\end{soltestprintbox}\fi}{}
-
-
-
-
-
-
-
-%% checkbox 정의
-% 번호 카운터 먼저 정의 - section 기준으로 리셋
-% 번호 형식은 '챕터.섹션.누적번호'임 (예: 18.1.1)
-\newcounter{checkbox}[section]
-\renewcommand{\thecheckbox}{\arabic{chapter}.\arabic{section}.\arabic{checkbox}}
-\NewTColorBox{checkboxbox}{g}{boxbase,% 제목을 {}안에 넣으면 제목이 함께 출력됨, 공통 서식 호출
-  title={\boxtitle{check\,\,\thecheckbox\IfNoValueF{#1}{. \,\,#1}}},
-  colframe=gray!50,% 테두리(기본 제목 배경) - 회색(50%)
-  coltitle=black}% 제목 글씨색 - 검정
-\newenvironment{checkbox}{\refstepcounter{checkbox}\begin{checkboxbox}}{\end{checkboxbox}}
-
-%% checkbox* 정의 - 번호 없음
-\NewTColorBox{checkboxbox*}{g}{boxbase,
-  title={\boxtitle{check\IfNoValueF{#1}{. \,\,#1}}},
-  colframe=gray!50,% 테두리(기본 제목 배경) - 회색(50%)
-  coltitle=black}% 제목 글씨색 - 검정
-\newenvironment{checkbox*}{\begin{checkboxbox*}}{\end{checkboxbox*}}
-
-%% practicebox 정의
-\newcounter{practicebox}[section]
-\renewcommand{\thepracticebox}{\arabic{chapter}.\arabic{section}.\arabic{practicebox}}
-\NewTColorBox{practiceboxbox}{g}{boxbase,
-  title={\boxtitle{practice\,\,\thepracticebox\IfNoValueF{#1}{. \,\,#1}}},
-  colframe=black,% 테두리(기본 제목 배경) - 검정
-  coltitle=white}% 제목 글씨색 - 흰색
-\newenvironment{practicebox}{\refstepcounter{practicebox}\begin{practiceboxbox}}{\end{practiceboxbox}}
-
-%% practicebox* 정의 - 번호 없음
-\NewTColorBox{practiceboxbox*}{g}{boxbase,
-  title={\boxtitle{practice\IfNoValueF{#1}{. \,\,#1}}},
-  colframe=black,% 테두리(기본 제목 배경) - 검정
-  coltitle=white}% 제목 글씨색 - 흰색
-\newenvironment{practicebox*}{\begin{practiceboxbox*}}{\end{practiceboxbox*}}
+\NewDocumentEnvironment{solbox}{m g +b}{%1,2일때만 파일 저장
+  \ifnum#1<3\relax
+    \SolOpenFile
+    \begingroup
+      \immediate\write\solfile{%
+        \string\begin{solprintbox}{\lastboxtype}{\lastboxno}{}}%
+      \immediate\write\solfile{\unexpanded{#3}}%
+      \immediate\write\solfile{%
+        \string\end{solprintbox}}\endgroup\fi%
+  \ifnum#1=1\relax% 1. 본문 출력 + 파일저장
+    \begin{solprintbox}{\lastboxtype}{\lastboxno}{}
+      #3\end{solprintbox}
+  \else\ifnum#1=3\relax% 3. seolmode에 따라 출력/화이트 자리 차지
+    \ifnum\seolmode>2\relax
+      \begin{solprintbox}{\lastboxtype}{\lastboxno}{}
+        #3\end{solprintbox}
+    \else
+      \begin{solprintboxwhite}{\lastboxtype}{\lastboxno}{}
+        #3\end{solprintboxwhite}\fi\fi\fi}{}
 
 %% questionbox 정의
 \NewTColorBox{questionboxbox}{g}{boxbase,
   title={\boxtitle{question\IfNoValueF{#1}{. \,\,#1}}},
   colframe=gray!50,% 테두리(기본 제목 배경) - 회색(50%)
   coltitle=black}% 제목 글씨색 - 검정
-\newenvironment{questionbox}{\begin{questionboxbox}}{\end{questionboxbox}}
 % 문제번호 저장용 매크로
 \newcommand{\QuestionNumberumber}{0}% 초기값 0으로 설정
-\newcommand{\QuestionNumber}[1]{\renewcommand{\QuestionNumberumber}{\unskip#1\unskip}}% 공백 무시, pn값을 저장
+\newcommand{\QuestionNumber}[1]{%
+  \renewcommand{\QuestionNumberumber}{\unskip#1\unskip}% 공백 무시, pn값을 저장
+  \xdef\lastboxtype{question}%
+  \xdef\lastboxno{\QuestionNumberumber}}%
+% 환경 시작 시점에도 solbox 추적값 갱신
+\NewDocumentEnvironment{questionbox}{g}{%
+  \xdef\lastboxtype{question.}%
+  \xdef\lastboxno{\thechapter. QuestionNumberumber}%
+  \begin{questionboxbox}{#1}}{\end{questionboxbox}}%
 
 %% problembox 정의
 \NewTColorBox{problemboxbox}{g}{boxbase,
   title={\boxtitle{problem\IfNoValueF{#1}{. \,\,#1}}},
   colframe=black,% 테두리(기본 제목 배경) - 검정
   coltitle=white}% 제목 글씨색 - 흰색
-\newenvironment{problembox}{\begin{problemboxbox}}{\end{problemboxbox}}
+  
 % 문제번호 저장용 매크로
 \newcommand{\ProblemNumberumber}{0}% 초기값 0으로 설정
-\newcommand{\ProblemNumber}[1]{\renewcommand{\ProblemNumberumber}{\unskip#1\unskip}}% 공백 무시, pn값을 저장
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% seolmode와 호환되는 박스
-%% solbox 정의 - 솔루션
-% seolmode가 3,4일때만 출력하고 1,2일때는 사라짐
-% \ifnum\seolmode>2% seolmode가 3이상이면 출력
-\NewTColorBox{solsolbox}{g}{boxbase,
-  title={\boxtitle{Solution\IfNoValueF{#1}{. \,\,#1}}},
-  colframe=blue!50,% 중간 파란 테두리
-  coltitle=black,% 제목 글씨색
-  colbacktitle=white}% 제목 배경색
-% 모드 변경용 하얀박스 - 위의 solsolbox와 완전 똑같이 만들고 전부 흰색으로 처리함
-\NewTColorBox{whitesolsolbox}{g}{boxbase, 
-  title={\boxtitle{\textcolor{white}{Solution\IfNoValueF{#1}{. \,\,#1}}}},
-  colframe=white, coltitle=white,colbacktitle=white}
-% 환경정의
-\NewDocumentEnvironment{solbox}{g}{
-  \ifnum\seolmode>2
-    \begin{solsolbox}{#1}
-  \else\begin{whitesolsolbox}{#1}\color{white}\fi}{
-  \ifnum\seolmode>2
-    \end{solsolbox}
-  \else\end{whitesolsolbox}\fi}
+% 번호 저장 + solbox 추적값 갱신
+\newcommand{\ProblemNumber}[1]{%
+  \renewcommand{\ProblemNumberumber}{\unskip#1\unskip}% 공백 무시, pn값을 저장
+  \xdef\lastboxtype{problem}%
+  \xdef\lastboxno{\ProblemNumberumber}}%
+% 환경 시작 시점에도 solbox 추적값 갱신
+\NewDocumentEnvironment{problembox}{g}{%
+  \xdef\lastboxtype{problem.}%
+  \xdef\lastboxno{\thechapter. \ProblemNumberumber}%
+  \begin{problemboxbox}{#1}}{\end{problemboxbox}}%
 
 % 솔루션 하이라이트, solight - 모드가 3 이상일때만 orange 출력
 \newcommand{\soli}[1]{%
   \ifnum\seolmode>2 \hlo{#1}
   \else \hlp{#1} \fi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% seolmode와 호환되는 박스로 썼으나 이제 안씀. 저장
+%% solbox 정의 - 솔루션
+% seolmode가 3,4일때만 출력하고 1,2일때는 사라짐
+% \ifnum\seolmode>2% seolmode가 3이상이면 출력
+%\NewTColorBox{solsolbox}{g}{boxbase,
+%  title={\boxtitle{Solution\IfNoValueF{#1}{. \,\,#1}}},
+%  colframe=blue!50,% 중간 파란 테두리
+%  coltitle=black,% 제목 글씨색
+%  colbacktitle=white}% 제목 배경색
+% 모드 변경용 하얀박스 - 위의 solsolbox와 완전 똑같이 만들고 전부 흰색으로 처리함
+%\NewTColorBox{whitesolsolbox}{g}{boxbase, 
+%  title={\boxtitle{\textcolor{white}{Solution\IfNoValueF{#1}{. \,\,#1}}}},
+%  colframe=white, coltitle=white,colbacktitle=white}
+% 환경정의
+%\NewDocumentEnvironment{solbox}{g}{
+%  \ifnum\seolmode>2
+%    \begin{solsolbox}{#1}
+%  \else\begin{whitesolsolbox}{#1}\color{white}\fi}{
+%  \ifnum\seolmode>2
+%    \end{solsolbox}
+%  \else\end{whitesolsolbox}\fi}

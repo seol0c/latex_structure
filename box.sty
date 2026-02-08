@@ -81,6 +81,130 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 문제풀이용 박스 제작
+% check, practice, question, problem의 4단계 문제
+% ckbox, prbox, qubox, prbox로 제작
+
+% solution의 문제 해결 박스는
+% 1번 모드면 본문에 나와서 보면서 편집이 가능하고,
+% 2번 모드이면 .sol 파일에 저장되어 나중에 한 번에 불러올 수 있도록 함
+
+% 1. 넘버링
+\newcounter{ckbox}[section]
+\renewcommand{\theckbox}{\arabic{chapter}.\arabic{section}.\arabic{ckbox}}
+
+\newcounter{ckboxstar}[section]
+\renewcommand{\theckboxstar}{\arabic{chapter}.\arabic{section}.\arabic{ckboxstar}}
+
+\newcounter{prbox}[section]
+\renewcommand{\theprbox}{\arabic{chapter}.\arabic{section}.\arabic{prbox}}
+
+\newcounter{prboxstar}[section]
+\renewcommand{\theprboxstar}{\arabic{chapter}.\arabic{section}.\arabic{prboxstar}}
+
+% 2. 마지막으로 사용된 문제의 정보 저장(솔루션 박스 자동 매치를 위함)
+\newcommand{\lastboxtype}{}
+\newcommand{\lastboxno}{}
+
+% 2. 문제박스 출력
+\NewTColorBox{ckboxbox}{g}{boxbase,% 제목을 {}안에 넣으면 제목이 함께 출력됨, 공통 서식 호출
+  title={\boxtitle{check\,\,\theckbox\IfNoValueF{#1}{. \,\,#1}}},
+  colframe=gray!50,% 테두리(기본 제목 배경) - 회색(50%)
+  coltitle=black}% 제목 글씨색 - 검정
+\NewDocumentEnvironment{ckbox}{g}{
+  \refstepcounter{ckbox}%
+  \xdef\lastboxtype{check}%
+  \xdef\lastboxno{\theckbox}%
+  \begin{ckboxbox}{#1}}{\end{ckboxbox}}
+
+\NewTColorBox{ckboxbox*}{g}{boxbase,% 제목을 {}안에 넣으면 제목이 함께 출력됨, 공통 서식 호출
+  title={\boxtitle{check% 기본 텍스트
+    \ifnum\seolmode>2%
+    \,(**)\,\theckboxstar\IfNoValueF{#1}% 모드 3,4일 때 번호 강제 출력, 제목 있으면 점 찍고 출력
+    \fi\IfNoValueF{#1}{. \,\,#1}}},% 제목이 있으면 점을 찍고 제목 출력
+  colframe=gray!50,% 테두리(기본 제목 배경) - 회색(50%)
+  coltitle=black}% 제목 글씨색 - 검정
+\NewDocumentEnvironment{ckbox*}{g}{
+  \refstepcounter{ckboxstar}%
+  \xdef\lastboxtype{check (**)}%
+  \xdef\lastboxno{\theckboxstar}%
+  \begin{ckboxbox*}{#1}}{\end{ckboxbox*}}
+
+\NewTColorBox{prboxbox}{g}{boxbase,% 제목을 {}안에 넣으면 제목이 함께 출력됨, 공통 서식 호출
+  title={\boxtitle{practice\,\,\theprbox\IfNoValueF{#1}{. \,\,#1}}},
+  colframe=black,% 테두리(기본 제목 배경) - 검정
+  coltitle=white}% 제목 글씨색 - 흰색
+\NewDocumentEnvironment{prbox}{g}{
+  \refstepcounter{prbox}%
+  \xdef\lastboxtype{practice}%
+  \xdef\lastboxno{\theprbox}%
+  \begin{prboxbox}{#1}}{\end{prboxbox}}
+
+\NewTColorBox{prboxbox*}{g}{boxbase,% 제목을 {}안에 넣으면 제목이 함께 출력됨, 공통 서식 호출
+  title={\boxtitle{practice% 기본 텍스트
+    \ifnum\seolmode>2%
+    \,(**)\,\theprboxstar\IfNoValueF{#1}% 모드 3,4일 때 번호 강제 출력, 제목 있으면 점 찍고 출력
+    \fi\IfNoValueF{#1}{. \,\,#1}}},% 제목이 있으면 점을 찍고 제목 출력
+  colframe=black,% 테두리(기본 제목 배경) - 검정
+  coltitle=white}% 제목 글씨색 - 흰색
+\NewDocumentEnvironment{prbox*}{g}{
+  \refstepcounter{prboxstar}%
+  \xdef\lastboxtype{practice (**)}%
+  \xdef\lastboxno{\theprboxstar}%
+  \begin{prboxbox*}{#1}}{\end{prboxbox*}}
+
+% 3-1. 솔루션 박스(제목은 날리고 번호만 가져옴)
+% 1은 본문 출력과 파일 저장 / 2는 파일 저장만
+\NewTColorBox{soltestprintbox}{m m g}{boxbase,
+  title={\boxtitle{sol:\,\,#1\,\,#2}},
+  colframe=blue!50,% 중간 파란 테두리
+  coltitle=black,% 제목 글씨색
+  colbacktitle=white}% 제목 배경색
+
+% 3-2. .sol.tmp 파일 생성 (main 폴더에 생성)
+\newwrite\soltestfile
+\newif\ifsoltestopen
+\soltestopenfalse
+\newcommand{\soltesttmpname}{} % 최종 tmp 파일명
+\newcommand{\SolTestBuildTmpName}{%
+  \edef\__raw{\currfiledir\currfilebase}%
+  \StrSubstitute{\__raw}{../}{}[\__a]% ../ 제거(반복)
+  \StrSubstitute{\__a}{../}{}[\__a]%
+  \StrSubstitute{\__a}{../}{}[\__a]%
+  \StrSubstitute{\__a}{../}{}[\__a]%
+  \StrSubstitute{\__a}{chapters/}{}[\__b]% chapters/ 제거
+  \StrSubstitute{\__b}{/./}{/}[\__c]% /./ 정리
+  \StrSubstitute{\__c}{/}{_}[\__d]% / -> _
+  \edef\soltesttmpname{\__d.sol.tmp}}% 최종
+\newcommand{\SolTestOpenFile}{%
+  \ifsoltestopen\else
+    \SolTestBuildTmpName
+    \immediate\openout\soltestfile=\soltesttmpname\relax
+    \global\soltestopentrue\fi}
+\AtEndDocument{%
+  \ifsoltestopen
+    \immediate\closeout\soltestfile\fi}
+
+% 3-3. 모드별 동작
+% 자동추적 변수로 \lastboxtype, \lastboxno 사용
+\NewDocumentEnvironment{soltestbox}{m g +b}{% 1,2 공통: 파일 저장은 무조건 수행
+  \SolTestOpenFile
+  \begingroup
+    \immediate\write\soltestfile{%
+      \string\begin{soltestprintbox}{\lastboxtype}{\lastboxno}%
+      \IfNoValueTF{#2}{{}}{{#2}}}%
+    \immediate\write\soltestfile{\unexpanded{#3}}%
+    \immediate\write\soltestfile{\string\end{soltestprintbox}}%
+  \endgroup%
+  \ifnum#1=1% 1이면 본문 출력도 수행
+    \begin{soltestprintbox}{\lastboxtype}{\lastboxno}{#2}
+    #3\end{soltestprintbox}\fi}{}
+
+
+
+
+
+
+
 %% checkbox 정의
 % 번호 카운터 먼저 정의 - section 기준으로 리셋
 % 번호 형식은 '챕터.섹션.누적번호'임 (예: 18.1.1)
@@ -161,142 +285,3 @@
 \newcommand{\soli}[1]{%
   \ifnum\seolmode>2 \hlo{#1}
   \else \hlp{#1} \fi}
-
-
-%----------------------------
-% 1) numbering
-%----------------------------
-\newcounter{testcheckbox}[section]
-\renewcommand{\thetestcheckbox}{\arabic{chapter}.\arabic{section}.\arabic{testcheckbox}}
-
-% 번호를 전역 문자열로 저장/읽기 (래퍼는 ":" 없음)
-\newcommand{\TestCheckSetNo}{}
-\newcommand{\TestCheckGetNo}{}
-
-\ExplSyntaxOn
-\tl_new:N \g__tc_lastno_tl
-\cs_new_protected:Npn \__tc_set_lastno: { \tl_gset:Nx \g__tc_lastno_tl { \thetestcheckbox } }
-\cs_new:Npn \__tc_get_lastno: { \tl_use:N \g__tc_lastno_tl }
-
-% 래퍼 정의(콜론 없는 사용자 명령)
-\cs_gset_protected:Npn \TestCheckSetNo { \__tc_set_lastno: }
-\cs_gset:Npn \TestCheckGetNo { \__tc_get_lastno: }
-\ExplSyntaxOff
-
-%----------------------------
-% 2) problem box (printed)
-%----------------------------
-\NewTColorBox{testcheckboxbox}{g}{boxbase,
-  title={\boxtitle{test\,\,\thetestcheckbox\IfNoValueF{#1}{. \,\,#1}}},
-  colframe=gray!50,
-  coltitle=black,
-  breakable}
-
-\NewDocumentEnvironment{testcheckbox}{g}{%
-  \refstepcounter{testcheckbox}%
-  \TestCheckSetNo % <-- 콜론 없는 래퍼 호출
-  \begin{testcheckboxbox}{#1}%
-}{%
-  \end{testcheckboxbox}%
-}
-
-%----------------------------
-% 3) solution print box (printed only when .sol is input)
-%----------------------------
-\NewTColorBox{testchecksolprintbox}{m g}{boxbase,
-  title={\boxtitle{solution\,\,#1\IfNoValueF{#2}{. \,\,#2}}},
-  colframe=blue!50,
-  coltitle=black,
-  colbacktitle=white,
-  coltext=black,
-  before upper=\color{black},
-  breakable}
-
-%----------------------------
-% 4) build flattened BASENAME from currfiledir+currfilebase
-%    -> 6_Electromagnetism_11_section01
-%----------------------------
-\newwrite\testsolfile
-\newif\iftestsolopen
-\testsolopenfalse
-
-\newcommand{\testsolwritename}{} % *.sol.tmp
-\newcommand{\testsolreadname}{}  % *.sol
-
-\ExplSyntaxOn
-\tl_new:N \l__tc_solbase_tl
-
-\cs_new_protected:Npn \__tc_build_solbase:
-  {
-    \tl_set:Nx \l_tmpa_tl { \currfiledir }
-    \tl_set:Nx \l_tmpb_tl { \currfilebase }
-
-    \regex_replace_all:nnN { \A (?:\.\./)+ } { } \l_tmpa_tl
-    \regex_replace_once:nnN { \A chapters/ } { } \l_tmpa_tl
-    \regex_replace_all:nnN { /\./ } { / } \l_tmpa_tl
-    \regex_replace_all:nnN { / \z } { } \l_tmpa_tl
-    \regex_replace_all:nnN { / } { _ } \l_tmpa_tl
-
-    \tl_set:Nx \l__tc_solbase_tl { \l_tmpa_tl _ \l_tmpb_tl }
-  }
-
-\cs_new_protected:Npn \__tc_open_sol_for_currfile:
-  {
-    \__tc_build_solbase:
-    \tl_set:Nx \l_tmpc_tl { \l__tc_solbase_tl }
-    \edef\__base{\tl_use:N \l_tmpc_tl}%
-    \edef\__write{\__base.sol.tmp}%
-    \edef\__read{\__base.sol}%
-
-    \ifx\testsolwritename\__write
-    \else
-      \iftestsolopen
-        \immediate\closeout\testsolfile
-        \testsolopenfalse
-      \fi
-      \edef\testsolwritename{\__write}%
-      \edef\testsolreadname{\__read}%
-      \immediate\openout\testsolfile=\testsolwritename\relax
-      \testsolopentrue
-    \fi
-  }
-
-% 래퍼(콜론 없음)
-\cs_gset_protected:Npn \TestCheckOpenSol { \__tc_open_sol_for_currfile: }
-\ExplSyntaxOff
-
-% 문서 끝: tmp -> sol 자동 갱신 (Windows, requires -shell-escape)
-\AtEndDocument{%
-  \iftestsolopen
-    \immediate\closeout\testsolfile
-    \testsolopenfalse
-  \fi
-  \IfFileExists{\testsolwritename}{%
-    \immediate\write18{copy /Y "\testsolwritename" "\testsolreadname"}%
-  }{}%
-}
-
-%----------------------------
-% 6) solution input box (NOT printed, only written to .sol.tmp)
-%----------------------------
-\NewDocumentEnvironment{testchecksolbox}{g +b}{%
-  \TestCheckOpenSol
-  \begingroup
-    \edef\solno{\TestCheckGetNo}%
-    \immediate\write\testsolfile{%
-      \string\begin{testchecksolprintbox}{\solno}%
-      \IfNoValueTF{#1}{{}}{{#1}}%
-    }%
-    \immediate\write\testsolfile{\unexpanded{#2}}%
-    \immediate\write\testsolfile{\string\end{testchecksolprintbox}}%
-  \endgroup
-}{}
-
-%----------------------------
-% 7) print chosen .sol (manual selection)
-%----------------------------
-\newcommand{\UseTestCheckSolutions}[1]{%
-  \par\color{black}%
-  \input{#1}%
-  \par
-}

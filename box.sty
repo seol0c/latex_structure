@@ -82,7 +82,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 문제풀이용 박스 제작
 % check, practice, question, problem의 4단계 문제
-% ckbox, prbox, qubox, prbox로 제작
+% ckbox, ptbox, qubox, ptbox로 제작
 
 % solution의 문제 해결 박스는
 % 1번 모드면 본문에 나와서 보면서 편집이 가능하고,
@@ -98,11 +98,11 @@
 \newcounter{ckboxstar}[section]% star(*)는 seolmode 2까지는 번호가 안보임. 3부터 관리용으로 보임
 \renewcommand{\theckboxstar}{\arabic{chapter}.\arabic{section}.\arabic{ckboxstar}}
 
-\newcounter{prbox}[section]
-\renewcommand{\theprbox}{\arabic{chapter}.\arabic{section}.\arabic{prbox}}
+\newcounter{ptbox}[section]
+\renewcommand{\theptbox}{\arabic{chapter}.\arabic{section}.\arabic{ptbox}}
 
-\newcounter{prboxstar}[section]
-\renewcommand{\theprboxstar}{\arabic{chapter}.\arabic{section}.\arabic{prboxstar}}
+\newcounter{ptboxstar}[section]
+\renewcommand{\theptboxstar}{\arabic{chapter}.\arabic{section}.\arabic{ptboxstar}}
 
 % 2. 마지막으로 사용된 문제의 정보 저장(솔루션 박스 자동 매치를 위함)
 \newcommand{\lastboxtype}{}
@@ -132,28 +132,28 @@
   \xdef\lastboxno{\theckboxstar}%
   \begin{ckboxbox*}{#1}}{\end{ckboxbox*}}
 
-\NewTColorBox{prboxbox}{g}{boxbase,% 제목을 {}안에 넣으면 제목이 함께 출력됨, 공통 서식 호출
-  title={\boxtitle{practice\,\,\theprbox\IfNoValueF{#1}{. \,\,#1}}},
+\NewTColorBox{ptboxbox}{g}{boxbase,% 제목을 {}안에 넣으면 제목이 함께 출력됨, 공통 서식 호출
+  title={\boxtitle{practice\,\,\theptbox\IfNoValueF{#1}{. \,\,#1}}},
   colframe=black,% 테두리(기본 제목 배경) - 검정
   coltitle=white}% 제목 글씨색 - 흰색
-\NewDocumentEnvironment{prbox}{g}{
-  \refstepcounter{prbox}%
+\NewDocumentEnvironment{ptbox}{g}{
+  \refstepcounter{ptbox}%
   \xdef\lastboxtype{practice}%
-  \xdef\lastboxno{\theprbox}%
-  \begin{prboxbox}{#1}}{\end{prboxbox}}
+  \xdef\lastboxno{\theptbox}%
+  \begin{ptboxbox}{#1}}{\end{ptboxbox}}
 
-\NewTColorBox{prboxbox*}{g}{boxbase,% 제목을 {}안에 넣으면 제목이 함께 출력됨, 공통 서식 호출
+\NewTColorBox{ptboxbox*}{g}{boxbase,% 제목을 {}안에 넣으면 제목이 함께 출력됨, 공통 서식 호출
   title={\boxtitle{practice% 기본 텍스트
     \ifnum\seolmode>2%
-    \,(**)\,\theprboxstar\IfNoValueF{#1}% 모드 3,4일 때 번호 강제 출력, 제목 있으면 점 찍고 출력
+    \,(**)\,\theptboxstar\IfNoValueF{#1}% 모드 3,4일 때 번호 강제 출력, 제목 있으면 점 찍고 출력
     \fi\IfNoValueF{#1}{. \,\,#1}}},% 제목이 있으면 점을 찍고 제목 출력
   colframe=black,% 테두리(기본 제목 배경) - 검정
   coltitle=white}% 제목 글씨색 - 흰색
-\NewDocumentEnvironment{prbox*}{g}{
-  \refstepcounter{prboxstar}%
+\NewDocumentEnvironment{ptbox*}{g}{
+  \refstepcounter{ptboxstar}%
   \xdef\lastboxtype{practice (**)}%
-  \xdef\lastboxno{\theprboxstar}%
-  \begin{prboxbox*}{#1}}{\end{prboxbox*}}
+  \xdef\lastboxno{\theptboxstar}%
+  \begin{ptboxbox*}{#1}}{\end{ptboxbox*}}
 
 % 3-1. 솔루션 박스(제목은 날리고 번호만 가져옴)
 % 1은 본문 출력과 파일 저장 / 2는 파일 저장만 / 3일 때는 seolmode에 따라 동작
@@ -172,21 +172,9 @@
 \newwrite\solfile
 \newif\ifsolopen
 \solopenfalse
-\newcommand{\soltmpname}{} % 최종 tmp 파일명
-\newcommand{\SolBuildTmpName}{%
-  \edef\__raw{\currfiledir\currfilebase}%
-  \StrSubstitute{\__raw}{../}{}[\__a]% ../ 제거(반복)
-  \StrSubstitute{\__a}{../}{}[\__a]%
-  \StrSubstitute{\__a}{../}{}[\__a]%
-  \StrSubstitute{\__a}{../}{}[\__a]%
-  \StrSubstitute{\__a}{chapters/}{}[\__b]% chapters/ 제거
-  \StrSubstitute{\__b}{/./}{/}[\__c]% /./ 정리
-  \StrSubstitute{\__c}{/}{_}[\__d]% / -> _
-  \edef\soltmpname{\__d.sol.tmp}}% 최종
 \newcommand{\SolOpenFile}{%
   \ifsolopen\else
-    \SolBuildTmpName
-    \immediate\openout\solfile=\soltmpname\relax
+    \immediate\openout\solfile=solution.sol.tmp\relax
     \global\solopentrue\fi}
 \AtEndDocument{%
   \ifsolopen
@@ -194,18 +182,25 @@
 
 % 3-3. 모드별 동작
 % 자동추적 변수로 \lastboxtype, \lastboxno 사용
+\newcommand{\SolSetGraphicsPath}[1]{\graphicspath{{#1}{#1figures/}}}% 그림 경로 바뀌는 것 방지
 \NewDocumentEnvironment{solbox}{m g +b}{%1,2일때만 파일 저장
   \ifnum#1<3\relax
     \SolOpenFile
     \begingroup
+      \edef\__soldir{\currfiledir}%
       \immediate\write\solfile{%
+        \string\begingroup
+        \string\SolSetGraphicsPath{\__soldir}%
         \string\begin{solprintbox}{\lastboxtype}{\lastboxno}{}}%
       \immediate\write\solfile{\unexpanded{#3}}%
       \immediate\write\solfile{%
-        \string\end{solprintbox}}\endgroup\fi%
+        \string\end{solprintbox}%
+        \string\endgroup}%
+    \endgroup\fi
   \ifnum#1=1\relax% 1. 본문 출력 + 파일저장
     \begin{solprintbox}{\lastboxtype}{\lastboxno}{}
-      #3\end{solprintbox}
+      #3
+    \end{solprintbox}
   \else\ifnum#1=3\relax% 3. seolmode에 따라 출력/화이트 자리 차지
     \ifnum\seolmode>2\relax
       \begin{solprintbox}{\lastboxtype}{\lastboxno}{}
@@ -228,7 +223,7 @@
 % 환경 시작 시점에도 solbox 추적값 갱신
 \NewDocumentEnvironment{questionbox}{g}{%
   \xdef\lastboxtype{question.}%
-  \xdef\lastboxno{\thechapter. QuestionNumberumber}%
+  \xdef\lastboxno{\thechapter. \QuestionNumberumber}%
   \begin{questionboxbox}{#1}}{\end{questionboxbox}}%
 
 %% problembox 정의

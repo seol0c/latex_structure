@@ -41,6 +41,9 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
 \newcommand{\printBib}{% sloppy로 참고문헌 출력시 길이가 길다면 강제 줄바꿈
   \begin{sloppypar} \printbibliography \end{sloppypar}}
 
+% nowchapter로 시작하는 챕터 지정. setcounter는 하나 빼야해서 헷갈림
+\newcommand{\nowchapter}[1]{\setcounter{chapter}{\numexpr#1-1\relax}}
+
 % 챕터 불러오기 - 이거 안쓰기로 함. 저장으로 컴파일이 안되는 문제 발생함
 \newcommand{\loadchapter}[1]{\subimport{../chapters/#1/}{chapter.tex}}
 % 히든 챕터 불러오기 - 본문에 안쓰는 챕터지만 식 참조 위하여 외부참조하기 위함 (aux 파일 한 번 컴파일 해야 함)
@@ -58,7 +61,7 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
 \captionsetup[figure]{name=Fig.}% 그림 아래 캡션도 Fig. 으로 나오도록 함. caption 필요
 
 
-\providecommand*{\practiceboxautorefname}{practice}% 문제박스 참조시 라벨명
+\providecommand*{\ptboxautorefname}{practice}% 문제박스 참조시 라벨명
 
 \DeclareCaptionFont{mycaptionfont}{\fontsize{8pt}{9pt}\selectfont}% 폰트 크기와 위아래 여백
 \captionsetup[figure]{font=mycaptionfont}
@@ -88,7 +91,6 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
 
 % 문제 풀이시 1값을 주면 문제가 출력되고, 0값을 주면 문제가 출력되지 않음
 \newcommand{\qblock}[2]{\ifnum #1 = 1\relax #2 \fi}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 페이지 벗어나는 상자(그림, 메모) 안쪽으로 밀어넣기(shift)
 % 좌표/크기 저장

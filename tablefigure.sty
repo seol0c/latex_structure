@@ -259,14 +259,14 @@
 %}% 가장 아래층 내림 안됨
 \ignorespaces} \zz}
 
-% 교사용 seolfig - 모드 3,4일때만 나오는 그림. 1,2에서는 자리만 차지
-\NewDocumentCommand{\seolfig}{O{0.8} m}{%
-  \begin{center} \zz
-    \ifnum\seolmode>2
-      \includegraphics[scale=#1]{figures/#2}%
-    \else
-      \phantom{\includegraphics[scale=#1]{figures/#2}}%
-    \fi \zz \end{center}}
+% 교사용 seolfig - 모드 3,4일때만 나오는 그림. 1,2에서는 자리만 차지 - 안씀
+%\NewDocumentCommand{\seolfig}{O{0.8} m}{%
+%  \begin{center} \zz
+%    \ifnum\seolmode>2
+%      \includegraphics[scale=#1]{figures/#2}%
+%    \else
+%      \phantom{\includegraphics[scale=#1]{figures/#2}}%
+%    \fi \zz \end{center}}
 
 %% figure 2개짜리 함수 작성(파일명은 같고_a, _b만 달라야 함)
 % \DeclareDoubleFigure[<1단계 기본배율(기본 1)>]{파일명(라벨)}{명령이름}{캡션} 순으로 입력하면 됨
@@ -284,8 +284,7 @@
         \box2
         \caption{}\label{fig:#2:b}
       \end{subfigure}
-      \caption{#4}
-      \label{fig:#2}
+      \caption{#4}\label{fig:#2}
     \zz \end{figure}}}
 
 
@@ -296,22 +295,12 @@
       \setbox0=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_a}}%
       \setbox2=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_b}}%
       \setbox4=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_c}}%
-      \begin{subfigure}[b]{\wd0}% bottm으로 정렬(t,c 가능)
-        \box0
-        \caption{}\label{fig:#2:a}% a, b, c 순차적으로 캡션 붙음, 하나씩 라벨 호출할 수 있음
-      \end{subfigure}
-      \hspace*{##2\textwidth}% 그림 간격 조절(기본 0)
-      \begin{subfigure}[b]{\wd2}
-        \box2
-        \caption{}\label{fig:#2:b}
-      \end{subfigure}
-      \hspace*{##2\textwidth}% 그림 간격 조절(기본 0)
-      \begin{subfigure}[b]{\wd4}
-        \box4
-        \caption{}\label{fig:#2:c}
-      \end{subfigure}
-      \caption{#4}
-      \label{fig:#2}
+      \begin{subfigure}[b]{\wd0}\box0\caption{}\label{fig:#2:a}\end{subfigure}
+      \hspace*{##2\textwidth}
+      \begin{subfigure}[b]{\wd2}\box2\caption{}\label{fig:#2:b}\end{subfigure}
+      \hspace*{##2\textwidth}
+      \begin{subfigure}[b]{\wd4}\box4\caption{}\label{fig:#2:c}\end{subfigure}
+      \caption{#4}\label{fig:#2}
     \zz \end{figure}}}
 
 %% triple figure - NoTag 버전 (번호/라벨 없음, subcaption (a)(b)(c)도 없음)
@@ -322,24 +311,13 @@
       \setbox0=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_a}}%
       \setbox2=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_b}}%
       \setbox4=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_c}}%
-      \begin{subfigure}[b]{\wd0}
-        \box0
-        \caption{}% (a)
-      \end{subfigure}
+      \begin{subfigure}[b]{\wd0}\box0\caption{}\end{subfigure}
       \hspace*{##2\textwidth}
-      \begin{subfigure}[b]{\wd2}
-        \box2
-        \caption{}% (b)
-      \end{subfigure}
+      \begin{subfigure}[b]{\wd2}\box2\caption{}\end{subfigure}
       \hspace*{##2\textwidth}
-      \begin{subfigure}[b]{\wd4}
-        \box4
-        \caption{}% (c)
-      \end{subfigure}
+      \begin{subfigure}[b]{\wd4}\box4\caption{}\end{subfigure}
       \caption*{#4}\zz
-    \end{figure}%
-  }%
-}
+    \end{figure}}}%
 
 %% figure 4개짜리 함수 작성(파일명은 같고_a ~ _d만 달라야 함, 1열 가로 배치)
 \NewDocumentCommand{\DeclareQuadFigure}{O{1} m m m}{%
@@ -349,29 +327,57 @@
       \setbox2=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_b}}%
       \setbox4=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_c}}%
       \setbox6=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_d}}%
-      \begin{subfigure}[b]{\wd0}% bottm으로 정렬(t,c 가능)
-        \box0
-        \caption{}\label{fig:#2:a}% a, b, c 순차적으로 캡션 붙음, 하나씩 라벨 호출할 수 있음
-      \end{subfigure}
-      \hspace*{##2\textwidth}% 그림 간격 조절(기본 0)
-      \begin{subfigure}[b]{\wd2}
-        \box2
-        \caption{}\label{fig:#2:b}
-      \end{subfigure}
-      \hspace*{##2\textwidth}% 그림 간격 조절(기본 0)
-      \begin{subfigure}[b]{\wd4}
-        \box4
-        \caption{}\label{fig:#2:c}
-      \end{subfigure}
+      \begin{subfigure}[b]{\wd0}\box0\caption{}\label{fig:#2:a}\end{subfigure}
       \hspace*{##2\textwidth}
-      \begin{subfigure}[b]{\wd6}
-        \box6
-        \caption{}\label{fig:#2:d}
-      \end{subfigure}
-      \caption{#4}
-      \label{fig:#2}
+      \begin{subfigure}[b]{\wd2}\box2\caption{}\label{fig:#2:b}\end{subfigure}
+      \hspace*{##2\textwidth}
+      \begin{subfigure}[b]{\wd4}\box4\caption{}\label{fig:#2:c}\end{subfigure}
+      \hspace*{##2\textwidth}
+      \begin{subfigure}[b]{\wd6}\box6\caption{}\label{fig:#2:d}\end{subfigure}
+      \caption{#4}\label{fig:#2}
     \zz \end{figure}}}
 
+%% figure 4개짜리 2x2 함수 (파일명 동일 _a ~ _d, 2×2 배치)
+\NewDocumentCommand{\DeclareQuadFigureTwoByTwo}{O{1} m m m}{%
+  \NewDocumentCommand{#3}{O{0.8} O{0} O{0}}{%
+    \begin{figure}[H]\centering \zz[0.2\bs]
+% 1행: a, b
+      \setbox0=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_a}}%
+      \setbox2=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_b}}%
+      \begin{subfigure}[b]{\wd0}\box0\caption{}\label{fig:#2:a}\end{subfigure}
+      \hspace*{##2\textwidth}
+      \begin{subfigure}[b]{\wd2}\box2\caption{}\label{fig:#2:b}\end{subfigure}
+      \par\vspace*{##3\textwidth}
+% 2행: c, d
+      \setbox4=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_c}}%
+      \setbox6=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_d}}%
+      \begin{subfigure}[b]{\wd4}\box4\caption{}\label{fig:#2:c}\end{subfigure}
+      \hspace*{##2\textwidth}
+      \begin{subfigure}[b]{\wd6}\box6\caption{}\label{fig:#2:d}\end{subfigure}
+      \caption{#4}
+      \label{fig:#2}
+    \zz \end{figure}}}%
+
+%% figure 5개짜리 함수 (파일명 동일, _a ~ _e, 1줄 가로 배치)
+\NewDocumentCommand{\DeclarePentaFigure}{O{1} m m m}{%
+  \NewDocumentCommand{#3}{O{0.8} O{0}}{%
+    \begin{figure}[H] \centering \zz[0.2\bs]
+      \setbox0=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_a}}%
+      \setbox2=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_b}}%
+      \setbox4=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_c}}%
+      \setbox6=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_d}}%
+      \setbox8=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_e}}%
+      \begin{subfigure}[b]{\wd0}\box0\caption{}\label{fig:#2:a}\end{subfigure}
+      \hspace*{##2\textwidth}
+      \begin{subfigure}[b]{\wd2}\box2\caption{}\label{fig:#2:b}\end{subfigure}
+      \hspace*{##2\textwidth}
+      \begin{subfigure}[b]{\wd4}\box4\caption{}\label{fig:#2:c}\end{subfigure}
+      \hspace*{##2\textwidth}
+      \begin{subfigure}[b]{\wd6}\box6\caption{}\label{fig:#2:d}\end{subfigure}
+      \hspace*{##2\textwidth}
+      \begin{subfigure}[b]{\wd8}\box8\caption{}\label{fig:#2:e}\end{subfigure}
+      \caption{#4}\label{fig:#2}
+    \zz \end{figure}}}%
 
 %% figure 6개짜리 함수 작성 (파일명은 같고 _a ~ _f까지 순차적으로, 3개씩 2줄 배치)
 %% 사용법: \DeclareHexaFigure[<1단계 기본배율(기본 1)>]{파일명(라벨)}{명령이름}{캡션}
@@ -382,84 +388,47 @@
       \setbox0=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_a}}%
       \setbox1=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_b}}%
       \setbox2=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_c}}%
-      \begin{subfigure}[b]{\wd0}
-        \box0
-        \caption{}\label{fig:#2:a}
-      \end{subfigure}
+      \begin{subfigure}[b]{\wd0}\box0\caption{}\label{fig:#2:a}\end{subfigure}
       \hspace*{##2\textwidth}
-      \begin{subfigure}[b]{\wd1}
-        \box1
-        \caption{}\label{fig:#2:b}
-      \end{subfigure}
+      \begin{subfigure}[b]{\wd1}\box1\caption{}\label{fig:#2:b}\end{subfigure}
       \hspace*{##2\textwidth}
-      \begin{subfigure}[b]{\wd2}
-        \box2
-        \caption{}\label{fig:#2:c}
-      \end{subfigure}
+      \begin{subfigure}[b]{\wd2}\box2\caption{}\label{fig:#2:c}\end{subfigure}
       \par\vspace*{##3\textwidth}
-
 % 2행: d, e, f
       \setbox3=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_d}}%
       \setbox4=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_e}}%
       \setbox5=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_f}}%
-      \begin{subfigure}[b]{\wd3}
-        \box3
-        \caption{}\label{fig:#2:d}
-      \end{subfigure}
+      \begin{subfigure}[b]{\wd3}\box3\caption{}\label{fig:#2:d}\end{subfigure}
       \hspace*{##2\textwidth}
-      \begin{subfigure}[b]{\wd4}
-        \box4
-        \caption{}\label{fig:#2:e}
-      \end{subfigure}
+      \begin{subfigure}[b]{\wd4}\box4\caption{}\label{fig:#2:e}\end{subfigure}
       \hspace*{##2\textwidth}
-      \begin{subfigure}[b]{\wd5}
-        \box5
-        \caption{}\label{fig:#2:f}
-      \end{subfigure}
-      \caption{#4}
-      \label{fig:#2}
+      \begin{subfigure}[b]{\wd5}\box5\caption{}\label{fig:#2:f}\end{subfigure}
+      \caption{#4}\label{fig:#2}
     \zz \end{figure}}}
 
-%% figure 6개짜리 함수 작성 (파일명은 같고 _a ~ _f까지 순차적으로, 2개씩 3줄 배치)
+%% figure 6개짜리 2x3 함수 작성 (파일명은 같고 _a ~ _f까지 순차적으로, 2개씩 3줄 배치)
 \NewDocumentCommand{\DeclareHexaFigureTwoByThree}{O{1} m m m}{%
   \NewDocumentCommand{#3}{O{0.8} O{0} O{0}}{%
     \begin{figure}[H] \centering \zz[0.2\bs]
-
 % 1행: a, b
       \setbox0=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_a}}%
       \setbox1=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_b}}%
-      \begin{subfigure}[b]{\wd0}
-        \box0 \caption{}\label{fig:#2:a}
-      \end{subfigure}
+      \begin{subfigure}[b]{\wd0}\box0\caption{}\label{fig:#2:a}\end{subfigure}
       \hspace*{##2\textwidth}
-      \begin{subfigure}[b]{\wd1}
-        \box1 \caption{}\label{fig:#2:b}
-      \end{subfigure}
+      \begin{subfigure}[b]{\wd1}\box1\caption{}\label{fig:#2:b}\end{subfigure}
       \par\vspace*{##3\textwidth}\vspace*{5pt}
-
 % 2행: c, d
       \setbox2=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_c}}%
       \setbox3=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_d}}%
-      \begin{subfigure}[b]{\wd2}
-        \box2 \caption{}\label{fig:#2:c}
-      \end{subfigure}
+      \begin{subfigure}[b]{\wd2}\box2\caption{}\label{fig:#2:c}\end{subfigure}
       \hspace*{##2\textwidth}
-      \begin{subfigure}[b]{\wd3}
-        \box3 \caption{}\label{fig:#2:d}
-      \end{subfigure}
+      \begin{subfigure}[b]{\wd3}\box3 \caption{}\label{fig:#2:d}\end{subfigure}
       \par\vspace*{##3\textwidth}\vspace*{5pt}
-
 % 3행: e, f
       \setbox4=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_e}}%
       \setbox5=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_f}}%
-      \begin{subfigure}[b]{\wd4}
-        \box4 \caption{}\label{fig:#2:e}
-      \end{subfigure}
+      \begin{subfigure}[b]{\wd4}\box4\caption{}\label{fig:#2:e}\end{subfigure}
       \hspace*{##2\textwidth}
-      \begin{subfigure}[b]{\wd5}
-        \box5 \caption{}\label{fig:#2:f}
-      \end{subfigure}
-      \caption{#4}
-      \label{fig:#2}
-    \zz \end{figure}}%
-}
+      \begin{subfigure}[b]{\wd5}\box5\caption{}\label{fig:#2:f}\end{subfigure}
+      \caption{#4}\label{fig:#2}
+    \zz \end{figure}}}%

@@ -303,6 +303,24 @@
       \caption{#4}\label{fig:#2}
     \zz \end{figure}}}
 
+%% figure 3개짜리 1x2 함수 (파일명 동일 _a ~ _c, 1행에 1개 + 아래 2개)
+%% 사용: \DeclareTripleFigureOneByTwo[<base scale=1>]{파일명(라벨)}{명령이름}{캡션}
+\NewDocumentCommand{\DeclareTripleFigureOneByTwo}{O{1} m m m}{%
+  \NewDocumentCommand{#3}{O{0.8} O{0} O{0}}{% ##1=size, ##2=가로간격, ##3=세로간격
+    \begin{figure}[H]\centering \zz[0.2\bs]
+% 1행: a (가운데 정렬)
+      \setbox0=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_a}}%
+      \begin{subfigure}[b]{\wd0}\box0\caption{}\label{fig:#2:a}\end{subfigure}
+      \par\vspace*{##3\textwidth}
+% 2행: b, c 
+      \setbox2=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_b}}%
+      \begin{subfigure}[b]{\wd2}\box2\caption{}\label{fig:#2:b}\end{subfigure}
+      \hspace*{##2\textwidth}
+      \setbox4=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_c}}%
+      \begin{subfigure}[b]{\wd4}\box4\caption{}\label{fig:#2:c}\end{subfigure}
+      \caption{#4}\label{fig:#2}
+    \zz \end{figure}}}%
+
 %% triple figure - NoTag 버전 (번호/라벨 없음, subcaption (a)(b)(c)도 없음)
 %% 사용: \DeclareTripleFigureNoTag[<base scale=1>]{파일명}{명령}{캡션}
 \NewDocumentCommand{\DeclareTripleFigureNoTag}{O{1} m m m}{%

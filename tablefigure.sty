@@ -450,3 +450,34 @@
       \begin{subfigure}[b]{\wd5}\box5\caption{}\label{fig:#2:f}\end{subfigure}
       \caption{#4}\label{fig:#2}
     \zz \end{figure}}}%
+
+%% figure 7개짜리 3x2x2 함수 (파일명 동일 _a ~ _g, 1행 3개 + 2행 2개 + 3행 2개)
+%% 사용: \DeclareHeptaFigureThreeTwoTwo[<base scale=1>]{파일명(라벨)}{명령이름}{캡션}
+\NewDocumentCommand{\DeclareHeptaFigureThreeTwoTwo}{O{1} m m m}{%
+  \NewDocumentCommand{#3}{O{0.8} O{0} O{0}}{% ##1=size, ##2=가로간격, ##3=세로간격
+    \begin{figure}[H]\centering \zz[0.2\bs]
+% 1행: a, b, c (3개)
+      \setbox0=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_a}}%
+      \setbox1=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_b}}%
+      \setbox2=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_c}}%
+      \begin{subfigure}[b]{\wd0}\box0\caption{}\label{fig:#2:a}\end{subfigure}
+      \hspace*{##2\textwidth}%
+      \begin{subfigure}[b]{\wd1}\box1\caption{}\label{fig:#2:b}\end{subfigure}
+      \hspace*{##2\textwidth}%
+      \begin{subfigure}[b]{\wd2}\box2\caption{}\label{fig:#2:c}\end{subfigure}%
+      \par\vspace*{##3\textwidth}\vspace*{5pt}
+% 2행: d, e (2개)
+      \setbox3=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_d}}%
+      \setbox4=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_e}}%
+      \begin{subfigure}[b]{\wd3}\box3\caption{}\label{fig:#2:d}\end{subfigure}
+      \hspace*{##2\textwidth}%
+      \begin{subfigure}[b]{\wd4}\box4\caption{}\label{fig:#2:e}\end{subfigure}%
+      \par\vspace*{##3\textwidth}\vspace*{5pt}
+% 3행: f, g (2개)
+      \setbox5=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_f}}%
+      \setbox6=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_g}}%
+      \begin{subfigure}[b]{\wd5}\box5\caption{}\label{fig:#2:f}\end{subfigure}
+      \hspace*{##2\textwidth}%
+      \begin{subfigure}[b]{\wd6}\box6\caption{}\label{fig:#2:g}\end{subfigure}%
+      \caption{#4}\label{fig:#2}
+    \zz \end{figure}}}

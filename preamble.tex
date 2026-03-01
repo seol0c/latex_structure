@@ -96,7 +96,7 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
 % 문제풀이시 입력 내용이 페이지 절반 미만인 경우 절반에 새로 쓰고, 절반을 넘어가면 새페이지에 작성
 \newcommand{\halfpage}{%
   \par\ifdim\pagetotal<0.5\textheight
-    \vspace*{\dimexpr0.5\textheight-\pagetotal+2\baselineskip\relax}%
+    \vspace{\dimexpr0.5\textheight-\pagetotal+2\baselineskip\relax}%
   \else
     \clearpage\fi}%
 

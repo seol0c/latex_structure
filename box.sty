@@ -51,9 +51,8 @@
     \begin{minipage}[t]{#2\linewidth}% 오른쪽 폭
       #4% 오른쪽 내용
     \end{minipage}\endgroup
-    \par\vspace{0.6\medskipamount}},% 아래 본문과의 간격을 벌리기(세 번째 박스 대비)
-  after upper={\vspace{-0.6\medskipamount}}% 본문이 끝나고 박스가 닫힐 때, 위에서 준 간격만큼 다시 당겨 올림
-}% 본문 내용이 없으면 1번과 2번이 서로 상쇄되어 여백이 생기지 않음
+    \par\addvspace{0.6\medskipamount}},% 아래 새로운 본문이 시작될 때만 간격 벌리기
+  after upper={}}% 추가 명령어 없음
 
 % 박스 내부에서 쓰도록 doublepage를 쉽게 만듦, 여백이나 간격을 제거하여 본문과 똑같이 쓰이게 함
 \NewDocumentEnvironment{doublepage}{mm +m +m}{% 빈 줄 허용

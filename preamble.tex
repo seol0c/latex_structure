@@ -93,6 +93,13 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
 % 문제 풀이시 1값을 주면 문제가 출력되고, 0값을 주면 문제가 출력되지 않음
 \newcommand{\qblock}[2]{\ifnum #1 = 1\relax #2 \fi}
 
+% 문제풀이시 입력 내용이 페이지 절반 미만인 경우 절반에 새로 쓰고, 절반을 넘어가면 새페이지에 작성
+\newcommand{\halfpage}{%
+  \par\ifdim\pagetotal<0.5\textheight
+    \vspace*{\dimexpr0.5\textheight-\pagetotal+2\baselineskip\relax}%
+  \else
+    \clearpage\fi}%
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 페이지 벗어나는 상자(그림, 메모) 안쪽으로 밀어넣기(shift)
 % 좌표/크기 저장
 \newsavebox{\edgebox}
@@ -109,7 +116,6 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
 \newcommand{\MeasureHalfFrom}[1]{%
   \sbox{\edgebox}{#1}%
   \setlength{\halfbox}{.5\dimexpr \ht\edgebox+\dp\edgebox\relax}}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%% 박스 내부에서 메모 shift 위해서 로컬 이동량 잡아서 보정하려는데 하는데 잘 안잡힘

@@ -303,9 +303,9 @@
       \caption{#4}\label{fig:#2}
     \zz \end{figure}}}
 
-%% figure 3개짜리 1x2 함수 (파일명 동일 _a ~ _c, 1행에 1개 + 아래 2개)
-%% 사용: \DeclareTripleFigureOneByTwo[<base scale=1>]{파일명(라벨)}{명령이름}{캡션}
-\NewDocumentCommand{\DeclareTripleFigureOneByTwo}{O{1} m m m}{%
+%% figure 3개짜리 1 + 2 함수 (파일명 동일 _a ~ _c, 1행에 1개 + 아래 2개)
+%% 사용: \DeclareTripleFigureOneTwo[<base scale=1>]{파일명(라벨)}{명령이름}{캡션}
+\NewDocumentCommand{\DeclareTripleFigureOneTwo}{O{1} m m m}{%
   \NewDocumentCommand{#3}{O{0.8} O{0} O{0}}{% ##1=size, ##2=가로간격, ##3=세로간격
     \begin{figure}[H]\centering \zz[0.2\bs]
 % 1행: a (가운데 정렬)
@@ -355,8 +355,8 @@
       \caption{#4}\label{fig:#2}
     \zz \end{figure}}}
 
-%% figure 4개짜리 2x2 함수 (파일명 동일 _a ~ _d, 2×2 배치)
-\NewDocumentCommand{\DeclareQuadFigureTwoByTwo}{O{1} m m m}{%
+%% figure 4개짜리 2 + 2 함수 (파일명 동일 _a ~ _d, 2×2 배치)
+\NewDocumentCommand{\DeclareQuadFigureTwoTwo}{O{1} m m m}{%
   \NewDocumentCommand{#3}{O{0.8} O{0} O{0}}{%
     \begin{figure}[H]\centering \zz[0.2\bs]
 % 1행: a, b
@@ -424,8 +424,8 @@
       \caption{#4}\label{fig:#2}
     \zz \end{figure}}}
 
-%% figure 6개짜리 2x3 함수 작성 (파일명은 같고 _a ~ _f까지 순차적으로, 2개씩 3줄 배치)
-\NewDocumentCommand{\DeclareHexaFigureTwoByThree}{O{1} m m m}{%
+%% figure 6개짜리 2 + 2 +2 함수 작성 (파일명은 같고 _a ~ _f까지 순차적으로, 2개씩 3줄 배치)
+\NewDocumentCommand{\DeclareHexaFigureTwoTwoTwo}{O{1} m m m}{%
   \NewDocumentCommand{#3}{O{0.8} O{0} O{0}}{%
     \begin{figure}[H] \centering \zz[0.2\bs]
 % 1행: a, b
@@ -451,7 +451,7 @@
       \caption{#4}\label{fig:#2}
     \zz \end{figure}}}%
 
-%% figure 7개짜리 3x2x2 함수 (파일명 동일 _a ~ _g, 1행 3개 + 2행 2개 + 3행 2개)
+%% figure 7개짜리 3 + 2 + 2 함수 (파일명 동일 _a ~ _g, 1행 3개 + 2행 2개 + 3행 2개)
 %% 사용: \DeclareHeptaFigureThreeTwoTwo[<base scale=1>]{파일명(라벨)}{명령이름}{캡션}
 \NewDocumentCommand{\DeclareHeptaFigureThreeTwoTwo}{O{1} m m m}{%
   \NewDocumentCommand{#3}{O{0.8} O{0} O{0}}{% ##1=size, ##2=가로간격, ##3=세로간격

@@ -1,13 +1,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 모든 패키지, 사용자 정의 매크로 호출
 % 호출 경로는 컴파일이 일어나는 main 기준으로 두 단계 올라가서 다시 내려옴
 % 기본 골격
-\input{../../structure/package.sty}
-\input{../../structure/format.sty}
-\input{../../structure/page.sty}
+\input{../structure/package.sty}
+\input{../structure/format.sty}
+\input{../structure/page.sty}
 % 응용함수
-\input{../../structure/seolmode.sty}
-\input{../../structure/box.sty}
-\input{../../structure/tablefigure.sty}
+\input{../structure/seolmode.sty}
+\input{../structure/box.sty}
+\input{../structure/tablefigure.sty}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 페이지 설정
@@ -29,15 +29,15 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% main.tex 명령어 단순화
 % 제목, 서문, 목차 불러오는 함수 만들기
-\newcommand{\includeHead}[1]{\input{../includes/#1.tex}}% 경로 확인할 것
+\newcommand{\includeHead}[1]{\input{includes/#1.tex}}% 경로 확인할 것
 
 % 참고문헌 불러오기
 \newcommand{\setupBib}{% 참고문헌 있는 경우 불러오기
   \usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
   \usepackage{csquotes}
-  \addbibresource{../bib/papers.bib}
-  \addbibresource{../bib/references.bib}
-  \addbibresource{../bib/websites.bib}}
+  \addbibresource{bib/papers.bib}
+  \addbibresource{bib/references.bib}
+  \addbibresource{bib/websites.bib}}
 \newcommand{\printBib}{% sloppy로 참고문헌 출력시 길이가 길다면 강제 줄바꿈
   \begin{sloppypar} \printbibliography \end{sloppypar}}
 
@@ -45,10 +45,10 @@ top=\geoTop, bottom=\geoBottom, left=\geoLeft, right=\geoRight}
 \newcommand{\nowchapter}[1]{\setcounter{chapter}{\numexpr#1-1\relax}}
 
 % 챕터 불러오기 - 이거 안쓰기로 함. 저장으로 컴파일이 안되는 문제 발생함
-\newcommand{\loadchapter}[1]{\subimport{../chapters/#1/}{chapter.tex}}
+\newcommand{\loadchapter}[1]{\subimport{chapters/#1/}{chapter.tex}}
 % 히든 챕터 불러오기 - 본문에 안쓰는 챕터지만 식 참조 위하여 외부참조하기 위함 (aux 파일 한 번 컴파일 해야 함)
 \newcommand{\hiddenchapter}[2]{%
-\externaldocument[]{../chapters/#1/#2/chapter}}
+\externaldocument[]{chapters/#1/#2/chapter}}
 
 
 

@@ -1,13 +1,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 모든 패키지, 사용자 정의 매크로 호출
 % 호출 경로는 컴파일이 일어나는 main 기준으로 두 단계 올라가서 다시 내려옴
 % 기본 골격
-\input{../structure/package.sty}
-\input{../structure/format.sty}
-\input{../structure/page.sty}
+\newcommand{\mystructure}{C:/Users/seolpc/seolgit/latex/book/structure}
+\input{\mystructure/package.sty}
+\input{\mystructure/format.sty}
+\input{\mystructure/page.sty}
 % 응용함수
-\input{../structure/seolmode.sty}
-\input{../structure/box.sty}
-\input{../structure/tablefigure.sty}
+\input{\mystructure/seolmode.sty}
+\input{\mystructure/box.sty}
+\input{\mystructure/tablefigure.sty}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 페이지 설정

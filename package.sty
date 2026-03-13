@@ -54,7 +54,7 @@
 
 % 표, 디자인
 \usepackage[most]{tcolorbox}% 박스 만들기 - box.sty에서 필수
-\usepackage{float}% 표/그림 위치 고정
+\usepackage{float}% 표/그림 위치 고정, [H] 배치를 위해 필요
 \usepackage{booktabs}% 표 상단선 등 고급 표 기능 \toprule, \midrule, \bottomrule
 \usepackage{longtable}% 페이지 넘어가는 긴 표
 \usepackage{tabularx}% 표에서 너비 자동 조정
@@ -69,3 +69,4 @@
 \usepackage{diagbox}% 표에서 대각선 그을 때 필요함
 \usepackage{makecell}% 표 안에서 단일 cell로 사용할 수 있음
 \usepackage{tabularray}% 새로운 형태. tabularx, multirow, makecell, colortbl 기능을 하나로 통합
+\UseTblrLibrary{booktabs, siunitx, varwidth}% 위 패키지의 필수 라이브러리

@@ -331,11 +331,12 @@
       \setbox0=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_a}}%
       \setbox2=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_b}}%
       \setbox4=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_c}}%
-      \begin{subfigure}[b]{\wd0}\box0\caption{}\end{subfigure}
+      %% subfigure 대신 minipage를 사용하여 번호 생성을 완전히 차단하였음
+      \begin{minipage}[b]{\wd0}\box0\end{minipage}
       \hspace*{##2\textwidth}
-      \begin{subfigure}[b]{\wd2}\box2\caption{}\end{subfigure}
+      \begin{minipage}[b]{\wd2}\box2\end{minipage}
       \hspace*{##2\textwidth}
-      \begin{subfigure}[b]{\wd4}\box4\caption{}\end{subfigure}
+      \begin{minipage}[b]{\wd4}\box4\end{minipage}
       \caption*{#4}\zz
     \end{figure}}}%
 

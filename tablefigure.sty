@@ -215,6 +215,29 @@
 }
 \makeatother
 
+%% figure 1개짜리 - 측면 캡션 자동 너비 버전 (캡션은 바닥 정렬, 전역 설정 무시)
+% \DeclareSideFigure[<1단계 기본배율>]{파일명(라벨)}{명령이름}{캡션}
+\NewDocumentCommand{\DeclareSideFigure}{O{1} m m m}{%
+  \NewDocumentCommand{#3}{O{0.8}}{% ##1: 그림 최종 배율만 조절
+    \begin{figure}[H]
+      \zz[0.2\bs]
+      % 그림 폭 측정 (wrap 방식 적용)
+      \sbox0{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2}}%
+      % 캡션 영역 (자동 계산: 전체 폭 - 그림 폭 - 여백 20pt)
+      \begin{minipage}[b]{\dimexpr\linewidth-\wd0-20pt\relax}%
+        % 여기서만 프리앰블의 전역 80% 설정을 무시하고 현재 칸 너비에 맞춤
+        \captionsetup{width=\linewidth}% 
+        \caption{#4}\label{fig:#2}%
+        \vspace*{-2.4pt}% 바닥 선 미세 보정. 원하는 만큼 보정
+      \end{minipage}%
+      \hfill%
+      \begin{minipage}[b]{\wd0}%
+        \usebox0
+      \end{minipage}%
+      \zz
+    \end{figure}}}
+
+
 %% 라벨 없이 간단하게 삽입하는 경우 - notag를 그냥 쓰는 것이 그림 관리가 쉬워서 notag 씀
 % \quickfig{파일명}으로 부를 수 있음.
 % 기본 0.8배 크기로 삽입되지만 \quickfig[0.6]{파일명} 이런식으로 사이즈 변경 가능. [1]넣으면 크기 커짐(100%)

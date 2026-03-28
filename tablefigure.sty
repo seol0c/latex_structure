@@ -346,7 +346,7 @@
       \caption{#4}\label{fig:#2}
     \zz \end{figure}}}%
 
-%% triple figure - NoTag 버전 (번호/라벨 없음, subcaption (a)(b)(c)도 없음)
+%% triple figure - NoTag 버전 (번호/라벨 없음, (a)(b)(c)을 직접 작성)
 %% 사용: \DeclareTripleFigureNoTag[<base scale=1>]{파일명}{명령}{캡션}
 \NewDocumentCommand{\DeclareTripleFigureNoTag}{O{1} m m m}{%
   \NewDocumentCommand{#3}{O{0.8} O{0}}{%
@@ -362,6 +362,24 @@
       \begin{minipage}[b]{\wd4}\ctt{\box4(c)}\end{minipage}
       \caption*{#4}\zz
     \end{figure}}}%
+
+%% triple figure - NoTag 버전 (번호/라벨 없음, (1)(2)(3)을 직접 작성)
+%% 사용: \DeclareTripleFigureNoTag[<base scale=1>]{파일명}{명령}{캡션}
+\NewDocumentCommand{\DeclareTripleFigureonetwothreeNoTag}{O{1} m m m}{%
+  \NewDocumentCommand{#3}{O{0.8} O{0}}{%
+    \begin{figure}[H]\centering \zz[0.2\bs]
+      \setbox0=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_a}}%
+      \setbox2=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_b}}%
+      \setbox4=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_c}}%
+      %% subfigure 대신 minipage를 사용하여 번호 생성을 완전히 차단하였음
+      \begin{minipage}[b]{\wd0}\ctt{\box0(1)}\end{minipage}% 수동 123 입력
+      \hspace*{##2\textwidth}
+      \begin{minipage}[b]{\wd2}\ctt{\box2(2)}\end{minipage}
+      \hspace*{##2\textwidth}
+      \begin{minipage}[b]{\wd4}\ctt{\box4(3)}\end{minipage}
+      \caption*{#4}\zz
+    \end{figure}}}%
+
 
 %% figure 4개짜리 함수 작성(파일명은 같고_a ~ _d만 달라야 함, 1열 가로 배치)
 \NewDocumentCommand{\DeclareQuadFigure}{O{1} m m m}{%
@@ -422,6 +440,30 @@
       \begin{subfigure}[b]{\wd8}\box8\caption{}\label{fig:#2:e}\end{subfigure}
       \caption{#4}\label{fig:#2}
     \zz \end{figure}}}%
+
+%% figure 5개짜리 3 + 2 함수 (파일명 동일 _a ~ _e, 1행 3개 + 2행 2개)
+%% 사용: \DeclarePentaFigureThreeTwo[<base scale=1>]{파일명(라벨)}{명령이름}{캡션}
+\NewDocumentCommand{\DeclarePentaFigureThreeTwo}{O{1} m m m}{%
+  \NewDocumentCommand{#3}{O{0.8} O{0} O{0}}{% ##1=size, ##2=가로간격, ##3=세로간격
+    \begin{figure}[H]\centering \zz[0.2\bs]
+% 1행: a, b, c (3개)
+      \setbox0=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_a}}%
+      \setbox1=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_b}}%
+      \setbox2=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_c}}%
+      \begin{subfigure}[b]{\wd0}\box0\caption{}\label{fig:#2:a}\end{subfigure}
+      \hspace*{##2\textwidth}%
+      \begin{subfigure}[b]{\wd1}\box1\caption{}\label{fig:#2:b}\end{subfigure}
+      \hspace*{##2\textwidth}%
+      \begin{subfigure}[b]{\wd2}\box2\caption{}\label{fig:#2:c}\end{subfigure}%
+      \par\vspace*{##3\textwidth}\vspace*{5pt}
+% 2행: d, e (2개)
+      \setbox3=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_d}}%
+      \setbox4=\hbox{\includegraphics[scale=\fpeval{#1*(##1)}]{figures/#2_e}}%
+      \begin{subfigure}[b]{\wd3}\box3\caption{}\label{fig:#2:d}\end{subfigure}
+      \hspace*{##2\textwidth}%
+      \begin{subfigure}[b]{\wd4}\box4\caption{}\label{fig:#2:e}\end{subfigure}%
+      \caption{#4}\label{fig:#2}
+    \zz \end{figure}}}
 
 %% figure 6개짜리 함수 작성 (파일명은 같고 _a ~ _f까지 순차적으로, 3개씩 2줄 배치)
 %% 사용법: \DeclareHexaFigure[<1단계 기본배율(기본 1)>]{파일명(라벨)}{명령이름}{캡션}

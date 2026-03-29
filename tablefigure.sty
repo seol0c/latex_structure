@@ -139,7 +139,7 @@
         \captionof{figure}{#4}\label{fig:#2}%
       \end{minipage}}
     \edef\wrapheight{\dimexpr\ht1+\dp1\relax}% 세로 높이 계산 - 잘안됨 나중에 다시
-    \begin{wrapfigure}{r}{\wrapwidth}%
+    \begin{wrapfigure}[\numexpr\wrapheight/\baselineskip+2\relax]{r}{\wrapwidth}%
       \zz[0.2\bs]
       \centering
       \usebox1
@@ -157,7 +157,7 @@
         \captionof{figure}{#4}\label{fig:#2}%
       \end{minipage}}
     \edef\wrapheight{\dimexpr\ht1+\dp1\relax}% 세로 높이 계산 - 잘안됨 나중에 다시
-    \begin{wrapfigure}{l}{\wrapwidth}% 여기만 r에서 l로 바꿈
+    \begin{wrapfigure}[\numexpr\wrapheight/\baselineskip+2\relax]{l}{\wrapwidth}% 여기만 r에서 l로 바꿈
       \zz[0.2\bs]
       \centering
       \usebox1
@@ -190,7 +190,7 @@
         \usebox0
       \end{minipage}}
     \edef\wrapheight{\dimexpr\ht1+\dp1\relax}% 세로 높이 계산 - 잘안됨 나중에 다시
-    \begin{wrapfigure}{r}{\wrapwidth}%
+    \begin{wrapfigure}[\numexpr\wrapheight/\baselineskip+1\relax]{r}{\wrapwidth}%
       \zz[0.2\bs]
       \centering
       \usebox1
@@ -207,7 +207,7 @@
         \usebox0
       \end{minipage}}
     \edef\wrapheight{\dimexpr\ht1+\dp1\relax}% 세로 높이 계산 - 잘안됨 나중에 다시
-    \begin{wrapfigure}{l}{\wrapwidth}% 여기만 r에서 l로 바꿈
+    \begin{wrapfigure}[\numexpr\wrapheight/\baselineskip+1\relax]{l}{\wrapwidth}% 여기만 r에서 l로 바꿈
       \zz[0.2\bs]
       \centering
       \usebox1

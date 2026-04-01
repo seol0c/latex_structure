@@ -46,9 +46,11 @@
 \newcommand{\memo}[2][0]{% [#1]: 추가 이동량 multiplier(기본값 0), #2: 메모 내용
   \leavevmode\nopagebreak % 페이지 찢어짐 방지
   \begingroup
+  % 복잡한 내용을 sbox에 먼저 담아 에러를 방지
+  \sbox0{\renderMemoBox{#2}}%
   % seolmode 4 전용 출력 설정
-  \ifnum\seolmode=4\relax \def\memoDraw{\renderMemoBox{#2}}%
-  \else \def\memoDraw{\phantom{\renderMemoBox{#2}}}\fi
+  \ifnum\seolmode=4\relax \def\memoDraw{\usebox0}%
+  \else \def\memoDraw{\phantom{\usebox0}}\fi%모드 4가 아니면 팬텀처리 (투명도 간섭 없음)
   % 위치 마킹
   \stepcounter{memomark}%
   \tikz[remember picture, baseline]{\coordinate (memomark-\thememomark) at (0,0);}%

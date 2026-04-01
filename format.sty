@@ -62,16 +62,23 @@
 \newcommand{\gray}[1]{\textcolor{mygray}{#1}}
 \newcommand{\white}[1]{\textcolor{mywhite}{#1}}
 
-%% 형광펜, 강조 스타일 정의 - luacolor,lua-ul 쓰면 매우 강력
-\newcommand{\hlr}[1]{\highLight[myred]{#1}}
-\newcommand{\hlo}[1]{\highLight[myorange]{#1}}
-\newcommand{\hly}[1]{\highLight[myyellow]{#1}}
-\newcommand{\hll}[1]{\highLight[mylime]{#1}}
-\newcommand{\hlgr}[1]{\highLight[mygreen]{#1}}
-\newcommand{\hlb}[1]{\highLight[myblue]{#1}}
-\newcommand{\hlgy}[1]{\highLight[mygray]{#1}}
-\newcommand{\hlw}[1]{\highLight[mywhite]{#1}}
-\newcommand{\hlp}[1]{\hlw{#1}}% 그냥 화이트로 대체함. 투명 하이라이트 찾아야 함.
+%% 형광펜, 강조 스타일 정의 - luacolor,lua-ul 쓰면 매우 강력, mbox로 정확히 경계 맞추도록 함
+
+% 하이라이트 공통 베이스 (수식 내부에서 번짐 방지 및 수식 모드 내 사용)
+\newcommand{\hlbase}[2]{\ifmmode\text{\highLight[#1]{$#2$}}\else\highLight[#1]{#2}\fi}
+
+\newcommand{\hlr}[1]{\hlbase{myred}{#1}}
+\newcommand{\hlo}[1]{\hlbase{myorange}{#1}}
+\newcommand{\hly}[1]{\hlbase{myyellow}{#1}}
+\newcommand{\hll}[1]{\hlbase{mylime}{#1}}
+\newcommand{\hlgr}[1]{\hlbase{mygreen}{#1}}
+\newcommand{\hlb}[1]{\hlbase{myblue}{#1}}
+\newcommand{\hlgy}[1]{\hlbase{mygray}{#1}}
+\newcommand{\hlw}[1]{\hlbase{mywhite}{#1}}
+%\newcommand{\hlp}[1]{\hlw{#1}}% 그냥 화이트로 대체함. 투명 하이라이트 찾아야 함.
+%% 투명 하이라이트 - 전체 투명도 0으로 설정하고, 텍스트만 다시 불투명(1)로 복구
+\DeclareRobustCommand{\hlp}[1]{{\transparent{0}\hlbase{mywhite}{\transparent{1}#1}}}
+% 수식이 아닌 한글의 첫 글자는 투명하게 되지만 두 번째 글자부터 하이라이트가 드러나는 문제가 발생
 
 % 정말 투명한 \hlp를 만들고 싶으나 실패함
 %\newcommand{\hlp}[1]{% 투명 형광펜 - 자리 차지 동일하게 하기 위해 높이, 깊이를 동일하게 갖는 박스를 앞뒤에 삽입

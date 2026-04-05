@@ -1,20 +1,17 @@
 %% 표 스타일 정의용 매크로
 
+%%%%%%%%%%%%% 이전에 사용하는 형식(tabular)임
 %% 자주 쓰는 열 정의
 \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}% 가운데 정렬 고정폭 열
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}% 왼쪽 정렬 고정폭 열
 \newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}% 오른쪽 정렬 고정폭 열
-
 %% 기본 테이블 여백 조정
 \setlength{\tabcolsep}{8pt}% 셀 좌우 간격
 \renewcommand{\arraystretch}{1.2}% 행 간격
-
 %% 강조 셀 스타일 - 기존에 정의한 색 재사용 (이미 \definecolor 되어 있어야 함)
 \newcommand{\graycell}[1]{\cellcolor{mygray!20}#1}% 회색 강조 셀
 \newcommand{\redcell}[1]{\cellcolor{myred!20}#1}% 빨간 강조 셀
 \newcommand{\bluecell}[1]{\cellcolor{myblue!20}#1}% 파란 강조 셀
-
-
 %% 그림이나 표를 감싸서 좌측 또는 우측에 배열하는 함수
 \newcommand{\wrapfigR}[1]{% fig나 tab을 우측에 붙이기
   \sbox0{#1}\begin{wrapfigure}{r}{\wd0}%
@@ -22,25 +19,19 @@
 \newcommand{\wrapfigL}[1]{% fig나 tab을 좌측에 붙이기
   \sbox0{#1}\begin{wrapfigure}{l}{\wd0}%
     \zz \usebox0 \zz \end{wrapfigure}}
-
-
-%%%%% 표
 %% 표 내에서 정렬이 편하도록 함수 명명
 \newcommand{\leftcell}[1]{\raggedright #1\arraybackslash}
 \newcommand{\centercell}[1]{\centering #1\arraybackslash}
 \newcommand{\rightcell}[1]{\raggedleft #1\arraybackslash}
-
 % \tab[h]{캡션}{라벨}{정렬}{내용} - 내용 빼고 모두 생략 가능
 \newcommand{\tab}[5][H]{% 기본 위치 here. 무조건 강하게 H
   \begin{table}[#1]% 표 float 환경 시작, 위에서 H로 지정함. 안써도 됨
     \zz[0.4\bs]
     \centering% 표 가운데 정렬
     \ifthenelse{\isempty{#2}}{}{% 캡션 내용 비어있으면 생략
-      \caption{#2}% 캡션이 비어 있지 않으면 삽입. tabular 아래에 넣으면 캡션은 아래로 감
-    }
+      \caption{#2}}% 캡션이 비어 있지 않으면 삽입. tabular 아래에 넣으면 캡션은 아래로 감
     \ifthenelse{\isempty{#3}}{}{%
-      \label{tab:#3}% 라벨이 비어 있지 않으면 tab: 접두사와 함께 삽입
-    }
+      \label{tab:#3}}% 라벨이 비어 있지 않으면 tab: 접두사와 함께 삽입
     {\fontsize{8}{10}\selectfont% 본문폰트 크기 10pt, 표 폰트 크기 8pt
     \begin{tabular}{#4}% 표 열 형식 지정
       \hline
@@ -48,20 +39,12 @@
       \hline
     \end{tabular}}
     \zz[0.2\bs]
-  \end{table}}
-
-
-  
+  \end{table}} 
 % \tabul{열형식}{내용} - tabular 완전 대체용
 \newcommand{\tabul}[2]{%
   \begin{tabular}{#1}%
     #2%
-  \end{tabular}%
-}
-
-
-
-
+  \end{tabular}}%
 %% table 선언 쉽도록 함수 작성 - \DeclareTable{라벨}{명령이름}{캡션}{열형식}{내용} 순으로 입력하면 됨
 \newcommand{\DeclareTable}[5]{
   \newcommand{#2}{
@@ -69,11 +52,9 @@
       \zz[0.4\bs]
       \centering
       \ifstrempty{#3}{}{%
-        \caption{#3}
-      }
+        \caption{#3}}
       \ifstrempty{#1}{}{%
-        \label{tab:#1}
-      }
+        \label{tab:#1}}
       {\fontsize{8}{10}\selectfont% 본문폰트 크기 10pt, 표 폰트 크기 8pt
       \begin{tabular}{#4}
         \hline
@@ -82,6 +63,47 @@
       \end{tabular}}
       \zz[0.2\bs]
     \end{table}}}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 새로운 표 선언
+
+%% tabularray를 이용한 새로운 표 선언 함수
+%% \DeclareNewTable{라벨}{명령이름}{캡션}{tblr옵션}{내용}
+\newcommand{\DeclareNewTable}[5]{
+  \newcommand{#2}{
+    \begin{table}[H]
+      \zz[0.4\bs]
+      \centering
+      % 캡션이 비어있지 않을 때만 출력
+      \ifstrempty{#3}{}{\caption{#3}}
+      % 라벨이 비어있지 않을 때만 출력 (tab: 접두어 포함)
+      \ifstrempty{#1}{}{\label{tab:#1}}
+      % 표 내부 폰트 설정 (8pt/10pt)
+      {\fontsize{8}{10}\selectfont
+      \begin{tblr}{
+        colsep = 4pt,% 기본 좌우 간격
+        rowsep = 1.2pt,% 기본 행 간격
+        stretch = 0.8,% 기본 행 간격 배율
+        #4}% 사용자 추가 옵션
+        #5
+      \end{tblr}}
+      \zz[0.2\bs]
+    \end{table}}}
+
+% \tbl{추가옵션}{내용}
+\newcommand{\tbl}[2]{%
+  {\fontsize{8}{10}\selectfont
+  \begin{tblr}{
+    colsep = 4pt,% 기본 좌우 간격
+    rowsep = 1.2pt,% 기본 행 간격
+    stretch = 0.8,% 기본 행 간격 배율
+    #1}% 사용자 추가 옵션
+    #2%
+  \end{tblr}}}%
+
 
 %%%%% 그림
 %% 본래 그림을 다음과 같이 선언해야 함
